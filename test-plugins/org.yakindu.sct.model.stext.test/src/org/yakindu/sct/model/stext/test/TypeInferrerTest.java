@@ -103,6 +103,12 @@ public class TypeInferrerTest extends AbstractSTextTest {
 		assertTrue(isRealType(inferType("1.1 + 2")));
 		assertTrue(isRealType(inferType("2 + 1.0")));
 		assertTrue(isRealType(inferType("1 + 2 + 3.0")));
+		// add with string
+		assertTrue(isStringType(inferType("'Hello' +  'World'")));
+		assertTrue(isStringType(inferType("'Hello World' + 2")));
+		assertTrue(isStringType(inferType("'Hello World' + true")));
+		assertTrue(isStringType(inferType("'Hello World' + true + 0.0")));
+		assertTrue(isStringType(inferType("'Hello World' + 0.0")));
 		// subtract
 		assertTrue(isIntegerType(inferType("1 - 2")));
 		assertTrue(isIntegerType(inferType("0x0F - 2")));
@@ -114,7 +120,7 @@ public class TypeInferrerTest extends AbstractSTextTest {
 		assertTrue(isRealType(inferType("realVar - 1.0")));
 		assertTrue(isRealType(inferType("1 - 2 - 3.0")));
 	}
-
+	
 	@Test
 	public void testNumericalAddSubtractExpressionFailure() {
 		// add
@@ -768,7 +774,6 @@ public class TypeInferrerTest extends AbstractSTextTest {
 	public void testTernaryExpression() {
 		assertTrue(isIntegerType(inferType("(1<2) ? 4 : 5")));
 		assertTrue(isBooleanType(inferType("(true) ? false : true")));
-
 		expectIssue(inferType("(true) ? 4 : false"), "Could not determine a common type for integer and boolean.");
 	}
 
