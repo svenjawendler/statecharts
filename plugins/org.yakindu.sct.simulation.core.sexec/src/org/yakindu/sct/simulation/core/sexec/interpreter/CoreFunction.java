@@ -85,10 +85,10 @@ public class CoreFunction extends Function {
 	public Double plus(Float f1, Double d2) {
 		return f1 + d2;
 	}
-	
+
 	@FunctionMethod(PLUS)
 	public Float plus(Float f1, Long l2) {
-		 return f1 + l2;
+		return f1 + l2;
 	}
 
 	@FunctionMethod(PLUS)
@@ -110,15 +110,45 @@ public class CoreFunction extends Function {
 	public Float plus(Long l1, Float f1) {
 		return l1 + f1;
 	}
-	
+
 	@FunctionMethod(PLUS)
 	public Long plus(Long l1, Integer i2) {
 		return l1 + i2;
 	}
-	
+
 	@FunctionMethod(PLUS)
 	public Double plus(Long l1, Double d2) {
 		return l1 + d2;
+	}
+
+	@FunctionMethod(PLUS)
+	public String plus(String s1, Integer i2) {
+		return s1 + i2;
+	}
+
+	@FunctionMethod(PLUS)
+	public String plus(String s1, Float f2) {
+		return s1 + f2;
+	}
+
+	@FunctionMethod(PLUS)
+	public String plus(String s1, Double d2) {
+		return s1 + d2;
+	}
+
+	@FunctionMethod(PLUS)
+	public String plus(String s1, Boolean b2) {
+		return s1 + b2;
+	}
+
+	@FunctionMethod(PLUS)
+	public String plus(String s1, Long l2) {
+		return s1 + l2;
+	}
+
+	@FunctionMethod(PLUS)
+	public String plus(String s1, String s2) {
+		return s1 + s2;
 	}
 
 	@FunctionMethod(PLUS)
@@ -215,7 +245,7 @@ public class CoreFunction extends Function {
 	public Double minus(Float f1, Double d2) {
 		return f1 - d2;
 	}
-	
+
 	@FunctionMethod(MINUS)
 	public Float minus(Float f1, Long l2) {
 		return f1 - l2;
@@ -240,12 +270,12 @@ public class CoreFunction extends Function {
 	public Long minus(Long l1, Integer i1) {
 		return l1 - i1;
 	}
-	
+
 	@FunctionMethod(MINUS)
 	public Float minus(Long l1, Float f1) {
 		return l1 - f1;
 	}
-	
+
 	@FunctionMethod(MINUS)
 	public Double minus(Long l1, Double d1) {
 		return l1 - d1;
@@ -295,7 +325,7 @@ public class CoreFunction extends Function {
 	public Double mul(Float f1, Double d2) {
 		return f1 * d2;
 	}
-	
+
 	@FunctionMethod(MULTIPLY)
 	public Float mul(Float f1, Long d2) {
 		return f1 * d2;
@@ -320,7 +350,7 @@ public class CoreFunction extends Function {
 	public Long mul(Long l1, Integer i1) {
 		return l1 * i1;
 	}
-	
+
 	@FunctionMethod(MULTIPLY)
 	public Float mul(Long d1, Float f2) {
 		return d1 * f2;
@@ -375,7 +405,7 @@ public class CoreFunction extends Function {
 	public Double div(Float f1, Double d2) {
 		return f1 / d2;
 	}
-	
+
 	@FunctionMethod(DIVIDE)
 	public Float div(Float f1, Long d2) {
 		return f1 / d2;
@@ -400,7 +430,7 @@ public class CoreFunction extends Function {
 	public Long div(Long l1, Integer i1) {
 		return l1 / i1;
 	}
-	
+
 	@FunctionMethod(DIVIDE)
 	public Float div(Long d1, Float f1) {
 		return d1 / f1;
@@ -455,7 +485,7 @@ public class CoreFunction extends Function {
 	public Double mod(Float f1, Double d2) {
 		return f1 % d2;
 	}
-	
+
 	@FunctionMethod(MODULO)
 	public Float mod(Float f1, Long d2) {
 		return f1 % d2;
@@ -475,7 +505,7 @@ public class CoreFunction extends Function {
 	public Double mod(Double d1, Long i1) {
 		return d1 % i1;
 	}
-	
+
 	@FunctionMethod(MODULO)
 	public Float mod(Long d1, Float f1) {
 		return d1 % f1;
@@ -500,7 +530,7 @@ public class CoreFunction extends Function {
 	public Long left(Long l1, Long l2) {
 		return l1 << l2;
 	}
-	
+
 	@FunctionMethod(BIT_LSHIFT)
 	public Long left(Long l1, Integer l2) {
 		return l1 << l2;
@@ -520,7 +550,7 @@ public class CoreFunction extends Function {
 	public Long right(Long l1, Long l2) {
 		return l1 >> l2;
 	}
-	
+
 	@FunctionMethod(BIT_RSHIFT)
 	public Long right(Long l1, Integer l2) {
 		return l1 >> l2;
@@ -540,12 +570,12 @@ public class CoreFunction extends Function {
 	public Long bitwiseAnd(Long l1, Long l2) {
 		return l1 & l2;
 	}
-	
+
 	@FunctionMethod(BIT_AND)
 	public Long bitwiseAnd(Long l1, Integer l2) {
 		return l1 & l2;
 	}
-	
+
 	@FunctionMethod(BIT_AND)
 	public Long bitwiseAnd(Integer l1, Long l2) {
 		return l1 & l2;
@@ -560,12 +590,12 @@ public class CoreFunction extends Function {
 	public Long bitwiseOr(Long l1, Long l2) {
 		return l1 | l2;
 	}
-	
+
 	@FunctionMethod(BIT_OR)
 	public Long bitwiseOr(Long l1, Integer l2) {
 		return l1 | l2;
 	}
-	
+
 	@FunctionMethod(BIT_OR)
 	public Long bitwiseOr(Integer l1, Long l2) {
 		return l1 | l2;
@@ -580,12 +610,12 @@ public class CoreFunction extends Function {
 	public Long bitwiseXor(Long l1, Long l2) {
 		return l1 ^ l2;
 	}
-	
+
 	@FunctionMethod(BIT_XOR)
 	public Long bitwiseXor(Long l1, Integer l2) {
 		return l1 ^ l2;
 	}
-	
+
 	@FunctionMethod(BIT_XOR)
 	public Long bitwiseXor(Integer l1, Long l2) {
 		return l1 ^ l2;
@@ -655,7 +685,7 @@ public class CoreFunction extends Function {
 	public Boolean equals(Float f1, Double d2) {
 		return f1.floatValue() == d2.doubleValue();
 	}
-	
+
 	@FunctionMethod(EQUALS)
 	public Boolean equals(Float f1, Long l2) {
 		return f1.floatValue() == l2.longValue();
@@ -680,12 +710,12 @@ public class CoreFunction extends Function {
 	public Boolean equals(Long l1, Integer i1) {
 		return l1.longValue() == i1.intValue();
 	}
-	
+
 	@FunctionMethod(EQUALS)
 	public Boolean equals(Long l1, Float f1) {
 		return l1.longValue() == f1.floatValue();
 	}
-	
+
 	@FunctionMethod(EQUALS)
 	public Boolean equals(Long l1, Double d1) {
 		return l1.longValue() == d1.doubleValue();
@@ -755,7 +785,7 @@ public class CoreFunction extends Function {
 	public Boolean notEquals(Float f1, Double d2) {
 		return f1.floatValue() != d2.doubleValue();
 	}
-	
+
 	@FunctionMethod(NOT_EQUALS)
 	public Boolean notEquals(Float f1, Long d2) {
 		return f1.floatValue() != d2.doubleValue();
@@ -780,12 +810,12 @@ public class CoreFunction extends Function {
 	public Boolean notEquals(Long l1, Integer i1) {
 		return l1.longValue() != i1.intValue();
 	}
-	
+
 	@FunctionMethod(NOT_EQUALS)
 	public Boolean notEquals(Long l1, Float f1) {
 		return l1.longValue() != f1.floatValue();
 	}
-	
+
 	@FunctionMethod(NOT_EQUALS)
 	public Boolean notEquals(Long l1, Double d1) {
 		return l1.longValue() != d1.doubleValue();
@@ -835,7 +865,7 @@ public class CoreFunction extends Function {
 	public Boolean greaterEqual(Float f1, Double d2) {
 		return f1 >= d2;
 	}
-	
+
 	@FunctionMethod(GREATER_EQUAL)
 	public Boolean greaterEqual(Float f1, Long d2) {
 		return f1 >= d2;
@@ -860,12 +890,12 @@ public class CoreFunction extends Function {
 	public Boolean greaterEqual(Long l1, Integer i1) {
 		return l1 >= i1;
 	}
-	
+
 	@FunctionMethod(GREATER_EQUAL)
 	public Boolean greaterEqual(Long l1, Float f1) {
 		return l1 >= f1;
 	}
-	
+
 	@FunctionMethod(GREATER_EQUAL)
 	public Boolean greaterEqual(Long l1, Double d1) {
 		return l1 >= d1;
@@ -915,7 +945,7 @@ public class CoreFunction extends Function {
 	public Boolean smallerEqual(Float f1, Double d2) {
 		return f1 <= d2;
 	}
-	
+
 	@FunctionMethod(SMALLER_EQUAL)
 	public Boolean smallerEqual(Float f1, Long d2) {
 		return f1 <= d2;
@@ -940,12 +970,12 @@ public class CoreFunction extends Function {
 	public Boolean smallerEqual(Long l1, Integer i1) {
 		return l1 <= i1;
 	}
-	
+
 	@FunctionMethod(SMALLER_EQUAL)
 	public Boolean smallerEqual(Long l1, Float f1) {
 		return l1 <= f1;
 	}
-	
+
 	@FunctionMethod(SMALLER_EQUAL)
 	public Boolean smallerEqual(Long l1, Double d1) {
 		return l1 <= d1;
@@ -995,7 +1025,7 @@ public class CoreFunction extends Function {
 	public Boolean greater(Float f1, Double d2) {
 		return f1 > d2;
 	}
-	
+
 	@FunctionMethod(GREATER)
 	public Boolean greater(Float f1, Long d2) {
 		return f1 > d2;
@@ -1020,12 +1050,12 @@ public class CoreFunction extends Function {
 	public Boolean greater(Long l1, Integer i1) {
 		return l1 > i1;
 	}
-	
+
 	@FunctionMethod(GREATER)
 	public Boolean greater(Long l1, Float i1) {
 		return l1 > i1;
 	}
-	
+
 	@FunctionMethod(GREATER)
 	public Boolean greater(Long l1, Double i1) {
 		return l1 > i1;
@@ -1075,7 +1105,7 @@ public class CoreFunction extends Function {
 	public Boolean smaller(Float f1, Double d2) {
 		return f1 < d2;
 	}
-	
+
 	@FunctionMethod(SMALLER)
 	public Boolean smaller(Float f1, Long d2) {
 		return f1 < d2;
@@ -1100,12 +1130,12 @@ public class CoreFunction extends Function {
 	public Boolean smaller(Long l1, Integer i1) {
 		return l1 < i1;
 	}
-	
+
 	@FunctionMethod(SMALLER)
 	public Boolean smaller(Long l1, Float i1) {
 		return l1 < i1;
 	}
-	
+
 	@FunctionMethod(SMALLER)
 	public Boolean smaller(Long l1, Double i1) {
 		return l1 < i1;
