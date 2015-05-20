@@ -1,0 +1,18 @@
+
+testgroup StringConversion for statechart StringConversion{
+	test StringConversionTest { 
+		enter
+		cycle
+		
+		assert active(StringConversion.main_region.B)
+		assert anotherword == word + number
+		
+		raise myEvent : "EventValue"+boolVar
+		cycle
+		
+		assert word == anotherword + boolVar + realVar
+		assert word == anotherword + "true" + "1.1"
+		 
+	} 
+}
+	

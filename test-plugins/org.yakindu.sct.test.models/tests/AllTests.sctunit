@@ -48,6 +48,7 @@ testsuite AllTests {
 	StaticChoice,
 	STextKeywordsInStatesAndRegions, 
 	StringExpressions, 
+	StringConversion,
 	SyncFork,
 	SyncJoin, 
 	TransitionWithoutCondition,
