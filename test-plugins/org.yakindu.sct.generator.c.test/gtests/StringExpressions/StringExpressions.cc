@@ -13,7 +13,7 @@
 #include "StringExpressions.h"
 
 
-StringExpressions handle;
+StringExpressions handle; 
 
 TEST(StatemachineTest, StringExpressionsTest) {
 	stringExpressions_init(&handle);
