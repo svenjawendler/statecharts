@@ -36,8 +36,8 @@ import org.junit.runners.Suite.SuiteClasses;
 		SimpleHierachyTest.class, StatechartActiveTest.class,
 		StatechartLocalReactionsTest.class, StateIsActiveTest.class,
 		StaticChoiceTest.class, STextKeywordsInStatesAndRegionsTest.class,
-		StringExpressionsTest.class, StringConversionTest.class,
-		SyncForkTest.class, SyncJoinTest.class,
+		StringConcatenationTest.class, StringConversionTest.class,
+		StringExpressionsTest.class, SyncForkTest.class, SyncJoinTest.class,
 		TransitionWithoutConditionTest.class,
 		TriggerGuardExpressionsTest.class, ValuedEventsTest.class})
 public class AllTestsTest {

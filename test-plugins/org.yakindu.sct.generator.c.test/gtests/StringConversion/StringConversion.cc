@@ -20,10 +20,11 @@ TEST(StatemachineTest, StringConversionTest) {
 	stringConversion_enter(&handle);
 	stringConversion_runCycle(&handle);
 	EXPECT_TRUE(stringConversion_isStateActive(&handle, StringConversion_main_region_B));
-	EXPECT_TRUE(strcmp(stringConversionIface_get_anotherword(&handle) , stringConversionIface_get_word(&handle) +stringConversionIface_get_number(&handle) ) == 0);
-	stringConversionIface_raise_myEvent(&handle, "EventValue"+stringConversionIface_get_boolVar(&handle) );
+	EXPECT_TRUE(stringConversionIface_get_anotherword(&handle) == stringConversionIface_get_word(&handle) +stringConversionIface_get_number(&handle) );
+	stringConversionIface_raise_myEvent(&handle, "EventValue");
 	stringConversion_runCycle(&handle);
-	EXPECT_TRUE(strcmp(stringConversionIface_get_word(&handle) , stringConversionIface_get_anotherword(&handle) +stringConversionIface_get_boolVar(&handle) +stringConversionIface_get_realVar(&handle) ) == 0);
+	EXPECT_TRUE(strcmp(stringConversionIface_get_anotherword(&handle) , "EventValue") == 0);
+	EXPECT_TRUE(stringConversionIface_get_word(&handle) == stringConversionIface_get_anotherword(&handle) +stringConversionIface_get_boolVar(&handle) +stringConversionIface_get_realVar(&handle) );
 	EXPECT_TRUE(strcmp(stringConversionIface_get_word(&handle) , stringConversionIface_get_anotherword(&handle) +"true"+"1.1") == 0);
 }
 

@@ -411,6 +411,14 @@ GeneratorModel for sctunit::java {
 		}			
 	}
 
+	test StringConcatenation{
+		
+		feature Outlet{ 
+			targetProject = "org.yakindu.sct.generator.java.test" 
+			targetFolder = "test-gen"			
+		}			
+	}
+
 	test StringConversion{
 		
 		feature Outlet{ 

@@ -18,10 +18,11 @@ TEST(StatemachineTest, StringConversionTest) {
 	statechart->enter();
 	statechart->runCycle();
 	EXPECT_TRUE(statechart->isStateActive(StringConversion::main_region_B));
-	EXPECT_TRUE(strcmp(statechart->getDefaultSCI()->get_anotherword(), statechart->getDefaultSCI()->get_word()+statechart->getDefaultSCI()->get_number()) == 0);
-	statechart->raise_myEvent( "EventValue"+statechart->getDefaultSCI()->get_boolVar());
+	EXPECT_TRUE(statechart->getDefaultSCI()->get_anotherword()== statechart->getDefaultSCI()->get_word()+statechart->getDefaultSCI()->get_number());
+	statechart->raise_myEvent( "EventValue");
 	statechart->runCycle();
-	EXPECT_TRUE(strcmp(statechart->getDefaultSCI()->get_word(), statechart->getDefaultSCI()->get_anotherword()+statechart->getDefaultSCI()->get_boolVar()+statechart->getDefaultSCI()->get_realVar()) == 0);
+	EXPECT_TRUE(strcmp(statechart->getDefaultSCI()->get_anotherword(), "EventValue") == 0);
+	EXPECT_TRUE(statechart->getDefaultSCI()->get_word()== statechart->getDefaultSCI()->get_anotherword()+statechart->getDefaultSCI()->get_boolVar()+statechart->getDefaultSCI()->get_realVar());
 	EXPECT_TRUE(strcmp(statechart->getDefaultSCI()->get_word(), statechart->getDefaultSCI()->get_anotherword()+"true"+"1.1") == 0);
 	delete statechart;
 }

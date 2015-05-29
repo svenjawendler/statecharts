@@ -15,19 +15,19 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.yakindu.scr.stringconversion.StringConversionStatemachine;
-import org.yakindu.scr.stringconversion.StringConversionStatemachine.State;
+import org.yakindu.scr.stringconcatenation.StringConcatenationStatemachine;
+import org.yakindu.scr.stringconcatenation.StringConcatenationStatemachine.State;
 /**
- *  Unit TestCase for StringConversion
+ *  Unit TestCase for StringConcatenation
  */
 @SuppressWarnings("all")
-public class StringConversionTest {
+public class StringConcatenationTest {
 
-	private StringConversionStatemachine statemachine;
+	private StringConcatenationStatemachine statemachine;
 
 	@Before
 	public void setUp() {
-		statemachine = new StringConversionStatemachine();
+		statemachine = new StringConcatenationStatemachine();
 		statemachine.init();
 	}
 
@@ -37,18 +37,18 @@ public class StringConversionTest {
 	}
 
 	@Test
-	public void testStringConversionTest() {
+	public void testStringConcatenationTest() {
 		statemachine.enter();
+		assertTrue(statemachine.isStateActive(State.main_region_A));
 		statemachine.runCycle();
 		assertTrue(statemachine.isStateActive(State.main_region_B));
-		assertTrue(statemachine.getAnotherword() == statemachine.getWord()
-				+ statemachine.getNumber());
-		statemachine.raiseMyEvent("EventValue");
-		statemachine.runCycle();
-		assertTrue(statemachine.getAnotherword().equals("EventValue"));
-		assertTrue(statemachine.getWord() == statemachine.getAnotherword()
-				+ statemachine.getBoolVar() + statemachine.getRealVar());
 		assertTrue(statemachine.getWord().equals(
-				statemachine.getAnotherword() + "true" + "1.1"));
+				statemachine.getAnotherword() + "_test_" + "_23"));
+		statemachine.raiseMyEvent("reset");
+		statemachine.runCycle();
+		assertTrue(statemachine.isStateActive(State.main_region_C));
+		assertTrue(statemachine.getAnotherword().equals("reset"));
+		assertTrue(statemachine.getLastword().equals(
+				statemachine.getAnotherword() + "AS"));
 	}
 }

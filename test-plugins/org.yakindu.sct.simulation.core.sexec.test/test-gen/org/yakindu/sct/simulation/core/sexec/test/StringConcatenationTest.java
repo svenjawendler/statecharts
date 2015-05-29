@@ -21,31 +21,31 @@ import org.yakindu.sct.test.models.SCTUnitTestModels;
 import com.google.inject.Inject;
 import static org.junit.Assert.assertTrue;
 /**
- *  Unit TestCase for StringConversion
+ *  Unit TestCase for StringConcatenation
  */
 @SuppressWarnings("all")
 @RunWith(XtextRunner.class)
 @InjectWith(SExecInjectionProvider.class)
-public class StringConversionTest extends AbstractExecutionFlowTest {
+public class StringConcatenationTest extends AbstractExecutionFlowTest {
 	@Before
 	public void setup() throws Exception {
 		ExecutionFlow flow = models
-				.loadExecutionFlowFromResource("StringConversion.sct");
+				.loadExecutionFlowFromResource("StringConcatenation.sct");
 		initInterpreter(flow);
 	}
 	@Test
-	public void StringConversionTest() throws Exception {
+	public void StringConcatenationTest() throws Exception {
 		interpreter.enter();
+		assertTrue(isStateActive("A"));
 		interpreter.runCycle();
 		assertTrue(isStateActive("B"));
-		assertTrue(getString("anotherword") == getString("word")
-				+ getInteger("number"));
-		raiseEvent("myEvent", "EventValue");
-		interpreter.runCycle();
-		assertTrue(getString("anotherword").equals("EventValue"));
-		assertTrue(getString("word") == getString("anotherword")
-				+ getBoolean("boolVar") + getReal("realVar"));
 		assertTrue(getString("word").equals(
-				getString("anotherword") + "true" + "1.1"));
+				getString("anotherword") + "_test_" + "_23"));
+		raiseEvent("myEvent", "reset");
+		interpreter.runCycle();
+		assertTrue(isStateActive("C"));
+		assertTrue(getString("anotherword").equals("reset"));
+		assertTrue(getString("lastword")
+				.equals(getString("anotherword") + "AS"));
 	}
 }

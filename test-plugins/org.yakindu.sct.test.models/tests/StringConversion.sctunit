@@ -7,9 +7,10 @@ testgroup StringConversion for statechart StringConversion{
 		assert active(StringConversion.main_region.B)
 		assert anotherword == word + number
 		
-		raise myEvent : "EventValue"+boolVar
+		raise myEvent : "EventValue"
 		cycle
 		
+		assert anotherword == "EventValue"
 		assert word == anotherword + boolVar + realVar
 		assert word == anotherword + "true" + "1.1"
 		 

@@ -1,0 +1,23 @@
+
+testgroup StringConcatenationWithOperations for statechart StringConcatenationWithOperations{
+	test StringConcatenationTest { 
+		enter
+		assert active(StringConcatenationWithOperations.main_region.A)
+		
+		cycle
+		assert active(StringConcatenationWithOperations.main_region.B)
+		assert word == anotherword + "_test_" + "_23"
+		
+		raise myEvent : "reset"
+		cycle
+		assert active(StringConcatenationWithOperations.main_region.C)
+		assert anotherword == "reset"
+		assert lastword == anotherword + myStringOp("as")
+		
+		cycle
+		assert active(StringConcatenationWithOperations.main_region.D)
+		assert lastword == word + myStringOp2
+		 
+	} 
+}
+	

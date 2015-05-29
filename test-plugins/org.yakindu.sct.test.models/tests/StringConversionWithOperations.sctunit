@@ -1,0 +1,32 @@
+
+testgroup StringConversionWithOperations for statechart StringConversionWithOperations{
+	test StringConversionWithOperationsTest { 
+		enter
+		cycle
+		
+		assert active(StringConversionWithOperations.main_region.B)
+		assert anotherword == word + number
+		
+		raise myEvent : "EventValue"
+		cycle
+		
+		assert active(StringConversionWithOperations.main_region.C)
+		assert anotherword == "EventValue"
+		assert word == anotherword + boolVar + realVar
+		assert word == anotherword + "true" + "1.1"
+		
+		cycle
+		assert active(StringConversionWithOperations.main_region.D)
+		assert word == anotherword + intOp + "xx"
+		
+		cycle
+		assert active(StringConversionWithOperations.main_region.E)
+		assert word == anotherword + realOp + "xx" 
+		
+		cycle
+		assert active(StringConversionWithOperations.main_region.F)
+		assert word == anotherword + boolOp + "xx" 
+		
+	} 
+}
+	
