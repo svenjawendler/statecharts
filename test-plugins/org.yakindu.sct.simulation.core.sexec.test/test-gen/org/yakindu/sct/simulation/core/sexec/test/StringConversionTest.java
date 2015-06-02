@@ -38,13 +38,15 @@ public class StringConversionTest extends AbstractExecutionFlowTest {
 		interpreter.enter();
 		interpreter.runCycle();
 		assertTrue(isStateActive("B"));
-		assertTrue(getString("anotherword") == getString("word")
-				+ getInteger("number"));
+		assertTrue(getString("anotherword").equals(
+				getString("word") + String.valueOf(getInteger("number"))));
 		raiseEvent("myEvent", "EventValue");
 		interpreter.runCycle();
 		assertTrue(getString("anotherword").equals("EventValue"));
-		assertTrue(getString("word") == getString("anotherword")
-				+ getBoolean("boolVar") + getReal("realVar"));
+		assertTrue(getString("word").equals(
+				getString("anotherword")
+						+ String.valueOf(getBoolean("boolVar"))
+						+ String.valueOf(getReal("realVar"))));
 		assertTrue(getString("word").equals(
 				getString("anotherword") + "true" + "1.1"));
 	}
