@@ -41,13 +41,16 @@ public class StringConversionTest {
 		statemachine.enter();
 		statemachine.runCycle();
 		assertTrue(statemachine.isStateActive(State.main_region_B));
-		assertTrue(statemachine.getAnotherword() == statemachine.getWord()
-				+ statemachine.getNumber());
+		assertTrue(statemachine.getAnotherword().equals(
+				statemachine.getWord()
+						+ String.valueOf(statemachine.getNumber())));
 		statemachine.raiseMyEvent("EventValue");
 		statemachine.runCycle();
 		assertTrue(statemachine.getAnotherword().equals("EventValue"));
-		assertTrue(statemachine.getWord() == statemachine.getAnotherword()
-				+ statemachine.getBoolVar() + statemachine.getRealVar());
+		assertTrue(statemachine.getWord().equals(
+				statemachine.getAnotherword()
+						+ String.valueOf(statemachine.getBoolVar())
+						+ String.valueOf(statemachine.getRealVar())));
 		assertTrue(statemachine.getWord().equals(
 				statemachine.getAnotherword() + "true" + "1.1"));
 	}
