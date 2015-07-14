@@ -46,9 +46,9 @@ public class EventDefinitionItemProvider extends EventItemProvider {
 	}
 
 	/**
-	 * This returns EventDefinition.gif. <!-- begin-user-doc --> <!--
+	 * This returns EventDefinition.gif.
+	 * <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -70,11 +70,10 @@ public class EventDefinitionItemProvider extends EventItemProvider {
 	}
 
 	/**
-	 * This handles model notifications by calling {@link #updateChildren} to
-	 * update any cached children and by creating a viewer notification, which
-	 * it passes to {@link #fireNotifyChanged}. <!-- begin-user-doc --> <!--
+	 * This handles model notifications by calling {@link #updateChildren} to update any cached
+	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
+	 * <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override

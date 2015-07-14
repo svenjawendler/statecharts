@@ -56,7 +56,15 @@ public enum TimeUnit implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	NANOSECOND(3, "nanosecond", "ns");
+	NANOSECOND(3, "nanosecond", "ns"), /**
+	 * The '<em><b>Cycles</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #CYCLES_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	CYCLES(4, "cycles", "cycles");
 
 	/**
 	 * The '<em><b>Second</b></em>' literal value.
@@ -119,6 +127,21 @@ public enum TimeUnit implements Enumerator {
 	public static final int NANOSECOND_VALUE = 3;
 
 	/**
+	 * The '<em><b>Cycles</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>Cycles</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @see #CYCLES
+	 * @model name="cycles"
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CYCLES_VALUE = 4;
+
+	/**
 	 * An array of all the '<em><b>Time Unit</b></em>' enumerators.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -130,6 +153,7 @@ public enum TimeUnit implements Enumerator {
 			MILLISECOND,
 			MICROSECOND,
 			NANOSECOND,
+			CYCLES,
 		};
 
 	/**
@@ -144,6 +168,8 @@ public enum TimeUnit implements Enumerator {
 	 * Returns the '<em><b>Time Unit</b></em>' literal with the specified literal value.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @param literal the literal.
+	 * @return the matching enumerator or <code>null</code>.
 	 * @generated
 	 */
 	public static TimeUnit get(String literal) {
@@ -160,6 +186,8 @@ public enum TimeUnit implements Enumerator {
 	 * Returns the '<em><b>Time Unit</b></em>' literal with the specified name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @param name the name.
+	 * @return the matching enumerator or <code>null</code>.
 	 * @generated
 	 */
 	public static TimeUnit getByName(String name) {
@@ -176,6 +204,8 @@ public enum TimeUnit implements Enumerator {
 	 * Returns the '<em><b>Time Unit</b></em>' literal with the specified integer value.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @param value the integer value.
+	 * @return the matching enumerator or <code>null</code>.
 	 * @generated
 	 */
 	public static TimeUnit get(int value) {
@@ -184,6 +214,7 @@ public enum TimeUnit implements Enumerator {
 			case MILLISECOND_VALUE: return MILLISECOND;
 			case MICROSECOND_VALUE: return MICROSECOND;
 			case NANOSECOND_VALUE: return NANOSECOND;
+			case CYCLES_VALUE: return CYCLES;
 		}
 		return null;
 	}

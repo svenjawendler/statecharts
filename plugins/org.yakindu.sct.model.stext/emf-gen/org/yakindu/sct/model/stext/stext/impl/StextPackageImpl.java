@@ -1241,6 +1241,7 @@ public class StextPackageImpl extends EPackageImpl implements StextPackage {
 		addEEnumLiteral(timeUnitEEnum, TimeUnit.MILLISECOND);
 		addEEnumLiteral(timeUnitEEnum, TimeUnit.MICROSECOND);
 		addEEnumLiteral(timeUnitEEnum, TimeUnit.NANOSECOND);
+		addEEnumLiteral(timeUnitEEnum, TimeUnit.CYCLES);
 
 		// Create resource
 		createResource(eNS_URI);

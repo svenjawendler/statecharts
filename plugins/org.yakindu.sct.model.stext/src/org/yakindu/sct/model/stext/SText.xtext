@@ -170,7 +170,7 @@ PrimaryExpression returns exp::Expression:
 	ParenthesizedExpression;
 
 enum TimeUnit:
-	second='s' | millisecond='ms' | microsecond='us' | nanosecond='ns';
+	second='s' | millisecond='ms' | microsecond='us' | nanosecond='ns' | cycles='cycles';
 
 XID:
 	ID | 'namespace' | 'interface' | 'internal' | 'event' | 'local' | 'in' | 'out' | 'var' | 'readonly' | 'external' |
