@@ -1,0 +1,34 @@
+
+testgroup AfterCycles for statechart AfterCycles{
+	test AftrerCyclesTest { 
+		enter
+		assert active(AfterCycles.main_region.A) 
+		
+		cycle
+		cycle
+		assert active(AfterCycles.main_region.A) 
+		
+		cycle
+		assert active(AfterCycles.main_region.B) 
+		 
+		cycle
+		assert myInt == 0
+		
+		cycle
+		assert myInt == 1
+		assert anotherInt == 5
+		
+		cycle
+		cycle
+		assert myInt == 2
+		
+		cycle
+		cycle
+		cycle
+		assert anotherInt == 10
+		
+		assert mybool == false
+		
+	} 
+}
+	
