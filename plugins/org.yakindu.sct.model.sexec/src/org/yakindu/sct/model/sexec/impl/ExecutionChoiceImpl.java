@@ -14,8 +14,6 @@ import org.yakindu.sct.model.sexec.SexecPackage;
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Execution Choice</b></em>'.
  * <!-- end-user-doc -->
- * <p>
- * </p>
  *
  * @generated
  */

@@ -1331,6 +1331,15 @@ public interface SexecPackage extends EPackage {
 	int TIME_EVENT__NAME = TypesPackage.EVENT__NAME;
 
 	/**
+	 * The feature id for the '<em><b>Direction</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TIME_EVENT__DIRECTION = TypesPackage.EVENT__DIRECTION;
+
+	/**
 	 * The feature id for the '<em><b>Periodic</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2449,6 +2458,126 @@ public interface SexecPackage extends EPackage {
 
 
 	/**
+	 * The meta object id for the '{@link org.yakindu.sct.model.sexec.impl.ScheduleCycleEventImpl <em>Schedule Cycle Event</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.yakindu.sct.model.sexec.impl.ScheduleCycleEventImpl
+	 * @see org.yakindu.sct.model.sexec.impl.SexecPackageImpl#getScheduleCycleEvent()
+	 * @generated
+	 */
+	int SCHEDULE_CYCLE_EVENT = 36;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SCHEDULE_CYCLE_EVENT__NAME = STEP__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Comment</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SCHEDULE_CYCLE_EVENT__COMMENT = STEP__COMMENT;
+
+	/**
+	 * The feature id for the '<em><b>Caller</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SCHEDULE_CYCLE_EVENT__CALLER = STEP__CALLER;
+
+	/**
+	 * The feature id for the '<em><b>Time Event</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SCHEDULE_CYCLE_EVENT__TIME_EVENT = STEP_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Time Value</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SCHEDULE_CYCLE_EVENT__TIME_VALUE = STEP_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of structural features of the '<em>Schedule Cycle Event</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SCHEDULE_CYCLE_EVENT_FEATURE_COUNT = STEP_FEATURE_COUNT + 2;
+
+	/**
+	 * The meta object id for the '{@link org.yakindu.sct.model.sexec.impl.UnscheduleCycleEventImpl <em>Unschedule Cycle Event</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.yakindu.sct.model.sexec.impl.UnscheduleCycleEventImpl
+	 * @see org.yakindu.sct.model.sexec.impl.SexecPackageImpl#getUnscheduleCycleEvent()
+	 * @generated
+	 */
+	int UNSCHEDULE_CYCLE_EVENT = 37;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNSCHEDULE_CYCLE_EVENT__NAME = STEP__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Comment</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNSCHEDULE_CYCLE_EVENT__COMMENT = STEP__COMMENT;
+
+	/**
+	 * The feature id for the '<em><b>Caller</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNSCHEDULE_CYCLE_EVENT__CALLER = STEP__CALLER;
+
+	/**
+	 * The feature id for the '<em><b>Time Event</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNSCHEDULE_CYCLE_EVENT__TIME_EVENT = STEP_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Unschedule Cycle Event</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNSCHEDULE_CYCLE_EVENT_FEATURE_COUNT = STEP_FEATURE_COUNT + 1;
+
+
+	/**
 	 * Returns the meta object for class '{@link org.yakindu.sct.model.sexec.ExecutionFlow <em>Execution Flow</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3319,6 +3448,59 @@ public interface SexecPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getTraceEndRunCycle();
+
+	/**
+	 * Returns the meta object for class '{@link org.yakindu.sct.model.sexec.ScheduleCycleEvent <em>Schedule Cycle Event</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Schedule Cycle Event</em>'.
+	 * @see org.yakindu.sct.model.sexec.ScheduleCycleEvent
+	 * @generated
+	 */
+	EClass getScheduleCycleEvent();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.yakindu.sct.model.sexec.ScheduleCycleEvent#getTimeEvent <em>Time Event</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Time Event</em>'.
+	 * @see org.yakindu.sct.model.sexec.ScheduleCycleEvent#getTimeEvent()
+	 * @see #getScheduleCycleEvent()
+	 * @generated
+	 */
+	EReference getScheduleCycleEvent_TimeEvent();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.yakindu.sct.model.sexec.ScheduleCycleEvent#getTimeValue <em>Time Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Time Value</em>'.
+	 * @see org.yakindu.sct.model.sexec.ScheduleCycleEvent#getTimeValue()
+	 * @see #getScheduleCycleEvent()
+	 * @generated
+	 */
+	EReference getScheduleCycleEvent_TimeValue();
+
+	/**
+	 * Returns the meta object for class '{@link org.yakindu.sct.model.sexec.UnscheduleCycleEvent <em>Unschedule Cycle Event</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Unschedule Cycle Event</em>'.
+	 * @see org.yakindu.sct.model.sexec.UnscheduleCycleEvent
+	 * @generated
+	 */
+	EClass getUnscheduleCycleEvent();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.yakindu.sct.model.sexec.UnscheduleCycleEvent#getTimeEvent <em>Time Event</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Time Event</em>'.
+	 * @see org.yakindu.sct.model.sexec.UnscheduleCycleEvent#getTimeEvent()
+	 * @see #getUnscheduleCycleEvent()
+	 * @generated
+	 */
+	EReference getUnscheduleCycleEvent_TimeEvent();
 
 	/**
 	 * Returns the meta object for class '{@link org.yakindu.sct.model.sexec.SaveHistory <em>Save History</em>}'.
@@ -4227,6 +4409,50 @@ public interface SexecPackage extends EPackage {
 		 * @generated
 		 */
 		EClass TRACE_END_RUN_CYCLE = eINSTANCE.getTraceEndRunCycle();
+
+		/**
+		 * The meta object literal for the '{@link org.yakindu.sct.model.sexec.impl.ScheduleCycleEventImpl <em>Schedule Cycle Event</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.yakindu.sct.model.sexec.impl.ScheduleCycleEventImpl
+		 * @see org.yakindu.sct.model.sexec.impl.SexecPackageImpl#getScheduleCycleEvent()
+		 * @generated
+		 */
+		EClass SCHEDULE_CYCLE_EVENT = eINSTANCE.getScheduleCycleEvent();
+
+		/**
+		 * The meta object literal for the '<em><b>Time Event</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference SCHEDULE_CYCLE_EVENT__TIME_EVENT = eINSTANCE.getScheduleCycleEvent_TimeEvent();
+
+		/**
+		 * The meta object literal for the '<em><b>Time Value</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference SCHEDULE_CYCLE_EVENT__TIME_VALUE = eINSTANCE.getScheduleCycleEvent_TimeValue();
+
+		/**
+		 * The meta object literal for the '{@link org.yakindu.sct.model.sexec.impl.UnscheduleCycleEventImpl <em>Unschedule Cycle Event</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.yakindu.sct.model.sexec.impl.UnscheduleCycleEventImpl
+		 * @see org.yakindu.sct.model.sexec.impl.SexecPackageImpl#getUnscheduleCycleEvent()
+		 * @generated
+		 */
+		EClass UNSCHEDULE_CYCLE_EVENT = eINSTANCE.getUnscheduleCycleEvent();
+
+		/**
+		 * The meta object literal for the '<em><b>Time Event</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference UNSCHEDULE_CYCLE_EVENT__TIME_EVENT = eINSTANCE.getUnscheduleCycleEvent_TimeEvent();
 
 		/**
 		 * The meta object literal for the '{@link org.yakindu.sct.model.sexec.impl.SaveHistoryImpl <em>Save History</em>}' class.

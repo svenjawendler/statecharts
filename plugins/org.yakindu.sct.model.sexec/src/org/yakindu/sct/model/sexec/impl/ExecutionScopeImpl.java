@@ -30,6 +30,7 @@ import org.yakindu.sct.model.sexec.StateVector;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.yakindu.sct.model.sexec.impl.ExecutionScopeImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.yakindu.sct.model.sexec.impl.ExecutionScopeImpl#getStateVector <em>State Vector</em>}</li>
@@ -39,7 +40,6 @@ import org.yakindu.sct.model.sexec.StateVector;
  *   <li>{@link org.yakindu.sct.model.sexec.impl.ExecutionScopeImpl#getExitSequence <em>Exit Sequence</em>}</li>
  *   <li>{@link org.yakindu.sct.model.sexec.impl.ExecutionScopeImpl#getInitSequence <em>Init Sequence</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

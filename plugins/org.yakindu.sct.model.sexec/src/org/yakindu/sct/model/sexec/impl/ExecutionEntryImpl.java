@@ -14,8 +14,6 @@ import org.yakindu.sct.model.sexec.SexecPackage;
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Execution Entry</b></em>'.
  * <!-- end-user-doc -->
- * <p>
- * </p>
  *
  * @generated
  */

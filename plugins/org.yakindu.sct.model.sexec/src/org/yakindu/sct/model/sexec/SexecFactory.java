@@ -278,6 +278,24 @@ public interface SexecFactory extends EFactory {
 	TraceEndRunCycle createTraceEndRunCycle();
 
 	/**
+	 * Returns a new object of class '<em>Schedule Cycle Event</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Schedule Cycle Event</em>'.
+	 * @generated
+	 */
+	ScheduleCycleEvent createScheduleCycleEvent();
+
+	/**
+	 * Returns a new object of class '<em>Unschedule Cycle Event</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Unschedule Cycle Event</em>'.
+	 * @generated
+	 */
+	UnscheduleCycleEvent createUnscheduleCycleEvent();
+
+	/**
 	 * Returns a new object of class '<em>Save History</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

@@ -29,13 +29,13 @@ import org.yakindu.sct.model.sexec.SexecPackage;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.yakindu.sct.model.sexec.impl.ExecutionNodeImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.yakindu.sct.model.sexec.impl.ExecutionNodeImpl#getReactions <em>Reactions</em>}</li>
  *   <li>{@link org.yakindu.sct.model.sexec.impl.ExecutionNodeImpl#getSimpleName <em>Simple Name</em>}</li>
  *   <li>{@link org.yakindu.sct.model.sexec.impl.ExecutionNodeImpl#getReactSequence <em>React Sequence</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

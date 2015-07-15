@@ -32,6 +32,7 @@ import org.yakindu.sct.model.sexec.MappedElement;
 import org.yakindu.sct.model.sexec.Reaction;
 import org.yakindu.sct.model.sexec.ReactionFired;
 import org.yakindu.sct.model.sexec.SaveHistory;
+import org.yakindu.sct.model.sexec.ScheduleCycleEvent;
 import org.yakindu.sct.model.sexec.ScheduleTimeEvent;
 import org.yakindu.sct.model.sexec.Sequence;
 import org.yakindu.sct.model.sexec.SexecFactory;
@@ -46,6 +47,7 @@ import org.yakindu.sct.model.sexec.TraceNodeExecuted;
 import org.yakindu.sct.model.sexec.TraceReactionWillFire;
 import org.yakindu.sct.model.sexec.TraceStateEntered;
 import org.yakindu.sct.model.sexec.TraceStateExited;
+import org.yakindu.sct.model.sexec.UnscheduleCycleEvent;
 import org.yakindu.sct.model.sexec.UnscheduleTimeEvent;
 
 /**
@@ -126,6 +128,8 @@ public class SexecFactoryImpl extends EFactoryImpl implements SexecFactory {
 			case SexecPackage.TRACE_STATE_EXITED: return createTraceStateExited();
 			case SexecPackage.TRACE_BEGIN_RUN_CYCLE: return createTraceBeginRunCycle();
 			case SexecPackage.TRACE_END_RUN_CYCLE: return createTraceEndRunCycle();
+			case SexecPackage.SCHEDULE_CYCLE_EVENT: return createScheduleCycleEvent();
+			case SexecPackage.UNSCHEDULE_CYCLE_EVENT: return createUnscheduleCycleEvent();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -409,6 +413,26 @@ public class SexecFactoryImpl extends EFactoryImpl implements SexecFactory {
 	public TraceEndRunCycle createTraceEndRunCycle() {
 		TraceEndRunCycleImpl traceEndRunCycle = new TraceEndRunCycleImpl();
 		return traceEndRunCycle;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ScheduleCycleEvent createScheduleCycleEvent() {
+		ScheduleCycleEventImpl scheduleCycleEvent = new ScheduleCycleEventImpl();
+		return scheduleCycleEvent;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public UnscheduleCycleEvent createUnscheduleCycleEvent() {
+		UnscheduleCycleEventImpl unscheduleCycleEvent = new UnscheduleCycleEventImpl();
+		return unscheduleCycleEvent;
 	}
 
 	/**

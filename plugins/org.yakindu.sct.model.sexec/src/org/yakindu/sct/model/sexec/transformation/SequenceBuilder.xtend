@@ -420,7 +420,11 @@ class SequenceBuilder {
 
 		for (tes : sc.timeEventSpecs) {
 			val timeEvent = tes.createDerivedEvent
-			val scheduleStep = timeEvent.newScheduleTimeEvent(tes.buildValueExpression)
+			val scheduleStep = 
+			if(tes.unit == TimeUnit.CYCLES)
+				timeEvent.newScheduleCycleEvent(tes.buildValueExpression)
+			else
+				timeEvent.newScheduleTimeEvent(tes.buildValueExpression)
 			enterSequence.steps.add(scheduleStep)
 		}
 

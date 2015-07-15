@@ -8,6 +8,7 @@ import java.util.Set
 import org.eclipse.emf.ecore.util.EcoreUtil
 import org.yakindu.base.expressions.expressions.BoolLiteral
 import org.yakindu.base.expressions.expressions.Expression
+import org.yakindu.base.expressions.expressions.ExpressionsFactory
 import org.yakindu.sct.model.sexec.Check
 import org.yakindu.sct.model.sexec.Execution
 import org.yakindu.sct.model.sexec.ExecutionChoice
@@ -40,7 +41,7 @@ import org.yakindu.sct.model.stext.stext.ReactionEffect
 import org.yakindu.sct.model.stext.stext.ReactionTrigger
 import org.yakindu.sct.model.stext.stext.RegularEventSpec
 import org.yakindu.sct.model.stext.stext.TimeEventSpec
-import org.yakindu.base.expressions.expressions.ExpressionsFactory
+import org.yakindu.sct.model.stext.stext.TimeUnit
 
 class BehaviorMapping {
 
@@ -60,7 +61,11 @@ class BehaviorMapping {
 		
 		for (tes : statechart.timeEventSpecs ) {
 			val timeEvent = tes.createDerivedEvent
-			val scheduleStep = timeEvent.newScheduleTimeEvent(tes.buildValueExpression)
+			val scheduleStep = 
+			if(tes.unit == TimeUnit.CYCLES)
+				timeEvent.newScheduleCycleEvent(tes.buildValueExpression)
+			else
+				timeEvent.newScheduleTimeEvent(tes.buildValueExpression)
 			seq.steps.add(scheduleStep)
 		}	
 		
@@ -86,7 +91,11 @@ class BehaviorMapping {
 		
 		for (tes : state.timeEventSpecs ) {
 			val timeEvent = tes.createDerivedEvent
-			val scheduleStep = timeEvent.newScheduleTimeEvent(tes.buildValueExpression)
+			val scheduleStep = 
+			if(tes.unit == TimeUnit.CYCLES)
+				timeEvent.newScheduleCycleEvent(tes.buildValueExpression)
+			else
+				timeEvent.newScheduleTimeEvent(tes.buildValueExpression)
 			seq.steps.add(scheduleStep)
 		}	
 		
@@ -151,7 +160,11 @@ class BehaviorMapping {
 		
 		for (tes : statechart.timeEventSpecs ) {
 			val timeEvent = tes.createDerivedEvent
-			val unscheduleStep = timeEvent.newUnscheduleTimeEvent()
+			val unscheduleStep =
+			if(tes.unit == TimeUnit.CYCLES)
+				timeEvent.newUnscheduleCycleEvent
+			else
+				timeEvent.newUnscheduleTimeEvent
 			seq.steps.add(unscheduleStep)
 		}	
 		
@@ -178,7 +191,11 @@ class BehaviorMapping {
 		
 		for (tes : state.timeEventSpecs ) {
 			val timeEvent = tes.createDerivedEvent
-			val unscheduleStep = timeEvent.newUnscheduleTimeEvent()
+			val unscheduleStep =
+			if(tes.unit == TimeUnit.CYCLES)
+				timeEvent.newUnscheduleCycleEvent
+			else
+				timeEvent.newUnscheduleTimeEvent
 			seq.steps.add(unscheduleStep)
 		}	
 		

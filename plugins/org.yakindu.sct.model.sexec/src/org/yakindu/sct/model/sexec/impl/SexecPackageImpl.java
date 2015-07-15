@@ -35,6 +35,7 @@ import org.yakindu.sct.model.sexec.MappedElement;
 import org.yakindu.sct.model.sexec.Reaction;
 import org.yakindu.sct.model.sexec.ReactionFired;
 import org.yakindu.sct.model.sexec.SaveHistory;
+import org.yakindu.sct.model.sexec.ScheduleCycleEvent;
 import org.yakindu.sct.model.sexec.ScheduleTimeEvent;
 import org.yakindu.sct.model.sexec.Sequence;
 import org.yakindu.sct.model.sexec.SexecFactory;
@@ -51,6 +52,7 @@ import org.yakindu.sct.model.sexec.TraceNodeExecuted;
 import org.yakindu.sct.model.sexec.TraceReactionWillFire;
 import org.yakindu.sct.model.sexec.TraceStateEntered;
 import org.yakindu.sct.model.sexec.TraceStateExited;
+import org.yakindu.sct.model.sexec.UnscheduleCycleEvent;
 import org.yakindu.sct.model.sexec.UnscheduleTimeEvent;
 import org.yakindu.sct.model.sgraph.SGraphPackage;
 
@@ -270,6 +272,20 @@ public class SexecPackageImpl extends EPackageImpl implements SexecPackage {
 	 * @generated
 	 */
 	private EClass traceEndRunCycleEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass scheduleCycleEventEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass unscheduleCycleEventEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -1121,6 +1137,51 @@ public class SexecPackageImpl extends EPackageImpl implements SexecPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getScheduleCycleEvent() {
+		return scheduleCycleEventEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getScheduleCycleEvent_TimeEvent() {
+		return (EReference)scheduleCycleEventEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getScheduleCycleEvent_TimeValue() {
+		return (EReference)scheduleCycleEventEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getUnscheduleCycleEvent() {
+		return unscheduleCycleEventEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getUnscheduleCycleEvent_TimeEvent() {
+		return (EReference)unscheduleCycleEventEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getSaveHistory() {
 		return saveHistoryEClass;
 	}
@@ -1421,6 +1482,13 @@ public class SexecPackageImpl extends EPackageImpl implements SexecPackage {
 		traceBeginRunCycleEClass = createEClass(TRACE_BEGIN_RUN_CYCLE);
 
 		traceEndRunCycleEClass = createEClass(TRACE_END_RUN_CYCLE);
+
+		scheduleCycleEventEClass = createEClass(SCHEDULE_CYCLE_EVENT);
+		createEReference(scheduleCycleEventEClass, SCHEDULE_CYCLE_EVENT__TIME_EVENT);
+		createEReference(scheduleCycleEventEClass, SCHEDULE_CYCLE_EVENT__TIME_VALUE);
+
+		unscheduleCycleEventEClass = createEClass(UNSCHEDULE_CYCLE_EVENT);
+		createEReference(unscheduleCycleEventEClass, UNSCHEDULE_CYCLE_EVENT__TIME_EVENT);
 	}
 
 	/**
@@ -1496,6 +1564,8 @@ public class SexecPackageImpl extends EPackageImpl implements SexecPackage {
 		traceStateExitedEClass.getESuperTypes().add(this.getTrace());
 		traceBeginRunCycleEClass.getESuperTypes().add(this.getTrace());
 		traceEndRunCycleEClass.getESuperTypes().add(this.getTrace());
+		scheduleCycleEventEClass.getESuperTypes().add(this.getStep());
+		unscheduleCycleEventEClass.getESuperTypes().add(this.getStep());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(mappedElementEClass, MappedElement.class, "MappedElement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1631,6 +1701,13 @@ public class SexecPackageImpl extends EPackageImpl implements SexecPackage {
 		initEClass(traceBeginRunCycleEClass, TraceBeginRunCycle.class, "TraceBeginRunCycle", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(traceEndRunCycleEClass, TraceEndRunCycle.class, "TraceEndRunCycle", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(scheduleCycleEventEClass, ScheduleCycleEvent.class, "ScheduleCycleEvent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getScheduleCycleEvent_TimeEvent(), this.getTimeEvent(), null, "timeEvent", null, 0, 1, ScheduleCycleEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getScheduleCycleEvent_TimeValue(), theExpressionsPackage.getExpression(), null, "timeValue", null, 0, 1, ScheduleCycleEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(unscheduleCycleEventEClass, UnscheduleCycleEvent.class, "UnscheduleCycleEvent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getUnscheduleCycleEvent_TimeEvent(), this.getTimeEvent(), null, "timeEvent", null, 0, 1, UnscheduleCycleEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

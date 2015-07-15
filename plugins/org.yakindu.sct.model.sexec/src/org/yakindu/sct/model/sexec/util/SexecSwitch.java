@@ -10,6 +10,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
 import org.yakindu.base.base.NamedElement;
+import org.yakindu.base.types.Declaration;
+import org.yakindu.base.types.Event;
 import org.yakindu.base.types.TypedElement;
 import org.yakindu.sct.model.sexec.Call;
 import org.yakindu.sct.model.sexec.Check;
@@ -32,6 +34,7 @@ import org.yakindu.sct.model.sexec.MappedElement;
 import org.yakindu.sct.model.sexec.Reaction;
 import org.yakindu.sct.model.sexec.ReactionFired;
 import org.yakindu.sct.model.sexec.SaveHistory;
+import org.yakindu.sct.model.sexec.ScheduleCycleEvent;
 import org.yakindu.sct.model.sexec.ScheduleTimeEvent;
 import org.yakindu.sct.model.sexec.Sequence;
 import org.yakindu.sct.model.sexec.SexecPackage;
@@ -47,6 +50,7 @@ import org.yakindu.sct.model.sexec.TraceNodeExecuted;
 import org.yakindu.sct.model.sexec.TraceReactionWillFire;
 import org.yakindu.sct.model.sexec.TraceStateEntered;
 import org.yakindu.sct.model.sexec.TraceStateExited;
+import org.yakindu.sct.model.sexec.UnscheduleCycleEvent;
 import org.yakindu.sct.model.sexec.UnscheduleTimeEvent;
 import org.yakindu.sct.model.sgraph.ScopedElement;
 
@@ -88,7 +92,7 @@ public class SexecSwitch<T> extends Switch<T> {
 	 * Checks whether this is a switch for the given package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @parameter ePackage the package in question.
+	 * @param ePackage the package in question.
 	 * @return whether this is a switch for the given package.
 	 * @generated
 	 */
@@ -408,6 +412,22 @@ public class SexecSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case SexecPackage.SCHEDULE_CYCLE_EVENT: {
+				ScheduleCycleEvent scheduleCycleEvent = (ScheduleCycleEvent)theEObject;
+				T result = caseScheduleCycleEvent(scheduleCycleEvent);
+				if (result == null) result = caseStep(scheduleCycleEvent);
+				if (result == null) result = caseNamedElement(scheduleCycleEvent);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case SexecPackage.UNSCHEDULE_CYCLE_EVENT: {
+				UnscheduleCycleEvent unscheduleCycleEvent = (UnscheduleCycleEvent)theEObject;
+				T result = caseUnscheduleCycleEvent(unscheduleCycleEvent);
+				if (result == null) result = caseStep(unscheduleCycleEvent);
+				if (result == null) result = caseNamedElement(unscheduleCycleEvent);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -588,7 +608,7 @@ public class SexecSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseDeclaration(org.yakindu.base.types.Declaration object) {
+	public T caseDeclaration(Declaration object) {
 		return null;
 	}
 
@@ -603,7 +623,7 @@ public class SexecSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseEvent(org.yakindu.base.types.Event object) {
+	public T caseEvent(Event object) {
 		return null;
 	}
 
@@ -919,6 +939,36 @@ public class SexecSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseTraceEndRunCycle(TraceEndRunCycle object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Schedule Cycle Event</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Schedule Cycle Event</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseScheduleCycleEvent(ScheduleCycleEvent object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Unschedule Cycle Event</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Unschedule Cycle Event</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseUnscheduleCycleEvent(UnscheduleCycleEvent object) {
 		return null;
 	}
 

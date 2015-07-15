@@ -233,18 +233,22 @@ import org.yakindu.sct.model.stext.stext.VariableDefinition
 		r
 	} 
 	
-	def ScheduleTimeEvent newScheduleTimeEvent(TimeEvent te, Expression timeValue) {
-		val r = sexecFactory.createScheduleTimeEvent
-		r.timeEvent = te
-		r.timeValue = timeValue
-		r
+	def create sexecFactory.createScheduleTimeEvent newScheduleTimeEvent(TimeEvent te, Expression timeValue) {
+		timeEvent = te
+		it.timeValue = timeValue
 	}
-	 
-	
-	def UnscheduleTimeEvent newUnscheduleTimeEvent(TimeEvent te) {
-		val r = sexecFactory.createUnscheduleTimeEvent
-		r.timeEvent = te
-		r
+
+	def create sexecFactory.createUnscheduleTimeEvent newUnscheduleTimeEvent(TimeEvent te) {
+		timeEvent = te
+	}
+
+	def create sexecFactory.createScheduleCycleEvent newScheduleCycleEvent(TimeEvent te, Expression timeValue) {
+		timeEvent = te
+		it.timeValue = timeValue
+	}
+
+	def create sexecFactory.createUnscheduleCycleEvent newUnscheduleCycleEvent(TimeEvent te) {
+		timeEvent = te
 	}
  
 

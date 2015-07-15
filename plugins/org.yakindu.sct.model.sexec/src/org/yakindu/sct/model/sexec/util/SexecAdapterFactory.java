@@ -11,6 +11,8 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
 import org.yakindu.base.base.NamedElement;
+import org.yakindu.base.types.Declaration;
+import org.yakindu.base.types.Event;
 import org.yakindu.base.types.TypedElement;
 import org.yakindu.sct.model.sexec.Call;
 import org.yakindu.sct.model.sexec.Check;
@@ -33,6 +35,7 @@ import org.yakindu.sct.model.sexec.MappedElement;
 import org.yakindu.sct.model.sexec.Reaction;
 import org.yakindu.sct.model.sexec.ReactionFired;
 import org.yakindu.sct.model.sexec.SaveHistory;
+import org.yakindu.sct.model.sexec.ScheduleCycleEvent;
 import org.yakindu.sct.model.sexec.ScheduleTimeEvent;
 import org.yakindu.sct.model.sexec.Sequence;
 import org.yakindu.sct.model.sexec.SexecPackage;
@@ -48,6 +51,7 @@ import org.yakindu.sct.model.sexec.TraceNodeExecuted;
 import org.yakindu.sct.model.sexec.TraceReactionWillFire;
 import org.yakindu.sct.model.sexec.TraceStateEntered;
 import org.yakindu.sct.model.sexec.TraceStateExited;
+import org.yakindu.sct.model.sexec.UnscheduleCycleEvent;
 import org.yakindu.sct.model.sexec.UnscheduleTimeEvent;
 import org.yakindu.sct.model.sgraph.ScopedElement;
 
@@ -252,6 +256,14 @@ public class SexecAdapterFactory extends AdapterFactoryImpl {
 				return createTraceEndRunCycleAdapter();
 			}
 			@Override
+			public Adapter caseScheduleCycleEvent(ScheduleCycleEvent object) {
+				return createScheduleCycleEventAdapter();
+			}
+			@Override
+			public Adapter caseUnscheduleCycleEvent(UnscheduleCycleEvent object) {
+				return createUnscheduleCycleEventAdapter();
+			}
+			@Override
 			public Adapter caseScopedElement(ScopedElement object) {
 				return createScopedElementAdapter();
 			}
@@ -264,11 +276,11 @@ public class SexecAdapterFactory extends AdapterFactoryImpl {
 				return createTypedElementAdapter();
 			}
 			@Override
-			public Adapter caseDeclaration(org.yakindu.base.types.Declaration object) {
+			public Adapter caseDeclaration(Declaration object) {
 				return createDeclarationAdapter();
 			}
 			@Override
-			public Adapter caseEvent(org.yakindu.base.types.Event object) {
+			public Adapter caseEvent(Event object) {
 				return createEventAdapter();
 			}
 			@Override
@@ -736,6 +748,34 @@ public class SexecAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createTraceEndRunCycleAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.yakindu.sct.model.sexec.ScheduleCycleEvent <em>Schedule Cycle Event</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.yakindu.sct.model.sexec.ScheduleCycleEvent
+	 * @generated
+	 */
+	public Adapter createScheduleCycleEventAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.yakindu.sct.model.sexec.UnscheduleCycleEvent <em>Unschedule Cycle Event</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.yakindu.sct.model.sexec.UnscheduleCycleEvent
+	 * @generated
+	 */
+	public Adapter createUnscheduleCycleEventAdapter() {
 		return null;
 	}
 

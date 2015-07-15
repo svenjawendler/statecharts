@@ -20,10 +20,10 @@ import org.yakindu.sct.model.sexec.TraceStateEntered;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.yakindu.sct.model.sexec.impl.TraceStateEnteredImpl#getState <em>State</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
