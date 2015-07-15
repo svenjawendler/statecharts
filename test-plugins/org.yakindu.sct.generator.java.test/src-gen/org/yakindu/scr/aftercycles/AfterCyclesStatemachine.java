@@ -2,7 +2,7 @@ package org.yakindu.scr.aftercycles;
 import org.yakindu.scr.ITimer;
 
 public class AfterCyclesStatemachine implements IAfterCyclesStatemachine {
-	private final boolean[] timeEvents = new boolean[2];
+	private final boolean[] timeEvents = new boolean[4];
 
 	private final class SCInterfaceImpl implements SCInterface {
 
@@ -13,6 +13,24 @@ public class AfterCyclesStatemachine implements IAfterCyclesStatemachine {
 
 		public void setMyInt(long value) {
 			this.myInt = value;
+		}
+
+		private long anotherInt;
+		public long getAnotherInt() {
+			return anotherInt;
+		}
+
+		public void setAnotherInt(long value) {
+			this.anotherInt = value;
+		}
+
+		private boolean mybool;
+		public boolean getMybool() {
+			return mybool;
+		}
+
+		public void setMybool(boolean value) {
+			this.mybool = value;
 		}
 
 	}
@@ -46,12 +64,19 @@ public class AfterCyclesStatemachine implements IAfterCyclesStatemachine {
 		clearOutEvents();
 
 		sCInterface.myInt = 0;
+
+		sCInterface.anotherInt = 0;
+
+		sCInterface.mybool = false;
 	}
 
 	public void enter() {
 		if (timer == null) {
 			throw new IllegalStateException("timer not set.");
 		}
+
+		timer.setTimer(this, 3, 5, true);
+
 		entryAction();
 
 		enterSequence_main_region_default();
@@ -147,13 +172,39 @@ public class AfterCyclesStatemachine implements IAfterCyclesStatemachine {
 	public void setMyInt(long value) {
 		sCInterface.setMyInt(value);
 	}
+	public long getAnotherInt() {
+		return sCInterface.getAnotherInt();
+	}
+
+	public void setAnotherInt(long value) {
+		sCInterface.setAnotherInt(value);
+	}
+	public boolean getMybool() {
+		return sCInterface.getMybool();
+	}
+
+	public void setMybool(boolean value) {
+		sCInterface.setMybool(value);
+	}
+
+	private boolean check__lr0() {
+		return timeEvents[3];
+	}
 
 	private boolean check_main_region_A_tr0_tr0() {
 		return timeEvents[0];
 	}
 
-	private boolean check_main_region_B_lr0_lr0() {
+	private boolean check_main_region_A_lr0_lr0() {
 		return timeEvents[1];
+	}
+
+	private boolean check_main_region_B_lr0_lr0() {
+		return timeEvents[2];
+	}
+
+	private void effect__lr0() {
+		sCInterface.anotherInt += 5;
 	}
 
 	private void effect_main_region_A_tr0() {
@@ -162,38 +213,49 @@ public class AfterCyclesStatemachine implements IAfterCyclesStatemachine {
 		enterSequence_main_region_B_default();
 	}
 
+	private void effect_main_region_A_lr0_lr0() {
+		sCInterface.mybool = true;
+	}
+
 	private void effect_main_region_B_lr0_lr0() {
 		sCInterface.myInt += 1;
 	}
 
 	/* Entry action for statechart 'AfterCycles'. */
 	private void entryAction() {
+
+		timer.setTimer(this, 3, 5, true);
 	}
 
 	/* Entry action for state 'A'. */
 	private void entryAction_main_region_A() {
 
 		timer.setTimer(this, 0, 3, false);
+
+		timer.setTimer(this, 1, 5, false);
 	}
 
 	/* Entry action for state 'B'. */
 	private void entryAction_main_region_B() {
 
-		timer.setTimer(this, 1, 2, true);
+		timer.setTimer(this, 2, 2, true);
 	}
 
 	/* Exit action for state 'AfterCycles'. */
 	private void exitAction() {
+		timer.unsetTimer(this, 3);
 	}
 
 	/* Exit action for state 'A'. */
 	private void exitAction_main_region_A() {
 		timer.unsetTimer(this, 0);
+
+		timer.unsetTimer(this, 1);
 	}
 
 	/* Exit action for state 'B'. */
 	private void exitAction_main_region_B() {
-		timer.unsetTimer(this, 1);
+		timer.unsetTimer(this, 2);
 	}
 
 	/* 'default' enter sequence for state A */
@@ -251,13 +313,25 @@ public class AfterCyclesStatemachine implements IAfterCyclesStatemachine {
 
 	/* The reactions of state A. */
 	private void react_main_region_A() {
+		if (check__lr0()) {
+			effect__lr0();
+		}
+
 		if (check_main_region_A_tr0_tr0()) {
 			effect_main_region_A_tr0();
+		} else {
+			if (check_main_region_A_lr0_lr0()) {
+				effect_main_region_A_lr0_lr0();
+			}
 		}
 	}
 
 	/* The reactions of state B. */
 	private void react_main_region_B() {
+		if (check__lr0()) {
+			effect__lr0();
+		}
+
 		if (check_main_region_B_lr0_lr0()) {
 			effect_main_region_B_lr0_lr0();
 		}

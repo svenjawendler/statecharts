@@ -51,8 +51,14 @@ public class AfterCyclesTest {
 		assertTrue(statemachine.getMyInt() == 0l);
 		statemachine.runCycle();
 		assertTrue(statemachine.getMyInt() == 1l);
+		assertTrue(statemachine.getAnotherInt() == 5l);
 		statemachine.runCycle();
 		statemachine.runCycle();
 		assertTrue(statemachine.getMyInt() == 2l);
+		statemachine.runCycle();
+		statemachine.runCycle();
+		statemachine.runCycle();
+		assertTrue(statemachine.getAnotherInt() == 10l);
+		assertTrue(statemachine.getMybool() == false);
 	}
 }

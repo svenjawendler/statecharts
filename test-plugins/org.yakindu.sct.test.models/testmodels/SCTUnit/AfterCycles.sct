@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.2/notation" xmlns:sgraph="http://www.yakindu.org/sct/sgraph/2.0.0">
-  <sgraph:Statechart xmi:id="_UAe04CovEeW0cOvvfpWb1w" specification="interface:&#xD;&#xA;var myInt : integer = 0" name="AfterCycles">
+  <sgraph:Statechart xmi:id="_UAe04CovEeW0cOvvfpWb1w" specification="interface:&#xD;&#xA;var myInt : integer = 0&#xD;&#xA;var anotherInt : integer = 0&#xD;&#xA;var mybool : boolean = false&#xD;&#xA;&#xD;&#xA;internal:&#xD;&#xA;every 5 cycles / anotherInt += 5" name="AfterCycles">
     <regions xmi:id="_UA8u8CovEeW0cOvvfpWb1w" name="main region">
       <vertices xsi:type="sgraph:Entry" xmi:id="_UBapACovEeW0cOvvfpWb1w">
         <outgoingTransitions xmi:id="_UBhWsCovEeW0cOvvfpWb1w" target="_UBceMCovEeW0cOvvfpWb1w"/>
       </vertices>
-      <vertices xsi:type="sgraph:State" xmi:id="_UBceMCovEeW0cOvvfpWb1w" name="A" incomingTransitions="_UBhWsCovEeW0cOvvfpWb1w">
+      <vertices xsi:type="sgraph:State" xmi:id="_UBceMCovEeW0cOvvfpWb1w" specification="after 5 cycles / mybool = true" name="A" incomingTransitions="_UBhWsCovEeW0cOvvfpWb1w">
         <outgoingTransitions xmi:id="_iKte8CovEeW0cOvvfpWb1w" specification="after 3 cycles" target="_hY0vACovEeW0cOvvfpWb1w"/>
       </vertices>
       <vertices xsi:type="sgraph:State" xmi:id="_hY0vACovEeW0cOvvfpWb1w" specification="every 2 cycles / myInt += 1" name="B" incomingTransitions="_iKte8CovEeW0cOvvfpWb1w"/>
@@ -45,7 +45,7 @@
           <styles xsi:type="notation:ShapeStyle" xmi:id="_UBeTYiovEeW0cOvvfpWb1w" fontName="Verdana" fillColor="15981773" lineColor="12632256"/>
           <styles xsi:type="notation:FontStyle" xmi:id="_UBeTYyovEeW0cOvvfpWb1w"/>
           <styles xsi:type="notation:BooleanValueStyle" xmi:id="_UBgvoCovEeW0cOvvfpWb1w" name="isHorizontal" booleanValue="true"/>
-          <layoutConstraint xsi:type="notation:Bounds" xmi:id="_UBgvoSovEeW0cOvvfpWb1w" x="40" y="80"/>
+          <layoutConstraint xsi:type="notation:Bounds" xmi:id="_UBgvoSovEeW0cOvvfpWb1w" x="4" y="82" width="209" height="53"/>
         </children>
         <children xmi:id="_hY3yUCovEeW0cOvvfpWb1w" type="State" element="_hY0vACovEeW0cOvvfpWb1w">
           <children xsi:type="notation:DecorationNode" xmi:id="_hY4ZYCovEeW0cOvvfpWb1w" type="StateName">
@@ -61,12 +61,12 @@
           <styles xsi:type="notation:ShapeStyle" xmi:id="_hY3yUSovEeW0cOvvfpWb1w" fontName="Verdana" fillColor="15981773" lineColor="12632256"/>
           <styles xsi:type="notation:FontStyle" xmi:id="_hY3yUiovEeW0cOvvfpWb1w"/>
           <styles xsi:type="notation:BooleanValueStyle" xmi:id="_hY5AcyovEeW0cOvvfpWb1w" name="isHorizontal" booleanValue="true"/>
-          <layoutConstraint xsi:type="notation:Bounds" xmi:id="_hY3yUyovEeW0cOvvfpWb1w" x="249" y="80" width="236"/>
+          <layoutConstraint xsi:type="notation:Bounds" xmi:id="_hY3yUyovEeW0cOvvfpWb1w" x="364" y="67" width="236"/>
         </children>
         <layoutConstraint xsi:type="notation:Bounds" xmi:id="_UBYz0SovEeW0cOvvfpWb1w"/>
       </children>
       <styles xsi:type="notation:ShapeStyle" xmi:id="_UBCOgSovEeW0cOvvfpWb1w" fontName="Verdana" fillColor="15790320" lineColor="12632256"/>
-      <layoutConstraint xsi:type="notation:Bounds" xmi:id="_UBZa4CovEeW0cOvvfpWb1w" x="220" y="10" width="521" height="186"/>
+      <layoutConstraint xsi:type="notation:Bounds" xmi:id="_UBZa4CovEeW0cOvvfpWb1w" x="250" y="10" width="622" height="186"/>
     </children>
     <children xsi:type="notation:Shape" xmi:id="_UBmPNCovEeW0cOvvfpWb1w" type="StatechartText" fontName="Verdana" lineColor="4210752">
       <children xsi:type="notation:DecorationNode" xmi:id="_UBm2QCovEeW0cOvvfpWb1w" type="StatechartName">
@@ -76,7 +76,7 @@
       <children xsi:type="notation:Shape" xmi:id="_UBm2QyovEeW0cOvvfpWb1w" type="StatechartTextExpression" fontName="Verdana" lineColor="4210752">
         <layoutConstraint xsi:type="notation:Bounds" xmi:id="_UBm2RCovEeW0cOvvfpWb1w"/>
       </children>
-      <layoutConstraint xsi:type="notation:Bounds" xmi:id="_UBndUCovEeW0cOvvfpWb1w" x="10" y="10" width="200" height="186"/>
+      <layoutConstraint xsi:type="notation:Bounds" xmi:id="_UBndUCovEeW0cOvvfpWb1w" x="10" y="10" width="231" height="186"/>
     </children>
     <styles xsi:type="notation:DiagramStyle" xmi:id="_UA8H4SovEeW0cOvvfpWb1w"/>
     <edges xmi:id="_UBloICovEeW0cOvvfpWb1w" type="Transition" element="_UBhWsCovEeW0cOvvfpWb1w" source="_UBapASovEeW0cOvvfpWb1w" target="_UBeTYSovEeW0cOvvfpWb1w">

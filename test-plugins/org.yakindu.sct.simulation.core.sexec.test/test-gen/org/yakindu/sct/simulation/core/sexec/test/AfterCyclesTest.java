@@ -45,8 +45,14 @@ public class AfterCyclesTest extends AbstractExecutionFlowTest {
 		assertTrue(getInteger("myInt") == 0l);
 		interpreter.runCycle();
 		assertTrue(getInteger("myInt") == 1l);
+		assertTrue(getInteger("anotherInt") == 5l);
 		interpreter.runCycle();
 		interpreter.runCycle();
 		assertTrue(getInteger("myInt") == 2l);
+		interpreter.runCycle();
+		interpreter.runCycle();
+		interpreter.runCycle();
+		assertTrue(getInteger("anotherInt") == 10l);
+		assertTrue(getBoolean("mybool") == false);
 	}
 }

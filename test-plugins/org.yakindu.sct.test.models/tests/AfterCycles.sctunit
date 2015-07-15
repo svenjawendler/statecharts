@@ -16,10 +16,19 @@ testgroup AfterCycles for statechart AfterCycles{
 		
 		cycle
 		assert myInt == 1
+		assert anotherInt == 5
 		
 		cycle
 		cycle
 		assert myInt == 2
+		
+		cycle
+		cycle
+		cycle
+		assert anotherInt == 10
+		
+		assert mybool == false
+		
 	} 
 }
 	
