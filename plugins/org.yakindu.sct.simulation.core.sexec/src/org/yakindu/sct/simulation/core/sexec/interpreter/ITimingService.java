@@ -27,9 +27,21 @@ public interface ITimingService {
 	public void scheduleTimeEvent(ExecutionContext context, String eventName, boolean periodical, long duration);
 
 	/**
+	 * schedules a new CycleEvent with the given name into the given context.
+	 * TimeEvents can be scheduled as periodical with a duration in ms.
+	 * 
+	 */
+	public void scheduleCycleEvent(ExecutionContext context, String eventName, boolean periodical, long cycleCount);
+
+	/**
 	 * unschedules a scheduled TimeEvent
 	 */
 	public void unscheduleTimeEvent(String eventName);
+
+	/**
+	 * unschedules a CycleEvent
+	 */
+	public void unscheduleCycleEvent(String eventName);
 
 	/**
 	 * pauses all TimeEvent
@@ -45,5 +57,10 @@ public interface ITimingService {
 	 * Stops all TimeEvent
 	 */
 	public void stop();
+
+	/**
+	 * Called when a cycle occures
+	 */
+	public void cycle();
 
 }

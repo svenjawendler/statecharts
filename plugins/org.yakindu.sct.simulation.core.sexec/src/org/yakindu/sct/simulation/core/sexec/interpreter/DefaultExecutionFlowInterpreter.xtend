@@ -25,11 +25,13 @@ import org.yakindu.sct.model.sexec.ExitState
 import org.yakindu.sct.model.sexec.HistoryEntry
 import org.yakindu.sct.model.sexec.If
 import org.yakindu.sct.model.sexec.SaveHistory
+import org.yakindu.sct.model.sexec.ScheduleCycleEvent
 import org.yakindu.sct.model.sexec.ScheduleTimeEvent
 import org.yakindu.sct.model.sexec.Sequence
 import org.yakindu.sct.model.sexec.StateSwitch
 import org.yakindu.sct.model.sexec.Step
 import org.yakindu.sct.model.sexec.Trace
+import org.yakindu.sct.model.sexec.UnscheduleCycleEvent
 import org.yakindu.sct.model.sexec.UnscheduleTimeEvent
 import org.yakindu.sct.model.sexec.extensions.StateVectorExtensions
 import org.yakindu.sct.model.sexec.transformation.SexecExtensions
@@ -49,7 +51,7 @@ class DefaultExecutionFlowInterpreter implements IExecutionFlowInterpreter {
 	@Inject
 	protected IStatementInterpreter statementInterpreter
 	@Inject
-	ITimingService timingService
+	protected ITimingService timingService
 	@Inject extension SexecExtensions
 	@Inject(optional=true)
 	ITraceStepInterpreter traceInterpreter
@@ -73,7 +75,7 @@ class DefaultExecutionFlowInterpreter implements IExecutionFlowInterpreter {
 		activeStateConfiguration = newArrayOfSize(flow.stateVector.size)
 		activeStateIndex = 0
 		historyStateConfiguration = newHashMap()
-		if (!executionContext.snapshot){
+		if (!executionContext.snapshot) {
 			flow.staticInitSequence.scheduleAndRun
 			flow.initSequence.scheduleAndRun
 		}
@@ -83,14 +85,16 @@ class DefaultExecutionFlowInterpreter implements IExecutionFlowInterpreter {
 		if (!executionContext.snapshot)
 			flow.enterSequences?.defaultSequence?.scheduleAndRun
 		else {
-			executionContext.activeStates.forEach[state|
-				activeStateConfiguration.set(state.toExecutionState.stateVector.offset, state.toExecutionState)]
+			executionContext.activeStates.forEach [ state |
+				activeStateConfiguration.set(state.toExecutionState.stateVector.offset, state.toExecutionState)
+			]
 		}
 	}
 
 	def ExecutionState toExecutionState(RegularState state) {
-		return flow.eAllContents.filter[
-			it instanceof ExecutionState && EcoreUtil::equals((it as ExecutionState).sourceElement, state)].head as ExecutionState
+		return flow.eAllContents.filter [
+			it instanceof ExecutionState && EcoreUtil::equals((it as ExecutionState).sourceElement, state)
+		].head as ExecutionState
 	}
 
 	override runCycle() {
@@ -104,6 +108,7 @@ class DefaultExecutionFlowInterpreter implements IExecutionFlowInterpreter {
 			activeStateIndex = activeStateIndex + 1
 		}
 		executionContext.clearLocalAndInEvents
+		timingService.cycle
 	}
 
 	override resume() {
@@ -227,14 +232,26 @@ class DefaultExecutionFlowInterpreter implements IExecutionFlowInterpreter {
 		null
 	}
 
+	def dispatch Object execute(ScheduleCycleEvent cycleEvent) {
+		var timeEvent = cycleEvent.timeEvent
+		var cyclePeriod = statementInterpreter.evaluateStatement(cycleEvent.timeValue, executionContext) as Long
+		timingService.scheduleCycleEvent(executionContext, timeEvent.name, timeEvent.periodic, cyclePeriod)
+		null
+	}
+
 	def dispatch Object execute(UnscheduleTimeEvent timeEvent) {
 		timingService.unscheduleTimeEvent(timeEvent.timeEvent.name)
 		null
 	}
-	
+
+	def dispatch Object execute(UnscheduleCycleEvent timeEvent) {
+		timingService.unscheduleCycleEvent(timeEvent.timeEvent.name)
+		null
+	}
+
 	override boolean isActive() {
 		var List<RegularState> activeStates = executionContext.getAllActiveStates()
-		
+
 		for (RegularState regularState : activeStates) {
 			if (!(regularState instanceof FinalState)) {
 				return true;
@@ -258,5 +275,5 @@ class DefaultExecutionFlowInterpreter implements IExecutionFlowInterpreter {
 			return true;
 		}
 	}
-	
+
 }
