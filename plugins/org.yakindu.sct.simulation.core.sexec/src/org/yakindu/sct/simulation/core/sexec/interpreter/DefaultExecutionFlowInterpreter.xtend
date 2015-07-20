@@ -98,6 +98,7 @@ class DefaultExecutionFlowInterpreter implements IExecutionFlowInterpreter {
 	}
 
 	override runCycle() {
+		timingService.cycle
 		executionContext.raiseScheduledEvents
 		activeStateIndex = 0
 		if(executionContext.executedElements.size > 0) executionContext.executedElements.clear
@@ -108,7 +109,6 @@ class DefaultExecutionFlowInterpreter implements IExecutionFlowInterpreter {
 			activeStateIndex = activeStateIndex + 1
 		}
 		executionContext.clearLocalAndInEvents
-		timingService.cycle
 	}
 
 	override resume() {
