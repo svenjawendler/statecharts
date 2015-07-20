@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.2/notation" xmlns:sgraph="http://www.yakindu.org/sct/sgraph/2.0.0">
-  <sgraph:Statechart xmi:id="_UAe04CovEeW0cOvvfpWb1w" specification="interface:&#xD;&#xA;var myInt : integer = 0&#xD;&#xA;var anotherInt : integer = 0&#xD;&#xA;var mybool : boolean = false&#xD;&#xA;&#xD;&#xA;internal:&#xD;&#xA;every 5 cycles / anotherInt += 5" name="AfterCycles">
+  <sgraph:Statechart xmi:id="_UAe04CovEeW0cOvvfpWb1w" specification="interface:&#xD;&#xA;var myInt : integer = 0&#xD;&#xA;var anotherInt : integer = 0&#xD;&#xA;var mybool : boolean = false&#xD;&#xA;&#xD;&#xA;internal:&#xD;&#xA;every 5 cycles / anotherInt += 5&#xD;&#xA;" name="AfterCycles">
     <regions xmi:id="_UA8u8CovEeW0cOvvfpWb1w" name="main region">
       <vertices xsi:type="sgraph:Entry" xmi:id="_UBapACovEeW0cOvvfpWb1w">
         <outgoingTransitions xmi:id="_UBhWsCovEeW0cOvvfpWb1w" target="_UBceMCovEeW0cOvvfpWb1w"/>
       </vertices>
       <vertices xsi:type="sgraph:State" xmi:id="_UBceMCovEeW0cOvvfpWb1w" specification="after 5 cycles / mybool = true" name="A" incomingTransitions="_UBhWsCovEeW0cOvvfpWb1w">
-        <outgoingTransitions xmi:id="_iKte8CovEeW0cOvvfpWb1w" specification="after 3 cycles" target="_hY0vACovEeW0cOvvfpWb1w"/>
+        <outgoingTransitions xmi:id="_iKte8CovEeW0cOvvfpWb1w" specification="after (3 * 1.1) as integer cycles" target="_hY0vACovEeW0cOvvfpWb1w"/>
       </vertices>
       <vertices xsi:type="sgraph:State" xmi:id="_hY0vACovEeW0cOvvfpWb1w" specification="every 2 cycles / myInt += 1" name="B" incomingTransitions="_iKte8CovEeW0cOvvfpWb1w"/>
     </regions>
@@ -61,12 +61,12 @@
           <styles xsi:type="notation:ShapeStyle" xmi:id="_hY3yUSovEeW0cOvvfpWb1w" fontName="Verdana" fillColor="15981773" lineColor="12632256"/>
           <styles xsi:type="notation:FontStyle" xmi:id="_hY3yUiovEeW0cOvvfpWb1w"/>
           <styles xsi:type="notation:BooleanValueStyle" xmi:id="_hY5AcyovEeW0cOvvfpWb1w" name="isHorizontal" booleanValue="true"/>
-          <layoutConstraint xsi:type="notation:Bounds" xmi:id="_hY3yUyovEeW0cOvvfpWb1w" x="364" y="67" width="236"/>
+          <layoutConstraint xsi:type="notation:Bounds" xmi:id="_hY3yUyovEeW0cOvvfpWb1w" x="459" y="-3" width="236"/>
         </children>
         <layoutConstraint xsi:type="notation:Bounds" xmi:id="_UBYz0SovEeW0cOvvfpWb1w"/>
       </children>
       <styles xsi:type="notation:ShapeStyle" xmi:id="_UBCOgSovEeW0cOvvfpWb1w" fontName="Verdana" fillColor="15790320" lineColor="12632256"/>
-      <layoutConstraint xsi:type="notation:Bounds" xmi:id="_UBZa4CovEeW0cOvvfpWb1w" x="250" y="10" width="622" height="186"/>
+      <layoutConstraint xsi:type="notation:Bounds" xmi:id="_UBZa4CovEeW0cOvvfpWb1w" x="250" y="10" width="731" height="186"/>
     </children>
     <children xsi:type="notation:Shape" xmi:id="_UBmPNCovEeW0cOvvfpWb1w" type="StatechartText" fontName="Verdana" lineColor="4210752">
       <children xsi:type="notation:DecorationNode" xmi:id="_UBm2QCovEeW0cOvvfpWb1w" type="StatechartName">
@@ -91,7 +91,7 @@
     <edges xmi:id="_iKxwYCovEeW0cOvvfpWb1w" type="Transition" element="_iKte8CovEeW0cOvvfpWb1w" source="_UBeTYSovEeW0cOvvfpWb1w" target="_hY3yUCovEeW0cOvvfpWb1w">
       <children xsi:type="notation:DecorationNode" xmi:id="_iKy-gCovEeW0cOvvfpWb1w" type="TransitionExpression">
         <styles xsi:type="notation:ShapeStyle" xmi:id="_iKy-gSovEeW0cOvvfpWb1w"/>
-        <layoutConstraint xsi:type="notation:Location" xmi:id="_iKy-giovEeW0cOvvfpWb1w" y="10"/>
+        <layoutConstraint xsi:type="notation:Location" xmi:id="_iKy-giovEeW0cOvvfpWb1w" x="51" y="36"/>
       </children>
       <styles xsi:type="notation:ConnectorStyle" xmi:id="_iKxwYSovEeW0cOvvfpWb1w" lineColor="4210752"/>
       <styles xsi:type="notation:FontStyle" xmi:id="_iKyXcCovEeW0cOvvfpWb1w" fontName="Verdana"/>

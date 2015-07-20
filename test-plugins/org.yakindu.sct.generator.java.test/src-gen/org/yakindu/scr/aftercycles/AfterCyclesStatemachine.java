@@ -74,8 +74,7 @@ public class AfterCyclesStatemachine implements IAfterCyclesStatemachine {
 		if (timer == null) {
 			throw new IllegalStateException("timer not set.");
 		}
-
-		timer.setTimer(this, 3, 5, true);
+		//ERROR: FlowCode for Step 'org.yakindu.sct.model.sexec.impl.ScheduleCycleEventImpl' not defined
 
 		entryAction();
 
@@ -223,39 +222,36 @@ public class AfterCyclesStatemachine implements IAfterCyclesStatemachine {
 
 	/* Entry action for statechart 'AfterCycles'. */
 	private void entryAction() {
-
-		timer.setTimer(this, 3, 5, true);
+		//ERROR: FlowCode for Step 'org.yakindu.sct.model.sexec.impl.ScheduleCycleEventImpl' not defined
 	}
 
 	/* Entry action for state 'A'. */
 	private void entryAction_main_region_A() {
+		//ERROR: FlowCode for Step 'org.yakindu.sct.model.sexec.impl.ScheduleCycleEventImpl' not defined
 
-		timer.setTimer(this, 0, 3, false);
-
-		timer.setTimer(this, 1, 5, false);
+		//ERROR: FlowCode for Step 'org.yakindu.sct.model.sexec.impl.ScheduleCycleEventImpl' not defined
 	}
 
 	/* Entry action for state 'B'. */
 	private void entryAction_main_region_B() {
-
-		timer.setTimer(this, 2, 2, true);
+		//ERROR: FlowCode for Step 'org.yakindu.sct.model.sexec.impl.ScheduleCycleEventImpl' not defined
 	}
 
 	/* Exit action for state 'AfterCycles'. */
 	private void exitAction() {
-		timer.unsetTimer(this, 3);
+		//ERROR: FlowCode for Step 'org.yakindu.sct.model.sexec.impl.UnscheduleCycleEventImpl' not defined
 	}
 
 	/* Exit action for state 'A'. */
 	private void exitAction_main_region_A() {
-		timer.unsetTimer(this, 0);
+		//ERROR: FlowCode for Step 'org.yakindu.sct.model.sexec.impl.UnscheduleCycleEventImpl' not defined
 
-		timer.unsetTimer(this, 1);
+		//ERROR: FlowCode for Step 'org.yakindu.sct.model.sexec.impl.UnscheduleCycleEventImpl' not defined
 	}
 
 	/* Exit action for state 'B'. */
 	private void exitAction_main_region_B() {
-		timer.unsetTimer(this, 2);
+		//ERROR: FlowCode for Step 'org.yakindu.sct.model.sexec.impl.UnscheduleCycleEventImpl' not defined
 	}
 
 	/* 'default' enter sequence for state A */
