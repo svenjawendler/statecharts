@@ -22,32 +22,15 @@ Require-Bundle: org.yakindu.sct.model.stext;visibility:=reexport,
  org.yakindu.sct.model.sgraph.ui,
  org.eclipse.gmf.runtime.emf.core,
  org.yakindu.base.expressions.ui;visibility:=reexport,
- org.yakindu.base.types.edit
+ org.yakindu.base.types.edit,
+ org.eclipse.xtext.xbase.lib
 Import-Package: org.apache.log4j,
  org.apache.commons.logging
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
-Export-Package: org.yakindu.sct.model.stext.ui;
-  uses:="org.eclipse.ui.plugin,
-   org.osgi.framework,
-   org.eclipse.xtext.ui,
-   org.eclipse.xtext.ui.guice,
-   com.google.inject",
- org.yakindu.sct.model.stext.ui.contentassist;
-  uses:="org.eclipse.xtext,
-   org.eclipse.emf.ecore,
-   org.eclipse.xtext.common.ui.contentassist,
-   org.eclipse.xtext.ui.editor.contentassist",
- org.yakindu.sct.model.stext.ui.contentassist.antlr;
-  uses:="org.eclipse.xtext,
-   org.yakindu.sct.model.stext.services,
-   org.eclipse.xtext.ui.editor.contentassist.antlr.internal,
-   org.yakindu.sct.model.stext.ui.contentassist.antlr.internal,
-   org.eclipse.xtext.ui.editor.contentassist.antlr",
- org.yakindu.sct.model.stext.ui.contentassist.antlr.internal;
-  uses:="org.eclipse.xtext,
-   org.antlr.runtime,
-   org.eclipse.xtext.ui.editor.contentassist.antlr.internal,
-   org.yakindu.sct.model.stext.services",
+Export-Package: org.yakindu.sct.model.stext.ui; uses:="org.eclipse.ui.plugin,  org.osgi.framework,  org.eclipse.xtext.ui,  org.eclipse.xtext.ui.guice,  com.google.inject",
+ org.yakindu.sct.model.stext.ui.contentassist; uses:="org.eclipse.xtext,  org.eclipse.emf.ecore,  org.eclipse.xtext.common.ui.contentassist,  org.eclipse.xtext.ui.editor.contentassist",
+ org.yakindu.sct.model.stext.ui.contentassist.antlr; uses:="org.eclipse.xtext,  org.yakindu.sct.model.stext.services,  org.eclipse.xtext.ui.editor.contentassist.antlr.internal,  org.yakindu.sct.model.stext.ui.contentassist.antlr.internal,  org.eclipse.xtext.ui.editor.contentassist.antlr",
+ org.yakindu.sct.model.stext.ui.contentassist.antlr.internal; uses:="org.eclipse.xtext,  org.antlr.runtime,  org.eclipse.xtext.ui.editor.contentassist.antlr.internal,  org.yakindu.sct.model.stext.services",
  org.yakindu.sct.model.stext.ui.help,
  org.yakindu.sct.model.stext.ui.hyperlink,
  org.yakindu.sct.model.stext.ui.internal;uses:="org.eclipse.ui.plugin,org.osgi.framework,com.google.inject",
