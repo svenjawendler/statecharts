@@ -45,5 +45,5 @@ Export-Package: org.yakindu.sct.model.stext,
  org.yakindu.sct.model.stext.expressions,
  org.yakindu.sct.model.stext.util,
  org.yakindu.sct.model.stext.validation,
- org.yakindu.sct.model.stext.serializer
+ org.yakindu.sct.model.stext.parseTreeConstruction
 Bundle-ClassPath: .

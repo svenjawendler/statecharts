@@ -43,10 +43,13 @@ Workflow {
 			// Java API to access grammar elements (required by several other fragments)
 			fragment = grammarAccess.GrammarAccessFragment auto-inject {}
 
-			// serializer 2.0
-    		fragment = serializer.SerializerFragment auto-inject {
-    			generateStub = false
-    		}
+			// the serialization component
+			fragment = parseTreeConstructor.ParseTreeConstructorFragment {}
+
+			// We can't use the serializer 2.0 yet, this causes some side effects in the SCTResource
+//    		fragment = serializer.SerializerFragment auto-inject {
+//    			generateStub = false
+//    		}
 			// a custom ResourceFactory for use with EMF
     		fragment = resourceFactory.ResourceFactoryFragment auto-inject {}
     
