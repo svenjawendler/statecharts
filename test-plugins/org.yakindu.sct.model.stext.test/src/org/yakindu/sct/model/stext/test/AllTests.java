@@ -20,7 +20,7 @@ import org.junit.runners.Suite.SuiteClasses;
  */
 @RunWith(value = Suite.class)
 @SuiteClasses(value = { TypeInferrerTest.class, STextJavaValidatorTest.class, StextParserRuleTest.class,
-		TestModelsContainErrorsTest.class, SCTUnitClassifierTest.class })
+		TestModelsContainErrorsTest.class, SCTUnitClassifierTest.class, STextScopeProviderTest.class })
 public class AllTests {
 
 }

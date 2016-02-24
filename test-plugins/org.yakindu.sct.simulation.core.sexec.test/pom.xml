@@ -25,12 +25,6 @@
 						<include>**/CoreFunctionTest.class</include>
 						<include>**/STextInterpreterTest.class</include>
 					</includes>
-
-					<excludes>
-						<exclude>**/util/TestModels.class</exclude>
-						<!-- It's toooo slow in the interpreter -->
-						<exclude>**/PerformanceTestTest.class</exclude>
-					</excludes>
 					<useUIHarness>false</useUIHarness>
 					<useUIThread>false</useUIThread>
 					<testFailureIgnore>${testFailureIgnore}</testFailureIgnore>

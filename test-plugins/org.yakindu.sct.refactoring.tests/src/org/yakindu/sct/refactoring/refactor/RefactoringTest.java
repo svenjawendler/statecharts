@@ -27,7 +27,7 @@ import com.google.inject.Inject;
  * @author thomas kutz - Initial contribution and API
  * 
  */
-public class RefactoringTest {
+public abstract class RefactoringTest {
 
 	@Inject
 	protected IParser parser;

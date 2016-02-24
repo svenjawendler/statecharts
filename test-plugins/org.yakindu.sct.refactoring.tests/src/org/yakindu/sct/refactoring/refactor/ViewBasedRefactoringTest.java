@@ -21,7 +21,12 @@ import org.yakindu.sct.model.sgraph.Statechart;
 import org.yakindu.sct.model.sgraph.resource.AbstractSCTResource;
 import org.yakindu.sct.refactoring.utils.RefactoringHelper;
 
-
+/**
+ * Base test class for view based refactorings.
+ * 
+ * @author thomas kutz - Initial contribution and API
+ * 
+ */
 public abstract class ViewBasedRefactoringTest extends RefactoringTest {
 
 	protected void testRefactoring(String pathToInitialSct, String pathToExpectedSct, String contextElementName) {
