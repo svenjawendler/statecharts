@@ -26,7 +26,6 @@ encoding//testmodels/SCTUnit/ShallowHistoryWithDeepEntry.sct=UTF-8
 encoding//testmodels/SCTUnit/StatechartActive.sct=UTF-8
 encoding//testmodels/SCTUnit/StaticChoice.sct=UTF-8
 encoding//testmodels/SCTUnit/SyncJoin.sct=UTF-8
-encoding//testmodels/SCTUnit/TimedTransitions.sct=UTF-8
 encoding//testmodels/SCTUnit/TransitionWithoutCondition.sct=UTF-8
 encoding//testmodels/SCTUnit/TriggerGuardExpressions.sct=UTF-8
 encoding//testmodels/SCTUnit/TypeAlias.sct=UTF-8

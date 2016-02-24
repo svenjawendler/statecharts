@@ -444,14 +444,6 @@ GeneratorModel for sctunit::java {
 		}			
 	}
 
-	test TimedTransitions{
-		
-		feature Outlet{ 
-			targetProject = "org.yakindu.sct.generator.java.test" 
-			targetFolder = "test-gen"			
-		}			
-	}
-
 
 	test TransitionWithoutCondition{
 		
