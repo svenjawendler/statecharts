@@ -89,11 +89,14 @@ public class CreationWizard extends Wizard implements INewWizard {
 
 	private IWorkbench workbench;
 
+	protected DiagramHelper diagramHelper;
+
 	public void init(IWorkbench workbench, IStructuredSelection selection) {
 		this.workbench = workbench;
 		this.selection = selection;
 		setWindowTitle("New YAKINDU Statechart");
 		setNeedsProgressMonitor(true);
+		diagramHelper = new DiagramHelper();
 	}
 
 	@Override
@@ -139,94 +142,11 @@ public class CreationWizard extends Wizard implements INewWizard {
 	}
 
 	protected boolean openDiagram(Resource diagram) throws PartInitException {
-		String path = diagram.getURI().toPlatformString(true);
-		IResource workspaceResource = ResourcesPlugin.getWorkspace().getRoot().findMember(new Path(path));
-		if (workspaceResource instanceof IFile) {
-			IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-			StatechartDiagramEditor editor = (StatechartDiagramEditor) page
-					.openEditor(new FileEditorInput((IFile) workspaceResource), getEditorID());
-			if (editor != null) {
-				List<EObject> allNotationElements = EcoreUtil2.eAllContentsAsList(diagram);
-				for (EObject eObject : allNotationElements) {
-					if (eObject instanceof View && ((View) eObject).getType().equals(SemanticHints.STATE_NAME)) {
-						IGraphicalEditPart editPart = EditPartUtils.findEditPartForSemanticElement(
-								editor.getDiagramGraphicalViewer().getRootEditPart(), ((View) eObject).getElement());
-						editPart = editPart.getChildBySemanticHint(SemanticHints.STATE_NAME);
-						if (editPart != null) {
-							final DirectEditRequest request = new DirectEditRequest();
-							request.setDirectEditFeature(BasePackage.Literals.NAMED_ELEMENT__NAME);
-							editPart.performRequest(request);
-							break;
-						}
-					}
-				}
-				return false;
-			}
-		}
-		return false;
+		return diagramHelper.openDiagram(diagram,getEditorID());
 	}
 
-	/**
-	 * Returns the Editor ID of the editor to open, after a new diagram was
-	 * created Override for subclasses with custom editors.
-	 * 
-	 * @return the ID of the editor.
-	 */
-	protected String getEditorID() {
-		return StatechartDiagramEditor.ID;
-	}
-
-	protected Resource createDiagram(final URI diagramURI, final URI modelURI, IProgressMonitor progressMonitor) {
-		TransactionalEditingDomain editingDomain = GMFEditingDomainFactory.INSTANCE.createEditingDomain();
-		progressMonitor.beginTask("Creating diagram file ...", 3);
-		final Resource resource = editingDomain.getResourceSet().createResource(modelURI);
-		AbstractTransactionalCommand command = new AbstractTransactionalCommand(editingDomain,
-				"Creating diagram file ...", Collections.EMPTY_LIST) {
-			@Override
-			protected CommandResult doExecuteWithResult(IProgressMonitor monitor, IAdaptable info)
-					throws ExecutionException {
-
-				FactoryUtils.createStatechartModel(resource, preferencesHint);
-				Statechart statechart = (Statechart) EcoreUtil.getObjectByType(resource.getContents(),
-						SGraphPackage.Literals.STATECHART);
-				statechart.setDomainID(domainWizardPage != null ? domainWizardPage.getDomainID()
-						: BasePackage.Literals.DOMAIN_ELEMENT__DOMAIN_ID.getDefaultValueLiteral());
-
-				try {
-					resource.save(getSaveOptions());
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				return CommandResult.newOKCommandResult();
-			}
-
-		};
-		try {
-			command.execute(progressMonitor, null);
-		} catch (ExecutionException e) {
-			e.printStackTrace();
-		}
-		setCharset(WorkspaceSynchronizer.getFile(resource));
-		editingDomain.dispose();
-		return resource;
-	}
-
-	protected Map<String, String> getSaveOptions() {
-		Map<String, String> saveOptions = new HashMap<String, String>();
-		saveOptions.put(XMLResource.OPTION_ENCODING, "UTF-8");
-		saveOptions.put(Resource.OPTION_SAVE_ONLY_IF_CHANGED, Resource.OPTION_SAVE_ONLY_IF_CHANGED_MEMORY_BUFFER);
-		return saveOptions;
-	}
-
-	protected void setCharset(IFile file) {
-		if (file == null) {
-			return;
-		}
-		try {
-			file.setCharset("UTF-8", new NullProgressMonitor());
-		} catch (CoreException e) {
-			e.printStackTrace();
-		}
+	private Resource createDiagram(URI uri, URI uri2, IProgressMonitor monitor) {
+		return diagramHelper.createDefaultDiagram(uri, domainWizardPage.getDomainID(), monitor);
 	}
 
 	public IStructuredSelection getSelection() {
@@ -243,6 +163,16 @@ public class CreationWizard extends Wizard implements INewWizard {
 
 	public void setOpenOnCreate(boolean openOnCreate) {
 		this.openOnCreate = openOnCreate;
+	}
+	
+	/**
+	 * Returns the Editor ID of the editor to open, after a new diagram was
+	 * created Override for subclasses with custom editors.
+	 * 
+	 * @return the ID of the editor.
+	 */
+	protected String getEditorID() {
+		return StatechartDiagramEditor.ID;
 	}
 
 	/**
