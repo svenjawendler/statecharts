@@ -28,6 +28,7 @@ import org.eclipse.xtext.validation.Issue.IssueImpl;
 public class SCTMarkerCreator extends MarkerCreator {
 
 	public static final String ELEMENT_ID = "elementId";
+	public static final String DIRECT_EDIT_ATTRIBUTE = "directEditAttr";
 
 	@Override
 	protected void setMarkerAttributes(Issue issue, IResource resource,
@@ -37,6 +38,11 @@ public class SCTMarkerCreator extends MarkerCreator {
 			marker.setAttribute(ELEMENT_ID,
 					((WrappingIssue) issue).getNotationViewURI());
 		}
+		String[] data = issue.getData();
+		if(data.length > 0){
+			marker.setAttribute(DIRECT_EDIT_ATTRIBUTE, data[0]);
+		}
+		
 	}
 
 	/**

@@ -111,7 +111,7 @@ public class SGraphJavaValidationTest {
 		state.setName(null);
 		assertFalse(validator.validate(state, diagnostics,
 				new HashMap<Object, Object>()));
-		assertError(diagnostics, ISSUE_STATE_WITHOUT_NAME);
+		assertError(diagnostics, ISSUE_STATE_WITHOUT_NAME_MSG);
 	}
 
 	/**
@@ -124,7 +124,7 @@ public class SGraphJavaValidationTest {
 		state.setName("");
 		assertFalse(validator.validate(state, diagnostics,
 				new HashMap<Object, Object>()));
-		assertError(diagnostics, ISSUE_STATE_WITHOUT_NAME);
+		assertError(diagnostics, ISSUE_STATE_WITHOUT_NAME_MSG);
 	}
 
 	/**
@@ -137,7 +137,7 @@ public class SGraphJavaValidationTest {
 		state.setName(" 	");
 		assertFalse(validator.validate(state, diagnostics,
 				new HashMap<Object, Object>()));
-		assertError(diagnostics, ISSUE_STATE_WITHOUT_NAME);
+		assertError(diagnostics, ISSUE_STATE_WITHOUT_NAME_MSG);
 	}
 
 	/**
@@ -149,7 +149,7 @@ public class SGraphJavaValidationTest {
 
 		assertFalse(validator.validate(state, diagnostics,
 				new HashMap<Object, Object>()));
-		assertError(diagnostics, ISSUE_NODE_NOT_REACHABLE);
+		assertError(diagnostics, ISSUE_NODE_NOT_REACHABLE_MSG);
 	}
 
 	/**
@@ -252,7 +252,7 @@ public class SGraphJavaValidationTest {
 		createTransition(choice, state);
 
 		validate(state);
-		assertIssue(diagnostics, ISSUE_NODE_NOT_REACHABLE);
+		assertIssue(diagnostics, ISSUE_NODE_NOT_REACHABLE_MSG);
 	}
 
 	/**
@@ -278,7 +278,7 @@ public class SGraphJavaValidationTest {
 		createTransition(choice, stateA);
 
 		validate(state);
-		assertIssue(diagnostics, ISSUE_NODE_NOT_REACHABLE);
+		assertIssue(diagnostics, ISSUE_NODE_NOT_REACHABLE_MSG);
 	}
 
 	/**
@@ -289,7 +289,7 @@ public class SGraphJavaValidationTest {
 		prepareStateTest();
 
 		validator.validate(state, diagnostics, new HashMap<Object, Object>());
-		assertNoIssue(diagnostics, ISSUE_STATE_WITHOUT_OUTGOING_TRANSITION);
+		assertNoIssue(diagnostics, ISSUE_STATE_WITHOUT_OUTGOING_TRANSITION_MSG);
 	}
 
 	/**
@@ -321,7 +321,7 @@ public class SGraphJavaValidationTest {
 
 		assertEquals(EntryKind.INITIAL, entry.getKind());
 		validator.validate(entry, diagnostics, new HashMap<Object, Object>());
-		assertWarning(diagnostics, ISSUE_INITIAL_ENTRY_WITH_IN_TRANS);
+		assertWarning(diagnostics, ISSUE_INITIAL_ENTRY_WITH_IN_TRANS_MSG);
 	}
 
 	/**
@@ -353,7 +353,7 @@ public class SGraphJavaValidationTest {
 
 		assertEquals(EntryKind.INITIAL, entry.getKind());
 		validator.validate(entry, diagnostics, new HashMap<Object, Object>());
-		assertWarning(diagnostics, ISSUE_INITIAL_ENTRY_WITHOUT_OUT_TRANS);
+		assertWarning(diagnostics, ISSUE_INITIAL_ENTRY_WITHOUT_OUT_TRANS_MSG);
 	}
 
 	/**
@@ -371,21 +371,21 @@ public class SGraphJavaValidationTest {
 		assertEquals(EntryKind.INITIAL, entry.getKind());
 		assertFalse(validator.validate(entry, diagnostics,
 				new HashMap<Object, Object>()));
-		assertError(diagnostics, ISSUE_ENTRY_WITH_MULTIPLE_OUT_TRANS);
+		assertError(diagnostics, ISSUE_ENTRY_WITH_MULTIPLE_OUT_TRANS_MSG);
 
 		entry.setKind(EntryKind.SHALLOW_HISTORY);
 
 		diagnostics = new BasicDiagnostic();
 		assertFalse(validator.validate(entry, diagnostics,
 				new HashMap<Object, Object>()));
-		assertError(diagnostics, ISSUE_ENTRY_WITH_MULTIPLE_OUT_TRANS);
+		assertError(diagnostics, ISSUE_ENTRY_WITH_MULTIPLE_OUT_TRANS_MSG);
 
 		entry.setKind(EntryKind.DEEP_HISTORY);
 
 		diagnostics = new BasicDiagnostic();
 		assertFalse(validator.validate(entry, diagnostics,
 				new HashMap<Object, Object>()));
-		assertError(diagnostics, ISSUE_ENTRY_WITH_MULTIPLE_OUT_TRANS);
+		assertError(diagnostics, ISSUE_ENTRY_WITH_MULTIPLE_OUT_TRANS_MSG);
 
 	}
 
@@ -403,7 +403,7 @@ public class SGraphJavaValidationTest {
 
 		assertFalse(validate(exit));
 
-		assertWarning(diagnostics, ISSUE_EXIT_WITHOUT_IN_TRANS);
+		assertWarning(diagnostics, ISSUE_EXIT_WITHOUT_IN_TRANS_MSG);
 	}
 
 	/**
@@ -427,7 +427,7 @@ public class SGraphJavaValidationTest {
 
 		assertFalse(validate(exit));
 
-		assertError(diagnostics, ISSUE_EXIT_WITH_OUT_TRANS);
+		assertError(diagnostics, ISSUE_EXIT_WITH_OUT_TRANS_MSG);
 	}
 
 	/**
@@ -442,7 +442,7 @@ public class SGraphJavaValidationTest {
 
 		assertFalse(validate(exit));
 
-		assertError(diagnostics, ISSUE_EXIT_ON_STATECHART);
+		assertError(diagnostics, ISSUE_EXIT_ON_STATECHART_MSG);
 	}
 
 	/**
@@ -479,7 +479,7 @@ public class SGraphJavaValidationTest {
 		diagnostics = new BasicDiagnostic();
 		assertFalse(validator.validate(entry, diagnostics,
 				new HashMap<Object, Object>()));
-		assertError(diagnostics, ISSUE_ENTRY_WITH_TRIGGER);
+		assertError(diagnostics, ISSUE_ENTRY_WITH_TRIGGER_MSG);
 	}
 
 	/**
@@ -496,7 +496,7 @@ public class SGraphJavaValidationTest {
 		assertFalse(validate(finalState));
 
 		assertIssueCount(diagnostics, 1);
-		assertError(diagnostics, ISSUE_NODE_NOT_REACHABLE);
+		assertError(diagnostics, ISSUE_NODE_NOT_REACHABLE_MSG);
 	}
 
 	/**
@@ -536,7 +536,7 @@ public class SGraphJavaValidationTest {
 		validate(finalState);
 
 		assertIssueCount(diagnostics, 1);
-		assertWarning(diagnostics, ISSUE_FINAL_STATE_OUTGOING_TRANSITION);
+		assertWarning(diagnostics, ISSUE_FINAL_STATE_OUTGOING_TRANSITION_MSG);
 	}
 
 	/**
@@ -558,7 +558,7 @@ public class SGraphJavaValidationTest {
 				new HashMap<Object, Object>()));
 
 		assertIssueCount(diagnostics, 1);
-		assertError(diagnostics, ISSUE_CHOICE_WITHOUT_OUTGOING_TRANSITION);
+		assertError(diagnostics, ISSUE_CHOICE_WITHOUT_OUTGOING_TRANSITION_MSG);
 	}
 
 	@Test
@@ -576,7 +576,7 @@ public class SGraphJavaValidationTest {
 		}
 
 		assertIssueCount(diagnostics, 2);
-		assertWarning(diagnostics, ISSUE_SYNCHRONIZATION_TRANSITION_COUNT);
+		assertWarning(diagnostics, ISSUE_SYNCHRONIZATION_TRANSITION_COUNT_MSG);
 	}
 
 	@Test
@@ -595,9 +595,9 @@ public class SGraphJavaValidationTest {
 
 		assertIssueCount(diagnostics, 2);
 		assertError(diagnostics,
-				ISSUE_SYNCHRONIZATION_SOURCE_STATES_NOT_ORTHOGONAL);
+				ISSUE_SYNCHRONIZATION_SOURCE_STATES_NOT_ORTHOGONAL_MSG);
 		assertError(diagnostics,
-				ISSUE_SYNCHRONIZATION_TARGET_STATES_NOT_ORTHOGONAL);
+				ISSUE_SYNCHRONIZATION_TARGET_STATES_NOT_ORTHOGONAL_MSG);
 
 		diagnostics = new BasicDiagnostic();
 		statechart = AbstractTestModelsUtil
@@ -614,9 +614,9 @@ public class SGraphJavaValidationTest {
 
 		assertIssueCount(diagnostics, 2);
 		assertError(diagnostics,
-				ISSUE_SYNCHRONIZATION_SOURCE_STATES_NOT_WITHIN_SAME_PARENTSTATE);
+				ISSUE_SYNCHRONIZATION_SOURCE_STATES_NOT_WITHIN_SAME_PARENTSTATE_MSG);
 		assertError(diagnostics,
-				ISSUE_SYNCHRONIZATION_TARGET_STATES_NOT_WITHIN_SAME_PARENTSTATE);
+				ISSUE_SYNCHRONIZATION_TARGET_STATES_NOT_WITHIN_SAME_PARENTSTATE_MSG);
 
 		diagnostics = new BasicDiagnostic();
 		statechart = AbstractTestModelsUtil
@@ -633,9 +633,9 @@ public class SGraphJavaValidationTest {
 
 		assertIssueCount(diagnostics, 2);
 		assertError(diagnostics,
-				ISSUE_SYNCHRONIZATION_SOURCE_STATES_NOT_WITHIN_SAME_PARENTSTATE);
+				ISSUE_SYNCHRONIZATION_SOURCE_STATES_NOT_WITHIN_SAME_PARENTSTATE_MSG);
 		assertError(diagnostics,
-				ISSUE_SYNCHRONIZATION_TARGET_STATES_NOT_WITHIN_SAME_PARENTSTATE);
+				ISSUE_SYNCHRONIZATION_TARGET_STATES_NOT_WITHIN_SAME_PARENTSTATE_MSG);
 	}
 
 	@Test
@@ -672,12 +672,12 @@ public class SGraphJavaValidationTest {
 		assertIssueCount(diagnostics, 2);
 
 		Diagnostic issue = issueByName(diagnostics,
-				ISSUE_REGION_CANT_BE_ENTERED_USING_SHALLOW_HISTORY_NO_DEFAULT_ENTRY);
+				ISSUE_REGION_CANT_BE_ENTERED_USING_SHALLOW_HISTORY_NO_DEFAULT_ENTRY_MSG);
 		assertTrue(issue.getSeverity() == Diagnostic.ERROR);
 		assertEquals("r_a", ((NamedElement) issue.getData().get(0)).getName());
 
 		issue = issueByName(diagnostics,
-				ISSUE_REGION_CANT_BE_ENTERED_USING_SHALLOW_HISTORY_NON_CONNECTED_DEFAULT_ENTRY);
+				ISSUE_REGION_CANT_BE_ENTERED_USING_SHALLOW_HISTORY_NON_CONNECTED_DEFAULT_ENTRY_MSG);
 		assertTrue(issue.getSeverity() == Diagnostic.ERROR);
 		assertEquals("r_c", ((NamedElement) issue.getData().get(0)).getName());
 	}
@@ -715,7 +715,7 @@ public class SGraphJavaValidationTest {
 
 		assertIssueCount(diagnostics, 1);
 		assertError(diagnostics,
-				ISSUE_INITIAL_ENTRY_WITH_TRANSITION_TO_CONTAINER);
+				ISSUE_INITIAL_ENTRY_WITH_TRANSITION_TO_CONTAINER_MSG);
 	}
 
 	/**

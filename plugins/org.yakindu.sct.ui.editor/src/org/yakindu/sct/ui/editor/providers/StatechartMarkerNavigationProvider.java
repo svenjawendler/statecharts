@@ -18,6 +18,7 @@ import java.util.Map;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.requests.DirectEditRequest;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
@@ -28,8 +29,7 @@ import org.eclipse.gmf.runtime.emf.ui.providers.marker.AbstractModelMarkerNaviga
 import org.eclipse.gmf.runtime.notation.Diagram;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.xtext.EcoreUtil2;
-import org.yakindu.base.xtext.utils.gmf.directedit.IXtextAwareEditPart;
-import org.yakindu.sct.model.sgraph.SGraphPackage;
+import org.yakindu.sct.model.sgraph.ui.validation.SCTMarkerCreator;
 import org.yakindu.sct.ui.editor.partitioning.DiagramPartitioningUtil;
 import org.yakindu.sct.ui.editor.validation.IMarkerType;
 
@@ -66,13 +66,17 @@ public class StatechartMarkerNavigationProvider extends AbstractModelMarkerNavig
 			String type = marker.getType();
 			if (type.equals(SCT_MARKER_TYPE)) {
 				final DirectEditRequest request = new DirectEditRequest();
-				request.setDirectEditFeature(SGraphPackage.eINSTANCE.getSpecificationElement_Specification());
+				String attribute = (String) marker.getAttribute(SCTMarkerCreator.DIRECT_EDIT_ATTRIBUTE);
 				List<EObject> allNotationElements = EcoreUtil2.eAllContentsAsList(targetView);
 				for (EObject eObject : allNotationElements) {
 					if (eObject instanceof View) {
 						IGraphicalEditPart editPart = (IGraphicalEditPart) editPartRegistry.get(eObject);
-						if (editPart instanceof IXtextAwareEditPart) {
+						if (attribute != null) {
+							EStructuralFeature feature = editPart.resolveSemanticElement().eClass()
+									.getEStructuralFeature(attribute);
+							request.setDirectEditFeature(feature);
 							editPart.performRequest(request);
+							break;
 						}
 					}
 				}
