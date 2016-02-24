@@ -16,7 +16,7 @@ import org.junit.runners.Suite.SuiteClasses;
  * @author andreas muelder - Initial contribution and API
  * 
  */
-@SuiteClasses(AbstractTypeSystemTest.class)
+@SuiteClasses(TypeSystemTest.class)
 public class AllTests {
 
 }

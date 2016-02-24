@@ -24,7 +24,7 @@ import org.yakindu.base.types.typesystem.AbstractTypeSystem;
  * @author andreas muelder - Initial contribution and API
  * 
  */
-public class AbstractTypeSystemTest extends AbstractTypeSystem {
+public class TypeSystemTest extends AbstractTypeSystem {
 
 	private static final String SUB_TYPE = "SubType";
 	private static final String SUB_TYPE2 = "SubType2";
