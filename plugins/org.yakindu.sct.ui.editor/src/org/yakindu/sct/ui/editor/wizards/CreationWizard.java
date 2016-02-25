@@ -89,14 +89,14 @@ public class CreationWizard extends Wizard implements INewWizard {
 
 	private IWorkbench workbench;
 
-	protected DiagramHelper diagramHelper;
+	protected SCTDiagramHelper diagramHelper;
 
 	public void init(IWorkbench workbench, IStructuredSelection selection) {
 		this.workbench = workbench;
 		this.selection = selection;
 		setWindowTitle("New YAKINDU Statechart");
 		setNeedsProgressMonitor(true);
-		diagramHelper = new DiagramHelper();
+		diagramHelper = new SCTDiagramHelper();
 	}
 
 	@Override

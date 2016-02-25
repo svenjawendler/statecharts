@@ -25,10 +25,8 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -47,7 +45,6 @@ import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.actions.WorkspaceModifyOperation;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.xtext.EcoreUtil2;
 import org.yakindu.base.base.BasePackage;
@@ -65,24 +62,10 @@ import org.yakindu.sct.ui.editor.providers.SemanticHints;
  * @author Johannes Dicks - Initial contribution and API
  *
  */
-public class DiagramHelper {
+public class SCTDiagramHelper {
 	
-	public void createAndOpenDiagramWithinWorkspace(final URI modelURI, final String domainID, final String editorID,IRunnableContext context,final IProgressMonitor progressMonitor){
-		IRunnableWithProgress op = new WorkspaceModifyOperation(null) {
-			@Override
-			protected void execute(IProgressMonitor monitor) throws CoreException, InterruptedException {
-				Resource diagram = createDefaultDiagram(modelURI, domainID, progressMonitor);
-				if ( diagram != null) {
-					try {
-						openDiagram(diagram,editorID);
-					} catch (PartInitException e) {
-						DiagramActivator.getDefault().getLog().log(
-								new Status(IStatus.WARNING, DiagramActivator.PLUGIN_ID, "Editor can't be opened", e));
-					}
-				}
-			}
-		};
-		
+	public Resource createAndOpenDiagramWithinWorkspace(final URI modelURI, final String domainID, final String editorID,IRunnableContext context,final IProgressMonitor progressMonitor){
+		CreateSCTAndOpenInEditor op = new CreateSCTAndOpenInEditor(this, null, editorID, domainID, progressMonitor, modelURI);
 		try {
 			context.run(false, true, op);
 		} catch (InvocationTargetException e) {
@@ -90,6 +73,7 @@ public class DiagramHelper {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		return op.getResource();
 	}
 	
 	public Resource createDefaultDiagram(final URI modelURI, final String domainID, IProgressMonitor progressMonitor) {
