@@ -45,6 +45,7 @@ import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.actions.WorkspaceModifyOperation;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.xtext.EcoreUtil2;
 import org.yakindu.base.base.BasePackage;
@@ -64,8 +65,40 @@ import org.yakindu.sct.ui.editor.providers.SemanticHints;
  */
 public class SCTDiagramHelper {
 	
-	public Resource createAndOpenDiagramWithinWorkspace(final URI modelURI, final String domainID, final String editorID,IRunnableContext context,final IProgressMonitor progressMonitor){
-		CreateSCTAndOpenInEditor op = new CreateSCTAndOpenInEditor(this, null, editorID, domainID, progressMonitor, modelURI);
+	
+	public Statechart createDefaultDiagram(final URI modelURI, final String domainID,IRunnableContext context) {
+		
+		final Resource[] resource = new Resource[1];
+		WorkspaceModifyOperation op = new WorkspaceModifyOperation(){
+
+			@Override
+			protected void execute(IProgressMonitor monitor)
+					throws CoreException, InvocationTargetException, InterruptedException {
+				resource[0] = doCreate(modelURI, domainID, monitor);
+			}
+			
+		};
+		exec(context, op);
+		return (Statechart) resource[0].getContents().get(0);
+	}
+
+	public boolean openDiagram(final Resource diagram,final String editorID,IRunnableContext context) {
+		
+		final Boolean[] resource = new Boolean[1];
+		WorkspaceModifyOperation op = new WorkspaceModifyOperation(){
+
+			@Override
+			protected void execute(IProgressMonitor monitor)
+					throws CoreException, InvocationTargetException, InterruptedException {
+				resource[0] = doOpen(diagram, editorID);
+			}
+			
+		};
+		exec(context, op);
+		return resource[0];
+	}
+	
+	private void exec(IRunnableContext context, WorkspaceModifyOperation op) {
 		try {
 			context.run(false, true, op);
 		} catch (InvocationTargetException e) {
@@ -73,10 +106,9 @@ public class SCTDiagramHelper {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		return op.getResource();
 	}
-	
-	public Resource createDefaultDiagram(final URI modelURI, final String domainID, IProgressMonitor progressMonitor) {
+
+	protected Resource doCreate(final URI modelURI, final String domainID, IProgressMonitor progressMonitor) {
 		TransactionalEditingDomain editingDomain = GMFEditingDomainFactory.INSTANCE.createEditingDomain();
 		progressMonitor.beginTask("Creating diagram file ...", 3);
 		final Resource resource = editingDomain.getResourceSet().createResource(modelURI);
@@ -108,7 +140,7 @@ public class SCTDiagramHelper {
 		editingDomain.dispose();
 		return resource;
 	}
-
+	
 	protected Map<String, String> getSaveOptions() {
 		Map<String, String> saveOptions = new HashMap<String, String>();
 		saveOptions.put(XMLResource.OPTION_ENCODING, "UTF-8");
@@ -127,11 +159,7 @@ public class SCTDiagramHelper {
 		}
 	}
 
-	/**
-	 * @param diagram
-	 * @throws PartInitException 
-	 */
-	public boolean openDiagram(Resource diagram,String editorID) throws PartInitException {
+	private boolean doOpen(Resource diagram, String editorID) throws PartInitException {
 		String path = diagram.getURI().toPlatformString(true);
 		IResource workspaceResource = ResourcesPlugin.getWorkspace().getRoot().findMember(new Path(path));
 		if (workspaceResource instanceof IFile) {

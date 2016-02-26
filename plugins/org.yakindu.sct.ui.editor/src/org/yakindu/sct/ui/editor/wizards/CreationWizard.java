@@ -142,11 +142,11 @@ public class CreationWizard extends Wizard implements INewWizard {
 	}
 
 	protected boolean openDiagram(Resource diagram) throws PartInitException {
-		return diagramHelper.openDiagram(diagram,getEditorID());
+		return diagramHelper.openDiagram(diagram,getEditorID(),getContainer());
 	}
 
 	private Resource createDiagram(URI uri, URI uri2, IProgressMonitor monitor) {
-		return diagramHelper.createDefaultDiagram(uri, domainWizardPage.getDomainID(), monitor);
+		return diagramHelper.createDefaultDiagram(uri, domainWizardPage.getDomainID(),getContainer()).eResource();
 	}
 
 	public IStructuredSelection getSelection() {
