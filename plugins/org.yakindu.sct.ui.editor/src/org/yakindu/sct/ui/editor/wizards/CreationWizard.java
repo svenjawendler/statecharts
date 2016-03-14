@@ -146,7 +146,7 @@ public class CreationWizard extends Wizard implements INewWizard {
 	}
 
 	private Resource createDiagram(URI uri, URI uri2, IProgressMonitor monitor) {
-		return diagramHelper.createDefaultDiagram(uri, domainWizardPage.getDomainID(),getContainer()).eResource();
+		return diagramHelper.createDefaultDiagram(uri, domainWizardPage.getDomainID(),getContainer(), false).eResource();
 	}
 
 	public IStructuredSelection getSelection() {

@@ -138,6 +138,37 @@ public final class FactoryUtils {
 
 	}
 
+
+	/**
+	 * Creates a Statechart with an initial empty Region
+	 * 
+	 * @return instanceof {@link Statechart}
+	 */
+	public static void createStatechartModelWithEmptyRegion(Resource resource, PreferencesHint preferencesHint) {
+		// Create a statechart
+		Statechart statechart = SGraphFactory.eINSTANCE.createStatechart();
+		String lastSegment = resource.getURI().lastSegment();
+		String statechartName = lastSegment.substring(0, lastSegment.indexOf('.'));
+		statechart.setName(statechartName);
+		statechart.setSpecification("");
+
+		Diagram diagram = ViewService.createDiagram(statechart, StatechartDiagramEditor.ID, preferencesHint);
+		diagram.setElement(statechart);
+		// Add to resource
+		resource.getContents().add(statechart);
+		resource.getContents().add(diagram);
+		// Create an initial region
+		Region region = SGraphFactory.eINSTANCE.createRegion();
+		region.setName(INITIAL_REGION_NAME);
+		statechart.getRegions().add(region);
+		Node regionView = ViewService.createNode(diagram, region, SemanticHints.REGION, preferencesHint);
+		setRegionViewLayoutConstraint(regionView);
+		// Create the textcompartment for events / variables
+		Node textCompartment = ViewService.createNode(diagram, statechart, SemanticHints.STATECHART_TEXT,
+				preferencesHint);
+		setTextCompartmentLayoutConstraint(textCompartment);
+	}
+	
 	private static void setStateViewLayoutConstraint(Node stateNode) {
 		Bounds bounds = NotationFactory.eINSTANCE.createBounds();
 		bounds.setX(40);

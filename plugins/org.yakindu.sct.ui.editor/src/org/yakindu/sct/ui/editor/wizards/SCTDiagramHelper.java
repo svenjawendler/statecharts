@@ -66,7 +66,7 @@ import org.yakindu.sct.ui.editor.providers.SemanticHints;
 public class SCTDiagramHelper {
 	
 	
-	public Statechart createDefaultDiagram(final URI modelURI, final String domainID,IRunnableContext context) {
+	public Statechart createDefaultDiagram(final URI modelURI, final String domainID,IRunnableContext context, final boolean empty) {
 		
 		final Resource[] resource = new Resource[1];
 		WorkspaceModifyOperation op = new WorkspaceModifyOperation(){
@@ -74,7 +74,7 @@ public class SCTDiagramHelper {
 			@Override
 			protected void execute(IProgressMonitor monitor)
 					throws CoreException, InvocationTargetException, InterruptedException {
-				resource[0] = doCreate(modelURI, domainID, monitor);
+				resource[0] = doCreate(modelURI, domainID, monitor, empty);
 			}
 			
 		};
@@ -108,7 +108,7 @@ public class SCTDiagramHelper {
 		}
 	}
 
-	protected Resource doCreate(final URI modelURI, final String domainID, IProgressMonitor progressMonitor) {
+	protected Resource doCreate(final URI modelURI, final String domainID, IProgressMonitor progressMonitor, final boolean empty) {
 		TransactionalEditingDomain editingDomain = GMFEditingDomainFactory.INSTANCE.createEditingDomain();
 		progressMonitor.beginTask("Creating diagram file ...", 3);
 		final Resource resource = editingDomain.getResourceSet().createResource(modelURI);
@@ -118,7 +118,11 @@ public class SCTDiagramHelper {
 			protected CommandResult doExecuteWithResult(IProgressMonitor monitor, IAdaptable info)
 					throws ExecutionException {
 
-				FactoryUtils.createStatechartModel(resource, DiagramActivator.DIAGRAM_PREFERENCES_HINT);
+				if (empty) {
+					FactoryUtils.createStatechartModelWithEmptyRegion(resource, DiagramActivator.DIAGRAM_PREFERENCES_HINT);					
+				} else {
+					FactoryUtils.createStatechartModel(resource, DiagramActivator.DIAGRAM_PREFERENCES_HINT);
+				}
 				Statechart statechart = (Statechart) EcoreUtil.getObjectByType(resource.getContents(),
 						SGraphPackage.Literals.STATECHART);
 				statechart.setDomainID(domainID != null ? domainID
