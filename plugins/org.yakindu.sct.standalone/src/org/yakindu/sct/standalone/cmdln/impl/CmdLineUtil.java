@@ -29,27 +29,13 @@ public class CmdLineUtil {
 	/**
 	 * root package so we will configure logging for all subpackages
 	 */
-	public static final String LOGGER_ID = "com.yakindu.sct.generator.headless";
-	public static final String LOGGER_ID_CORE = LOGGER_ID+".core";
+	public static final String LOGGER_ID = "org.yakindu.sct.standalone";
 	private static final Logger logger = Logger.getLogger(LOGGER_ID);
-	private static final Logger logger_core = Logger.getLogger(LOGGER_ID_CORE);
 	private static final String DEFAULT_LOG_LEVEL = "INFO";
 	private static final String LOG_LEVEL_DEVELOPMENT = "DEV";
 
 	public static final String PARAM_LOG = "logLvl";
 	public static final String PARAM_LOG_FILE = "logFile";
-
-	// execution parameters
-	private static final String PARAM_CONFIRM_EXIT = "ce";
-
-	public  void initDefaultLogging() {
-		Logger root = Logger.getRootLogger();
-		root.setLevel(Level.INFO);
-		root.removeAllAppenders();
-		PatternLayout layout = new PatternLayout("%5p | %m%n");
-		// add appenders
-		root.addAppender(new ConsoleAppender(layout));
-	}
 
 	public  void configureCustomLogging(CommandLine line) {
 		// get log lvl
@@ -58,19 +44,17 @@ public class CmdLineUtil {
 			logLevel = line.getOptionValue(PARAM_LOG);
 		else
 			logLevel = DEFAULT_LOG_LEVEL;
-
-		Logger root = Logger.getRootLogger();
+	
 		Level level = null;
 		PatternLayout layout = new PatternLayout("%5p | %d | %F | %L | %m%n");
 		if (logLevel.equals(LOG_LEVEL_DEVELOPMENT)) {
 			level = Level.ALL;
-			root.removeAllAppenders();
-			root.addAppender(new ConsoleAppender(layout));
-			logger_core.setLevel(level);
+			logger.removeAllAppenders();
+			logger.addAppender(new ConsoleAppender(layout));
 		} else {
 			level = Level.toLevel(logLevel);
 		}
-		initFileAppenderIfConfigured(line, root, layout);
+		initFileAppenderIfConfigured(line, logger, layout);
 		logger.setLevel(level);
 		logger.info("Logging mode: " + level);
 	}
@@ -80,23 +64,20 @@ public class CmdLineUtil {
 			try {
 				root.addAppender(new RollingFileAppender(layout, line.getOptionValue(PARAM_LOG_FILE), true));
 			} catch (IOException e) {
-				logger_core.error("Error creating log4j.FileAppender", e);
+				System.err.println("Error creating log4j.FileAppender ("+e.getMessage()+")");
+				e.printStackTrace();
 			}
 		}
 	}
 
 	@SuppressWarnings("static-access")
 	public  void initOptions(Options options) {
-		// output / loglvl
 		options.addOption(OptionBuilder.withArgName("logLevel").hasArg()
 				.withDescription("Log level:  OFF, FATAL, ERROR, WARN, INFO, DEBUG, TRACE and ALL").create(PARAM_LOG));
 		options.addOption(OptionBuilder.withArgName("logFile").hasArg()
 				.withDescription("An absolute path to the log file").create(PARAM_LOG_FILE));
-		// user experience
-		options.addOption(OptionBuilder.withArgName("confirm").hasArg(false).isRequired(false)
-				.withDescription("Confirm exit, avoids cmd line window to be closed.").create(PARAM_CONFIRM_EXIT));
 		options.addOption(OptionBuilder.withArgName("help").hasArg(false).isRequired(false)
-				.withDescription("Shows this help content.").create(PARAM_HELP));
+				.withDescription("Shows help content.").create(PARAM_HELP));
 	}
 
 	public  String readInput() {
@@ -104,7 +85,8 @@ public class CmdLineUtil {
 		try {
 			return br.readLine();
 		} catch (IOException e) {
-			logger_core.error("Error while reading input.", e);
+			System.out.println("Error while reading input.");
+			e.printStackTrace();
 		} finally {
 			try {
 				br.close();
@@ -121,23 +103,6 @@ public class CmdLineUtil {
 		formatter.printHelp(app, options);
 	}
 
-	public  void exit(int exitCode, CommandLine cmdLine) {
-		if (getConfirmExit(cmdLine)) {
-			logger.info("please press enter to exit...");
-			// blocks
-			readInput();
-		}
-		logger.info("exit. ( " + exitCode + " )");
-		System.exit(exitCode);
-	}
-
-	private  boolean getConfirmExit(CommandLine cmdLine) {
-		if (cmdLine != null && cmdLine.hasOption(PARAM_CONFIRM_EXIT)) {
-			return true;
-		}
-		return false;
-	}
-
 	public  CommandLine parseCmdLine(String[] args, String app, Options options) {
 		CommandLine cmd = null;
 		try {
@@ -146,20 +111,19 @@ public class CmdLineUtil {
 			configureCustomLogging(cmd);
 		} catch (MissingOptionException e) {
 			System.err.println(e.getMessage());
-			helpAndExit(options, app);
+			help(options, app);
 		} catch (UnrecognizedOptionException e) {
 			System.err.println(e.getMessage());
-			helpAndExit(options, app);
+			help(options, app);
 		} catch (ParseException e) {
 			e.printStackTrace();
-			helpAndExit(options, app);
+			help(options, app);
 		}
 		return cmd;
 	}
 
-	public  void helpAndExit(Options cmdOptions, String app) {
+	public  void help(Options cmdOptions, String app) {
 		printHelp(cmdOptions, app);
-		exit(0, null);
 	}
 
 	public  boolean containsHelp(String[] args) {
