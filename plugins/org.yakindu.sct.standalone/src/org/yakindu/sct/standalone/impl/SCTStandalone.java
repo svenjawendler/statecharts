@@ -32,7 +32,6 @@ import org.yakindu.sct.model.sgen.SGenPackage;
 import org.yakindu.sct.model.stext.STextRuntimeModule;
 import org.yakindu.sct.model.stext.STextStandaloneSetup;
 import org.yakindu.sct.standalone.api.ISCTStandalone;
-import org.yakindu.sct.standalone.api.SCTStandaloneParameter;
 import org.yakindu.sct.standalone.cmdln.api.SCTStandaloneOptions;
 import org.yakindu.sct.standalone.extension.DomainDescriptor;
 import org.yakindu.sct.standalone.extension.GeneratorDescriptor;
@@ -48,7 +47,7 @@ import com.google.inject.util.Modules;
 public class SCTStandalone implements ISCTStandalone {
 
 	private ResourceSet resourceSet;
-	private SCTStandaloneParameter parameter;
+	private SCTStandaloneOptions parameter;
 
 	@Override
 	public void generate() {
@@ -56,10 +55,10 @@ public class SCTStandalone implements ISCTStandalone {
 		generateAll();
 	}
 
-	protected void load(SCTStandaloneParameter parameter) {
-		File file = new File(parameter.absoluteSCTDir);
+	protected void load(SCTStandaloneOptions parameter) {
+		File file = new File(parameter.getSCTDir());
 		loadSCTs(file);
-		load(parameter.absoluteSgenPath);
+		load(parameter.getSGenPath());
 	}
 
 	protected void loadSCTs(File file) {
@@ -95,7 +94,7 @@ public class SCTStandalone implements ISCTStandalone {
 	}
 
 	@Override
-	public void init(SCTStandaloneParameter parameter) {
+	public void init(SCTStandaloneOptions parameter) {
 		this.parameter = parameter;
 		initLanguages();
 		initResourceSet();
@@ -118,13 +117,13 @@ public class SCTStandalone implements ISCTStandalone {
 		}
 	}
 
-	protected void initSCTGenerator(final SCTStandaloneParameter parameter) {
+	protected void initSCTGenerator(final SCTStandaloneOptions parameter) {
 		for (GeneratorDescriptor generator : getGenerators()) {
 			GeneratorExtensions.getGeneratorDescriptors().add(generator);
 		}
 	}
 
-	protected void initSgenLibraries(SCTStandaloneParameter parameter) {
+	protected void initSgenLibraries(SCTStandaloneOptions parameter) {
 		for (LibraryDescriptor libraryDescriptor : getLibraries(parameter)) {
 			LibraryExtensions.getLibraryDescriptors().add(libraryDescriptor);
 		}
@@ -134,7 +133,7 @@ public class SCTStandalone implements ISCTStandalone {
 		return resourceSet.getResource(URI.createFileURI(resourceURI), true);
 	}
 
-	protected void initSCTDomain(final SCTStandaloneParameter parameter) {
+	protected void initSCTDomain(final SCTStandaloneOptions parameter) {
 		for (DomainDescriptor domain : getDomains(parameter)) {
 			DomainRegistry.getDomainDescriptors().add(domain);
 		}
@@ -185,17 +184,17 @@ public class SCTStandalone implements ISCTStandalone {
 	}
 	
 	
-	protected List<LibraryDescriptor> getLibraries(SCTStandaloneParameter parameter) {
+	protected List<LibraryDescriptor> getLibraries(SCTStandaloneOptions parameter) {
 		List<LibraryDescriptor> libraries = Lists.newArrayList();
 
 		libraries.add(new LibraryDescriptor("org.yakindu.generator.core.features",
-				URI.createFileURI(parameter.absoluteLibrariesDir + "/CoreFeatureTypeLibrary.xmi"),
+				URI.createFileURI(parameter.getAbsoluteLibrariesDir() + "/CoreFeatureTypeLibrary.xmi"),
 				new CoreLibraryDefaultFeatureValueProvider()));
 		libraries.add(new LibraryDescriptor("org.yakindu.sct.generator.feature.java",
-				URI.createFileURI(parameter.absoluteLibrariesDir + "/GenericJavaFeatureTypeLibrary.xmi"),
+				URI.createFileURI(parameter.getAbsoluteLibrariesDir()+ "/GenericJavaFeatureTypeLibrary.xmi"),
 				new GenericJavaLibraryDefaultValueProvider()));
 		libraries.add(new LibraryDescriptor("org.yakindu.generator.core.features.sctbase",
-				URI.createFileURI(parameter.absoluteLibrariesDir + "/SCTBaseFeatureLibrary.xmi"),
+				URI.createFileURI(parameter.getAbsoluteLibrariesDir()+ "/SCTBaseFeatureLibrary.xmi"),
 				new SCTBaseLibaryDefaultFeatureValueProvider()));
 		return libraries;
 	}
@@ -211,7 +210,7 @@ public class SCTStandalone implements ISCTStandalone {
 		return generators;
 	}
 
-	protected List<DomainDescriptor> getDomains(final SCTStandaloneParameter parameter) {
+	protected List<DomainDescriptor> getDomains(final SCTStandaloneOptions parameter) {
 		List<DomainDescriptor> domains = Lists.newArrayList();
 		domains.add(new DomainDescriptor("org.yakindu.domain.default", "Default",
 				"The default domain for YAKINDU Statechart Tools.") {
@@ -221,7 +220,7 @@ public class SCTStandalone implements ISCTStandalone {
 					@Override
 					public Module getGeneratorModule(String generatorId) {
 						Module generatorModule = super.getGeneratorModule(generatorId);
-						return toStandaloneGeneratorModule(generatorModule, parameter.absoluteGenTargetDir);
+						return toStandaloneGeneratorModule(generatorModule, parameter.getAbsoluteGenTargetDir());
 					}
 					protected Module getResourceModule() {
 						return toStandaloneResourceModule(this);

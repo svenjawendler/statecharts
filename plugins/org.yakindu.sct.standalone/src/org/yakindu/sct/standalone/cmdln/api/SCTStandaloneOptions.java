@@ -27,8 +27,8 @@ public interface SCTStandaloneOptions {
 	
 	
 	String getAbsoluteWorkspaceDir();
-	String getAbsoluteSGenPath();
-	String getAbsoluteSCTDir();
+	String getSGenPath();
+	String getSCTDir();
 	String getAbsoluteGenTargetDir();
 	String getAbsoluteLibrariesDir();
 	
