@@ -19,6 +19,7 @@ import static org.yakindu.base.types.typesystem.ITypeSystem.VOID;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtext.EcoreUtil2;
+import org.yakindu.base.expressions.expressions.ArrayInitializationExpression;
 import org.yakindu.base.expressions.expressions.AssignmentExpression;
 import org.yakindu.base.expressions.expressions.BitwiseAndExpression;
 import org.yakindu.base.expressions.expressions.BitwiseOrExpression;
@@ -46,6 +47,8 @@ import org.yakindu.base.expressions.expressions.ShiftExpression;
 import org.yakindu.base.expressions.expressions.StringLiteral;
 import org.yakindu.base.expressions.expressions.TypeCastExpression;
 import org.yakindu.base.expressions.expressions.UnaryOperator;
+import org.yakindu.base.types.ArrayTypeSpecifier;
+import org.yakindu.base.types.DeclaredTypeSpecifier;
 import org.yakindu.base.types.EnumerationType;
 import org.yakindu.base.types.Enumerator;
 import org.yakindu.base.types.Operation;
@@ -201,6 +204,18 @@ public class ExpressionsTypeInferrer extends AbstractTypeSystemInferrer implemen
 		}
 		return inferTypeDispatch(e.getFeature());
 	}
+	
+	public Type infer(ArrayInitializationExpression e) {
+		return inferTypeDispatch(e.getValues().get(0));
+	}
+	
+	public Object infer(DeclaredTypeSpecifier typeSpecifier) {
+		return inferTypeDispatch(typeSpecifier.getType());
+	}
+	
+	public Object infer(ArrayTypeSpecifier typeSpecifier) {
+		return typeSpecifier;
+	}
 
 	public Type infer(ElementReferenceExpression e) {
 		if (e.isOperationCall()) {
@@ -208,6 +223,10 @@ public class ExpressionsTypeInferrer extends AbstractTypeSystemInferrer implemen
 			EList<Parameter> parameters = operation.getParameters();
 			EList<Expression> args = e.getArgs();
 			inferParameter(parameters, args);
+		}
+		if (e.isArrayAccess()) {
+			ArrayTypeSpecifier arrayType = (ArrayTypeSpecifier) inferTypeDispatch(e.getReference());
+			return inferTypeDispatch(arrayType.getType());
 		}
 		return inferTypeDispatch(e.getReference());
 	}

@@ -13,6 +13,7 @@ package org.yakindu.sct.model.stext.test.util;
 import java.util.HashMap;
 import java.util.List;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -25,10 +26,12 @@ import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.scoping.IScope;
 import org.eclipse.xtext.scoping.impl.SimpleScope;
 import org.yakindu.base.types.ComplexType;
+import org.yakindu.base.types.Declaration;
 import org.yakindu.base.types.EnumerationType;
 import org.yakindu.base.types.Enumerator;
 import org.yakindu.base.types.Property;
 import org.yakindu.base.types.Type;
+import org.yakindu.base.types.TypeSpecifier;
 import org.yakindu.base.types.TypesFactory;
 import org.yakindu.base.types.typesystem.GenericTypeSystem;
 import org.yakindu.base.types.typesystem.ITypeSystem;
@@ -64,16 +67,14 @@ public class STextTestScopeProvider extends STextScopeProvider {
 		State dummyState = createDummyModel();
 		descriptions.add(createEObjectDesc(dummyState));
 
-		Type complexType = createComplexType();
+		ComplexType complexType = createComplexType();
 		descriptions.add(createEObjectDesc(complexType));
 		
 		Type enumType = createEnumType();
 		descriptions.add(createEObjectDesc(enumType));
 
-		TreeIterator<EObject> iterator = complexType.eAllContents();
-		while (iterator.hasNext()) {
-			EObject content = iterator.next();
-			descriptions.add(createEObjectDesc(content));
+		for (Declaration feature : complexType.getFeatures()) {
+			descriptions.add(createEObjectDesc(feature));
 		}
 
 		return new SimpleScope(descriptions);
@@ -101,7 +102,9 @@ public class STextTestScopeProvider extends STextScopeProvider {
 
 		Property featureX = TypesFactory.eINSTANCE.createProperty();
 		featureX.setName("x");
-		featureX.setType(typeSystem.getType(GenericTypeSystem.INTEGER));
+		TypeSpecifier typeSpecifier = TypesFactory.eINSTANCE.createTypeSpecifier();
+		typeSpecifier.setType(typeSystem.getType(GenericTypeSystem.INTEGER));
+		featureX.setTypeSpecifier(typeSpecifier);
 		complexType.getFeatures().add(featureX);
 
 		Resource resource = new ResourceImpl(URI.createURI("types2"));

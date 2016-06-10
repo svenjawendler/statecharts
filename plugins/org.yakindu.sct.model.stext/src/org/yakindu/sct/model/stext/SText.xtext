@@ -75,27 +75,37 @@ Declaration returns types::Declaration:
 	EventDefinition | VariableDefinition | OperationDefinition | TypeAliasDefinition | LocalReaction;
 
 EventDefinition:
-	(direction=Direction)? 'event' name=XID (':' type=[types::Type|FQN])?;
+	(direction=Direction)? 'event' name=XID (':' typeSpecifier=TypeSpecifier)?;
 
 enum Direction returns types::Direction:
 	LOCAL='local' | IN='in' | OUT='out';
 
 VariableDefinition:
-	{VariableDefinition} (const?='const'|'var') ((readonly?='readonly')? & (external?='external')?) name=XID ':' type=[types::Type|FQN]
-	(('<' (typeArguments+=[types::Type|QID]) (',' typeArguments+=[types::Type|QID])* '>'))?
-	('=' initialValue=Expression)?; /* ---- operation definition ---- */ 
-	
+	{VariableDefinition} (const?='const'|'var') ((readonly?='readonly')? & (external?='external')?) name=XID ':' typeSpecifier=TypeSpecifier
+	('=' initialValue=Expression)?;
+
+TypeSpecifier returns types::TypeSpecifier:
+	ArrayTypeSpecifier | DeclaredTypeSpecifier;
+
+ArrayTypeSpecifier returns types::ArrayTypeSpecifier:
+	type=[types::Type|FQN] (('<' (typeArguments+=[types::Type|QID]) (',' typeArguments+=[types::Type|QID])* '>'))? 
+	(=> '[' dimensions+=ArrayDimension ']' ('[' dimensions+=ArrayDimension ']')*);
+
+DeclaredTypeSpecifier returns types::DeclaredTypeSpecifier:
+	type=[types::Type|FQN] (('<' (typeArguments+=[types::Type|QID]) (',' typeArguments+=[types::Type|QID])* '>'))?;
+
+ArrayDimension returns types::ArrayDimension:
+	{types::ArrayDimension} (size=INT)?;
+
 TypeAliasDefinition:
-	{TypeAliasDefinition} 'alias' name=XID ':' type=[types::Type|FQN]
-;
+	{TypeAliasDefinition} 'alias' name=XID ':' type=[types::Type|FQN];
 
 OperationDefinition:
 	{OperationDefinition} 'operation' name=XID '(' (parameters+=Parameter (',' parameters+=Parameter)*)? ')' (':'
-	type=[types::Type|FQN] (('<' (typeArguments+=[types::Type|QID]) (',' typeArguments+=[types::Type|QID])* '>'))?)?;
+	typeSpecifier=TypeSpecifier)?;
 
 Parameter returns types::Parameter:
-	name=XID ':' type=[types::Type|FQN] (('<' (typeArguments+=[types::Type|QID]) (',' typeArguments+=[types::Type|QID])*
-	'>'))?;
+	name=XID ':' typeSpecifier=TypeSpecifier;
 
 Reaction returns sgraph::Reaction:
 	LocalReaction | TransitionReaction;
@@ -137,7 +147,22 @@ EventSpec:
 
 RegularEventSpec:
 	event=FeatureCall;
+/*
+// Use SimpleFeatureCall for eventSpec to avoid guard ambiguity with array access
+RegularEventSpec:
+	event=SimpleFeatureCall;
 
+SimpleFeatureCall returns exp::Expression:
+	SimpleElementReferenceExpression ({exp::FeatureCall.owner=current} '.' feature=[ecore::EObject]
+	(=> operationCall?='('
+	(args+=Expression (',' args+=Expression)*)?
+	')')?)*;
+SimpleElementReferenceExpression returns exp::ElementReferenceExpression:
+	reference=[ecore::EObject|ID]
+	(=> operationCall?='('
+	(args+=Expression (',' args+=Expression)*)?
+	')')?;
+ */
 TimeEventSpec:
 	type=TimeEventType value=ConditionalExpression unit=TimeUnit;
 
@@ -166,7 +191,7 @@ ActiveStateReferenceExpression returns exp::Expression:
 	{ActiveStateReferenceExpression} 'active' '(' value=[sgraph::State|FQN] ')';
 
 PrimaryExpression returns exp::Expression:
-	PrimitiveValueExpression | FeatureCall | ActiveStateReferenceExpression | EventValueReferenceExpression |
+	PrimitiveValueExpression | FeatureCall | ArrayInitializationExpression | ActiveStateReferenceExpression | EventValueReferenceExpression |
 	ParenthesizedExpression;
 
 enum TimeUnit:

@@ -8,6 +8,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+import org.yakindu.base.expressions.expressions.*;
 import org.yakindu.base.expressions.expressions.AdditiveOperator;
 import org.yakindu.base.expressions.expressions.AssignmentExpression;
 import org.yakindu.base.expressions.expressions.AssignmentOperator;
@@ -111,6 +112,7 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
 			case ExpressionsPackage.ELEMENT_REFERENCE_EXPRESSION: return createElementReferenceExpression();
 			case ExpressionsPackage.PARENTHESIZED_EXPRESSION: return createParenthesizedExpression();
 			case ExpressionsPackage.TYPE_CAST_EXPRESSION: return createTypeCastExpression();
+			case ExpressionsPackage.ARRAY_INITIALIZATION_EXPRESSION: return createArrayInitializationExpression();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -414,6 +416,16 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
 	public TypeCastExpression createTypeCastExpression() {
 		TypeCastExpressionImpl typeCastExpression = new TypeCastExpressionImpl();
 		return typeCastExpression;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ArrayInitializationExpression createArrayInitializationExpression() {
+		ArrayInitializationExpressionImpl arrayInitializationExpression = new ArrayInitializationExpressionImpl();
+		return arrayInitializationExpression;
 	}
 
 	/**

@@ -12,7 +12,10 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+import org.yakindu.base.types.ArrayDimension;
+import org.yakindu.base.types.ArrayTypeSpecifier;
 import org.yakindu.base.types.ComplexType;
+import org.yakindu.base.types.DeclaredTypeSpecifier;
 import org.yakindu.base.types.Direction;
 import org.yakindu.base.types.Domain;
 import org.yakindu.base.types.EnumerationType;
@@ -29,6 +32,7 @@ import org.yakindu.base.types.Type;
 import org.yakindu.base.types.TypeAlias;
 import org.yakindu.base.types.TypeConstraint;
 import org.yakindu.base.types.TypeParameter;
+import org.yakindu.base.types.TypeSpecifier;
 import org.yakindu.base.types.TypesFactory;
 import org.yakindu.base.types.TypesPackage;
 
@@ -93,6 +97,10 @@ public class TypesFactoryImpl extends EFactoryImpl implements TypesFactory {
 			case TypesPackage.RANGE_CONSTRAINT: return createRangeConstraint();
 			case TypesPackage.DOMAIN: return createDomain();
 			case TypesPackage.TYPE_ALIAS: return createTypeAlias();
+			case TypesPackage.TYPE_SPECIFIER: return createTypeSpecifier();
+			case TypesPackage.ARRAY_TYPE_SPECIFIER: return createArrayTypeSpecifier();
+			case TypesPackage.ARRAY_DIMENSION: return createArrayDimension();
+			case TypesPackage.DECLARED_TYPE_SPECIFIER: return createDeclaredTypeSpecifier();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -296,6 +304,46 @@ public class TypesFactoryImpl extends EFactoryImpl implements TypesFactory {
 	public TypeAlias createTypeAlias() {
 		TypeAliasImpl typeAlias = new TypeAliasImpl();
 		return typeAlias;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public TypeSpecifier createTypeSpecifier() {
+		TypeSpecifierImpl typeSpecifier = new TypeSpecifierImpl();
+		return typeSpecifier;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ArrayTypeSpecifier createArrayTypeSpecifier() {
+		ArrayTypeSpecifierImpl arrayTypeSpecifier = new ArrayTypeSpecifierImpl();
+		return arrayTypeSpecifier;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ArrayDimension createArrayDimension() {
+		ArrayDimensionImpl arrayDimension = new ArrayDimensionImpl();
+		return arrayDimension;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public DeclaredTypeSpecifier createDeclaredTypeSpecifier() {
+		DeclaredTypeSpecifierImpl declaredTypeSpecifier = new DeclaredTypeSpecifierImpl();
+		return declaredTypeSpecifier;
 	}
 
 	/**

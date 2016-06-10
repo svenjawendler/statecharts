@@ -36,6 +36,9 @@ import org.yakindu.sct.simulation.core.sruntime.ExecutionSlot
 import org.yakindu.sct.simulation.core.sruntime.impl.CompositeSlotImpl
 import org.yakindu.sct.simulation.core.sruntime.impl.ExecutionEventImpl
 import org.yakindu.sct.simulation.core.sruntime.impl.ExecutionVariableImpl
+import org.yakindu.base.types.TypedElement
+import org.yakindu.base.types.Type
+import org.yakindu.base.types.ArrayTypeSpecifier
 
 /**
  * 
@@ -110,12 +113,10 @@ class DefaultExecutionContextInitializer implements IExecutionContextInitializer
 		scope.declarations.forEach[decl|it.slots += decl.transform]
 	}
 
-	def dispatch ExecutionSlot create new ExecutionVariableImpl() transform(VariableDefinition variable) {
-		it.name = variable.fullyQualifiedName.lastSegment
-		it.fqName = variable.fullyQualifiedName.toString
-		it.type = variable.inferType(null)
-		it.value = it.type?.defaultValue
-		it.writable = !variable.const
+	def dispatch ExecutionSlot transform(VariableDefinition variable) {
+		val slot = variable.createExecutionSlot
+		slot.writable = !variable.const
+		slot
 	}
 
 	def dispatch ExecutionSlot create new ExecutionEventImpl() transform(EventDefinition event) {
@@ -138,6 +139,34 @@ class DefaultExecutionContextInitializer implements IExecutionContextInitializer
 		it.fqName = event.fullyQualifiedName.toString
 		it.type = getType(ITypeSystem.INTEGER)
 		it.value = it.type.defaultValue
+	}
+	
+	def protected ExecutionSlot createExecutionSlot(TypedElement element) {
+		createExecutionSlot(element.inferType(null), element)
+	}
+	
+	def dispatch ExecutionSlot create slot : new ExecutionVariableImpl() createExecutionSlot(Type type, TypedElement element) {
+		slot.name = element.fullyQualifiedName.lastSegment
+		slot.fqName = element.fullyQualifiedName.toString
+		slot.type = element.inferType(null)
+		slot.value = slot.type?.defaultValue
+	}
+	
+	def dispatch ExecutionSlot create slot : new CompositeSlotImpl() createExecutionSlot(ArrayTypeSpecifier type, TypedElement element) {
+		slot.name = element.fullyQualifiedName.lastSegment
+		slot.fqName = element.fullyQualifiedName.toString
+		slot.value = slot.type?.defaultValue
+		slot.type = type
+		val size = type.dimensions.get(0).size
+		for (var int i=0; i<size; i++) {
+			val elemSlot = new ExecutionVariableImpl()
+			elemSlot.name = "["+i+"]"
+			elemSlot.fqName = slot.name + "." + elemSlot.name
+			elemSlot.type = type.type
+			elemSlot.value = elemSlot.type?.defaultValue
+
+			slot.slots += elemSlot
+		}
 	}
 
 }

@@ -2,19 +2,19 @@
  */
 package org.yakindu.sct.model.stext.stext.impl;
 
-import java.util.Collection;
-
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.yakindu.base.base.BasePackage;
 import org.yakindu.base.base.NamedElement;
 import org.yakindu.base.types.Declaration;
 import org.yakindu.base.types.PackageMember;
 import org.yakindu.base.types.Type;
+import org.yakindu.base.types.TypeSpecifier;
 import org.yakindu.base.types.TypedElement;
 import org.yakindu.base.types.TypesPackage;
 import org.yakindu.sct.model.sgraph.impl.ReactionImpl;
@@ -30,6 +30,7 @@ import org.yakindu.sct.model.stext.stext.StextPackage;
  * </p>
  * <ul>
  *   <li>{@link org.yakindu.sct.model.stext.stext.impl.LocalReactionImpl#getType <em>Type</em>}</li>
+ *   <li>{@link org.yakindu.sct.model.stext.stext.impl.LocalReactionImpl#getTypeSpecifier <em>Type Specifier</em>}</li>
  *   <li>{@link org.yakindu.sct.model.stext.stext.impl.LocalReactionImpl#getTypeArguments <em>Type Arguments</em>}</li>
  *   <li>{@link org.yakindu.sct.model.stext.stext.impl.LocalReactionImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.yakindu.sct.model.stext.stext.impl.LocalReactionImpl#getId <em>Id</em>}</li>
@@ -39,24 +40,14 @@ import org.yakindu.sct.model.stext.stext.StextPackage;
  */
 public class LocalReactionImpl extends ReactionImpl implements LocalReaction {
 	/**
-	 * The cached value of the '{@link #getType() <em>Type</em>}' reference.
+	 * The cached value of the '{@link #getTypeSpecifier() <em>Type Specifier</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getType()
+	 * @see #getTypeSpecifier()
 	 * @generated
 	 * @ordered
 	 */
-	protected Type type;
-
-	/**
-	 * The cached value of the '{@link #getTypeArguments() <em>Type Arguments</em>}' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getTypeArguments()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<Type> typeArguments;
+	protected TypeSpecifier typeSpecifier;
 
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
@@ -113,24 +104,19 @@ public class LocalReactionImpl extends ReactionImpl implements LocalReaction {
 	 * @generated
 	 */
 	public Type getType() {
-		if (type != null && type.eIsProxy()) {
-			InternalEObject oldType = (InternalEObject)type;
-			type = (Type)eResolveProxy(oldType);
-			if (type != oldType) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, StextPackage.LOCAL_REACTION__TYPE, oldType, type));
-			}
-		}
-		return type;
+		Type type = basicGetType();
+		return type != null && type.eIsProxy() ? (Type)eResolveProxy((InternalEObject)type) : type;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	public Type basicGetType() {
-		return type;
+		if (getTypeSpecifier() != null)
+			return getTypeSpecifier().getType();
+		return null;
 	}
 
 	/**
@@ -138,11 +124,8 @@ public class LocalReactionImpl extends ReactionImpl implements LocalReaction {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setType(Type newType) {
-		Type oldType = type;
-		type = newType;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, StextPackage.LOCAL_REACTION__TYPE, oldType, type));
+	public TypeSpecifier getTypeSpecifier() {
+		return typeSpecifier;
 	}
 
 	/**
@@ -150,11 +133,33 @@ public class LocalReactionImpl extends ReactionImpl implements LocalReaction {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<Type> getTypeArguments() {
-		if (typeArguments == null) {
-			typeArguments = new EObjectResolvingEList<Type>(Type.class, this, StextPackage.LOCAL_REACTION__TYPE_ARGUMENTS);
+	public NotificationChain basicSetTypeSpecifier(TypeSpecifier newTypeSpecifier, NotificationChain msgs) {
+		TypeSpecifier oldTypeSpecifier = typeSpecifier;
+		typeSpecifier = newTypeSpecifier;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, StextPackage.LOCAL_REACTION__TYPE_SPECIFIER, oldTypeSpecifier, newTypeSpecifier);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
-		return typeArguments;
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setTypeSpecifier(TypeSpecifier newTypeSpecifier) {
+		if (newTypeSpecifier != typeSpecifier) {
+			NotificationChain msgs = null;
+			if (typeSpecifier != null)
+				msgs = ((InternalEObject)typeSpecifier).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - StextPackage.LOCAL_REACTION__TYPE_SPECIFIER, null, msgs);
+			if (newTypeSpecifier != null)
+				msgs = ((InternalEObject)newTypeSpecifier).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - StextPackage.LOCAL_REACTION__TYPE_SPECIFIER, null, msgs);
+			msgs = basicSetTypeSpecifier(newTypeSpecifier, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, StextPackage.LOCAL_REACTION__TYPE_SPECIFIER, newTypeSpecifier, newTypeSpecifier));
 	}
 
 	/**
@@ -189,6 +194,8 @@ public class LocalReactionImpl extends ReactionImpl implements LocalReaction {
 			case StextPackage.LOCAL_REACTION__TYPE:
 				if (resolve) return getType();
 				return basicGetType();
+			case StextPackage.LOCAL_REACTION__TYPE_SPECIFIER:
+				return getTypeSpecifier();
 			case StextPackage.LOCAL_REACTION__TYPE_ARGUMENTS:
 				return getTypeArguments();
 			case StextPackage.LOCAL_REACTION__NAME:
@@ -204,16 +211,11 @@ public class LocalReactionImpl extends ReactionImpl implements LocalReaction {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case StextPackage.LOCAL_REACTION__TYPE:
-				setType((Type)newValue);
-				return;
-			case StextPackage.LOCAL_REACTION__TYPE_ARGUMENTS:
-				getTypeArguments().clear();
-				getTypeArguments().addAll((Collection<? extends Type>)newValue);
+			case StextPackage.LOCAL_REACTION__TYPE_SPECIFIER:
+				setTypeSpecifier((TypeSpecifier)newValue);
 				return;
 			case StextPackage.LOCAL_REACTION__NAME:
 				setName((String)newValue);
@@ -230,11 +232,8 @@ public class LocalReactionImpl extends ReactionImpl implements LocalReaction {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case StextPackage.LOCAL_REACTION__TYPE:
-				setType((Type)null);
-				return;
-			case StextPackage.LOCAL_REACTION__TYPE_ARGUMENTS:
-				getTypeArguments().clear();
+			case StextPackage.LOCAL_REACTION__TYPE_SPECIFIER:
+				setTypeSpecifier((TypeSpecifier)null);
 				return;
 			case StextPackage.LOCAL_REACTION__NAME:
 				setName(NAME_EDEFAULT);
@@ -252,9 +251,11 @@ public class LocalReactionImpl extends ReactionImpl implements LocalReaction {
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 			case StextPackage.LOCAL_REACTION__TYPE:
-				return type != null;
+				return basicGetType() != null;
+			case StextPackage.LOCAL_REACTION__TYPE_SPECIFIER:
+				return typeSpecifier != null;
 			case StextPackage.LOCAL_REACTION__TYPE_ARGUMENTS:
-				return typeArguments != null && !typeArguments.isEmpty();
+				return !getTypeArguments().isEmpty();
 			case StextPackage.LOCAL_REACTION__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case StextPackage.LOCAL_REACTION__ID:
@@ -273,6 +274,7 @@ public class LocalReactionImpl extends ReactionImpl implements LocalReaction {
 		if (baseClass == TypedElement.class) {
 			switch (derivedFeatureID) {
 				case StextPackage.LOCAL_REACTION__TYPE: return TypesPackage.TYPED_ELEMENT__TYPE;
+				case StextPackage.LOCAL_REACTION__TYPE_SPECIFIER: return TypesPackage.TYPED_ELEMENT__TYPE_SPECIFIER;
 				case StextPackage.LOCAL_REACTION__TYPE_ARGUMENTS: return TypesPackage.TYPED_ELEMENT__TYPE_ARGUMENTS;
 				default: return -1;
 			}
@@ -307,6 +309,7 @@ public class LocalReactionImpl extends ReactionImpl implements LocalReaction {
 		if (baseClass == TypedElement.class) {
 			switch (baseFeatureID) {
 				case TypesPackage.TYPED_ELEMENT__TYPE: return StextPackage.LOCAL_REACTION__TYPE;
+				case TypesPackage.TYPED_ELEMENT__TYPE_SPECIFIER: return StextPackage.LOCAL_REACTION__TYPE_SPECIFIER;
 				case TypesPackage.TYPED_ELEMENT__TYPE_ARGUMENTS: return StextPackage.LOCAL_REACTION__TYPE_ARGUMENTS;
 				default: return -1;
 			}
@@ -350,6 +353,26 @@ public class LocalReactionImpl extends ReactionImpl implements LocalReaction {
 	@Override
 	public String getId() {
 		return getName();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case StextPackage.LOCAL_REACTION__TYPE_SPECIFIER:
+				return basicSetTypeSpecifier(null, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
+
+	@Override
+	public EList<Type> getTypeArguments() {
+		// TODO Maybe LocalReaction should not be a Declaration
+		return new BasicEList<Type>();
 	}
 	
 } //LocalReactionImpl

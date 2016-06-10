@@ -22,6 +22,7 @@ import org.yakindu.base.expressions.expressions.ExpressionsFactory;
 import org.yakindu.base.expressions.expressions.FeatureCall;
 import org.yakindu.base.expressions.expressions.IntLiteral;
 import org.yakindu.base.expressions.expressions.PrimitiveValueExpression;
+import org.yakindu.base.types.DeclaredTypeSpecifier;
 import org.yakindu.base.types.Type;
 import org.yakindu.base.types.TypesFactory;
 import org.yakindu.sct.model.sgraph.Reaction;
@@ -82,7 +83,9 @@ public class StextTestFactory extends StextFactoryImpl {
 		VariableDefinition v = StextFactory.eINSTANCE
 				.createVariableDefinition();
 		v.setName(name);
-		v.setType(type);
+		DeclaredTypeSpecifier specifier = TypesFactory.eINSTANCE.createDeclaredTypeSpecifier();
+		specifier.setType(type);
+		v.setTypeSpecifier(specifier);
 		if (scope != null)
 			scope.getDeclarations().add(v);
 		return v;

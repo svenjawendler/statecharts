@@ -11,8 +11,11 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
 import org.yakindu.base.base.NamedElement;
+import org.yakindu.base.types.ArrayDimension;
+import org.yakindu.base.types.ArrayTypeSpecifier;
 import org.yakindu.base.types.ComplexType;
 import org.yakindu.base.types.Declaration;
+import org.yakindu.base.types.DeclaredTypeSpecifier;
 import org.yakindu.base.types.Domain;
 import org.yakindu.base.types.EnumerationType;
 import org.yakindu.base.types.Enumerator;
@@ -28,6 +31,7 @@ import org.yakindu.base.types.Type;
 import org.yakindu.base.types.TypeAlias;
 import org.yakindu.base.types.TypeConstraint;
 import org.yakindu.base.types.TypeParameter;
+import org.yakindu.base.types.TypeSpecifier;
 import org.yakindu.base.types.TypedElement;
 import org.yakindu.base.types.TypesPackage;
 
@@ -159,6 +163,22 @@ public class TypesAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseTypeAlias(TypeAlias object) {
 				return createTypeAliasAdapter();
+			}
+			@Override
+			public Adapter caseTypeSpecifier(TypeSpecifier object) {
+				return createTypeSpecifierAdapter();
+			}
+			@Override
+			public Adapter caseArrayTypeSpecifier(ArrayTypeSpecifier object) {
+				return createArrayTypeSpecifierAdapter();
+			}
+			@Override
+			public Adapter caseArrayDimension(ArrayDimension object) {
+				return createArrayDimensionAdapter();
+			}
+			@Override
+			public Adapter caseDeclaredTypeSpecifier(DeclaredTypeSpecifier object) {
+				return createDeclaredTypeSpecifierAdapter();
 			}
 			@Override
 			public Adapter caseNamedElement(NamedElement object) {
@@ -464,6 +484,62 @@ public class TypesAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createTypeAliasAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.yakindu.base.types.TypeSpecifier <em>Type Specifier</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.yakindu.base.types.TypeSpecifier
+	 * @generated
+	 */
+	public Adapter createTypeSpecifierAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.yakindu.base.types.ArrayTypeSpecifier <em>Array Type Specifier</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.yakindu.base.types.ArrayTypeSpecifier
+	 * @generated
+	 */
+	public Adapter createArrayTypeSpecifierAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.yakindu.base.types.ArrayDimension <em>Array Dimension</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.yakindu.base.types.ArrayDimension
+	 * @generated
+	 */
+	public Adapter createArrayDimensionAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.yakindu.base.types.DeclaredTypeSpecifier <em>Declared Type Specifier</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.yakindu.base.types.DeclaredTypeSpecifier
+	 * @generated
+	 */
+	public Adapter createDeclaredTypeSpecifierAdapter() {
 		return null;
 	}
 

@@ -176,6 +176,10 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 				return createTypeCastExpressionAdapter();
 			}
 			@Override
+			public Adapter caseArrayInitializationExpression(ArrayInitializationExpression object) {
+				return createArrayInitializationExpressionAdapter();
+			}
+			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -570,6 +574,20 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createTypeCastExpressionAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.yakindu.base.expressions.expressions.ArrayInitializationExpression <em>Array Initialization Expression</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.yakindu.base.expressions.expressions.ArrayInitializationExpression
+	 * @generated
+	 */
+	public Adapter createArrayInitializationExpressionAdapter() {
 		return null;
 	}
 

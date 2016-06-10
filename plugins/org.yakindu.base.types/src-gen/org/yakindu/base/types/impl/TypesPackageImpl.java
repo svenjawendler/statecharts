@@ -13,8 +13,11 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.yakindu.base.base.BasePackage;
+import org.yakindu.base.types.ArrayDimension;
+import org.yakindu.base.types.ArrayTypeSpecifier;
 import org.yakindu.base.types.ComplexType;
 import org.yakindu.base.types.Declaration;
+import org.yakindu.base.types.DeclaredTypeSpecifier;
 import org.yakindu.base.types.Direction;
 import org.yakindu.base.types.Domain;
 import org.yakindu.base.types.EnumerationType;
@@ -31,6 +34,7 @@ import org.yakindu.base.types.Type;
 import org.yakindu.base.types.TypeAlias;
 import org.yakindu.base.types.TypeConstraint;
 import org.yakindu.base.types.TypeParameter;
+import org.yakindu.base.types.TypeSpecifier;
 import org.yakindu.base.types.TypedElement;
 import org.yakindu.base.types.TypesFactory;
 import org.yakindu.base.types.TypesPackage;
@@ -163,6 +167,34 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * @generated
 	 */
 	private EClass typeAliasEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass typeSpecifierEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass arrayTypeSpecifierEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass arrayDimensionEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass declaredTypeSpecifierEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -402,8 +434,17 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getTypedElement_TypeArguments() {
+	public EReference getTypedElement_TypeSpecifier() {
 		return (EReference)typedElementEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getTypedElement_TypeArguments() {
+		return (EReference)typedElementEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -635,6 +676,78 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getTypeSpecifier() {
+		return typeSpecifierEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getTypeSpecifier_TypeArguments() {
+		return (EReference)typeSpecifierEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getTypeSpecifier_Type() {
+		return (EReference)typeSpecifierEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getArrayTypeSpecifier() {
+		return arrayTypeSpecifierEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getArrayTypeSpecifier_Dimensions() {
+		return (EReference)arrayTypeSpecifierEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getArrayDimension() {
+		return arrayDimensionEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getArrayDimension_Size() {
+		return (EAttribute)arrayDimensionEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getDeclaredTypeSpecifier() {
+		return declaredTypeSpecifierEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EEnum getDirection() {
 		return directionEEnum;
 	}
@@ -690,6 +803,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 
 		typedElementEClass = createEClass(TYPED_ELEMENT);
 		createEReference(typedElementEClass, TYPED_ELEMENT__TYPE);
+		createEReference(typedElementEClass, TYPED_ELEMENT__TYPE_SPECIFIER);
 		createEReference(typedElementEClass, TYPED_ELEMENT__TYPE_ARGUMENTS);
 
 		eventEClass = createEClass(EVENT);
@@ -729,6 +843,18 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 		createEAttribute(domainEClass, DOMAIN__DOMAIN_ID);
 
 		typeAliasEClass = createEClass(TYPE_ALIAS);
+
+		typeSpecifierEClass = createEClass(TYPE_SPECIFIER);
+		createEReference(typeSpecifierEClass, TYPE_SPECIFIER__TYPE_ARGUMENTS);
+		createEReference(typeSpecifierEClass, TYPE_SPECIFIER__TYPE);
+
+		arrayTypeSpecifierEClass = createEClass(ARRAY_TYPE_SPECIFIER);
+		createEReference(arrayTypeSpecifierEClass, ARRAY_TYPE_SPECIFIER__DIMENSIONS);
+
+		arrayDimensionEClass = createEClass(ARRAY_DIMENSION);
+		createEAttribute(arrayDimensionEClass, ARRAY_DIMENSION__SIZE);
+
+		declaredTypeSpecifierEClass = createEClass(DECLARED_TYPE_SPECIFIER);
 
 		// Create enums
 		directionEEnum = createEEnum(DIRECTION);
@@ -784,6 +910,9 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 		rangeConstraintEClass.getESuperTypes().add(this.getTypeConstraint());
 		typeAliasEClass.getESuperTypes().add(this.getTypedElement());
 		typeAliasEClass.getESuperTypes().add(this.getType());
+		arrayTypeSpecifierEClass.getESuperTypes().add(this.getTypeSpecifier());
+		arrayTypeSpecifierEClass.getESuperTypes().add(this.getType());
+		declaredTypeSpecifierEClass.getESuperTypes().add(this.getTypeSpecifier());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(packageEClass, org.yakindu.base.types.Package.class, "Package", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -812,8 +941,9 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 		initEReference(getParameter_OwningOperation(), this.getOperation(), this.getOperation_Parameters(), "owningOperation", null, 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(typedElementEClass, TypedElement.class, "TypedElement", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getTypedElement_Type(), this.getType(), null, "type", null, 0, 1, TypedElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getTypedElement_TypeArguments(), this.getType(), null, "typeArguments", null, 0, -1, TypedElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getTypedElement_Type(), this.getType(), null, "type", null, 0, 1, TypedElement.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+		initEReference(getTypedElement_TypeSpecifier(), this.getTypeSpecifier(), null, "typeSpecifier", null, 0, 1, TypedElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getTypedElement_TypeArguments(), this.getType(), null, "typeArguments", null, 0, -1, TypedElement.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
 		initEClass(eventEClass, Event.class, "Event", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getEvent_Direction(), this.getDirection(), "direction", null, 0, 1, Event.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -854,6 +984,18 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 		initEAttribute(getDomain_DomainID(), ecorePackage.getEString(), "domainID", null, 0, 1, Domain.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(typeAliasEClass, TypeAlias.class, "TypeAlias", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(typeSpecifierEClass, TypeSpecifier.class, "TypeSpecifier", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getTypeSpecifier_TypeArguments(), this.getType(), null, "typeArguments", null, 0, -1, TypeSpecifier.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getTypeSpecifier_Type(), this.getType(), null, "type", null, 0, 1, TypeSpecifier.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(arrayTypeSpecifierEClass, ArrayTypeSpecifier.class, "ArrayTypeSpecifier", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getArrayTypeSpecifier_Dimensions(), this.getArrayDimension(), null, "dimensions", null, 1, -1, ArrayTypeSpecifier.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(arrayDimensionEClass, ArrayDimension.class, "ArrayDimension", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getArrayDimension_Size(), ecorePackage.getEInt(), "size", null, 0, 1, ArrayDimension.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(declaredTypeSpecifierEClass, DeclaredTypeSpecifier.class, "DeclaredTypeSpecifier", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		// Initialize enums and add enum literals
 		initEEnum(directionEEnum, Direction.class, "Direction");

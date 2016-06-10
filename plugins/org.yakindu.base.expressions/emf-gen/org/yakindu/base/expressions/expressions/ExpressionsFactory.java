@@ -247,6 +247,15 @@ public interface ExpressionsFactory extends EFactory {
 	TypeCastExpression createTypeCastExpression();
 
 	/**
+	 * Returns a new object of class '<em>Array Initialization Expression</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Array Initialization Expression</em>'.
+	 * @generated
+	 */
+	ArrayInitializationExpression createArrayInitializationExpression();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

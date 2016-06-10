@@ -267,13 +267,22 @@ public interface TypesPackage extends EPackage {
 	int TYPED_ELEMENT__TYPE = 0;
 
 	/**
+	 * The feature id for the '<em><b>Type Specifier</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TYPED_ELEMENT__TYPE_SPECIFIER = 1;
+
+	/**
 	 * The feature id for the '<em><b>Type Arguments</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TYPED_ELEMENT__TYPE_ARGUMENTS = 1;
+	int TYPED_ELEMENT__TYPE_ARGUMENTS = 2;
 
 	/**
 	 * The number of structural features of the '<em>Typed Element</em>' class.
@@ -282,7 +291,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TYPED_ELEMENT_FEATURE_COUNT = 2;
+	int TYPED_ELEMENT_FEATURE_COUNT = 3;
 
 	/**
 	 * The meta object id for the '{@link org.yakindu.base.types.impl.DeclarationImpl <em>Declaration</em>}' class.
@@ -302,6 +311,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int DECLARATION__TYPE = TYPED_ELEMENT__TYPE;
+
+	/**
+	 * The feature id for the '<em><b>Type Specifier</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DECLARATION__TYPE_SPECIFIER = TYPED_ELEMENT__TYPE_SPECIFIER;
 
 	/**
 	 * The feature id for the '<em><b>Type Arguments</b></em>' reference list.
@@ -347,6 +365,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int OPERATION__TYPE = DECLARATION__TYPE;
+
+	/**
+	 * The feature id for the '<em><b>Type Specifier</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATION__TYPE_SPECIFIER = DECLARATION__TYPE_SPECIFIER;
 
 	/**
 	 * The feature id for the '<em><b>Type Arguments</b></em>' reference list.
@@ -401,6 +428,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int PROPERTY__TYPE = DECLARATION__TYPE;
+
+	/**
+	 * The feature id for the '<em><b>Type Specifier</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPERTY__TYPE_SPECIFIER = DECLARATION__TYPE_SPECIFIER;
 
 	/**
 	 * The feature id for the '<em><b>Type Arguments</b></em>' reference list.
@@ -475,6 +511,15 @@ public interface TypesPackage extends EPackage {
 	int PARAMETER__TYPE = TYPED_ELEMENT__TYPE;
 
 	/**
+	 * The feature id for the '<em><b>Type Specifier</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER__TYPE_SPECIFIER = TYPED_ELEMENT__TYPE_SPECIFIER;
+
+	/**
 	 * The feature id for the '<em><b>Type Arguments</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -529,6 +574,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int EVENT__TYPE = DECLARATION__TYPE;
+
+	/**
+	 * The feature id for the '<em><b>Type Specifier</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EVENT__TYPE_SPECIFIER = DECLARATION__TYPE_SPECIFIER;
 
 	/**
 	 * The feature id for the '<em><b>Type Arguments</b></em>' reference list.
@@ -915,6 +969,15 @@ public interface TypesPackage extends EPackage {
 	int ENUMERATOR__TYPE = DECLARATION__TYPE;
 
 	/**
+	 * The feature id for the '<em><b>Type Specifier</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENUMERATOR__TYPE_SPECIFIER = DECLARATION__TYPE_SPECIFIER;
+
+	/**
 	 * The feature id for the '<em><b>Type Arguments</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1164,6 +1227,15 @@ public interface TypesPackage extends EPackage {
 	int TYPE_ALIAS__TYPE = TYPED_ELEMENT__TYPE;
 
 	/**
+	 * The feature id for the '<em><b>Type Specifier</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TYPE_ALIAS__TYPE_SPECIFIER = TYPED_ELEMENT__TYPE_SPECIFIER;
+
+	/**
 	 * The feature id for the '<em><b>Type Arguments</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1227,6 +1299,199 @@ public interface TypesPackage extends EPackage {
 	int TYPE_ALIAS_FEATURE_COUNT = TYPED_ELEMENT_FEATURE_COUNT + 5;
 
 	/**
+	 * The meta object id for the '{@link org.yakindu.base.types.impl.TypeSpecifierImpl <em>Type Specifier</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.yakindu.base.types.impl.TypeSpecifierImpl
+	 * @see org.yakindu.base.types.impl.TypesPackageImpl#getTypeSpecifier()
+	 * @generated
+	 */
+	int TYPE_SPECIFIER = 19;
+
+	/**
+	 * The feature id for the '<em><b>Type Arguments</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TYPE_SPECIFIER__TYPE_ARGUMENTS = 0;
+
+	/**
+	 * The feature id for the '<em><b>Type</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TYPE_SPECIFIER__TYPE = 1;
+
+	/**
+	 * The number of structural features of the '<em>Type Specifier</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TYPE_SPECIFIER_FEATURE_COUNT = 2;
+
+	/**
+	 * The meta object id for the '{@link org.yakindu.base.types.impl.ArrayTypeSpecifierImpl <em>Array Type Specifier</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.yakindu.base.types.impl.ArrayTypeSpecifierImpl
+	 * @see org.yakindu.base.types.impl.TypesPackageImpl#getArrayTypeSpecifier()
+	 * @generated
+	 */
+	int ARRAY_TYPE_SPECIFIER = 20;
+
+	/**
+	 * The feature id for the '<em><b>Type Arguments</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ARRAY_TYPE_SPECIFIER__TYPE_ARGUMENTS = TYPE_SPECIFIER__TYPE_ARGUMENTS;
+
+	/**
+	 * The feature id for the '<em><b>Type</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ARRAY_TYPE_SPECIFIER__TYPE = TYPE_SPECIFIER__TYPE;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ARRAY_TYPE_SPECIFIER__NAME = TYPE_SPECIFIER_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ARRAY_TYPE_SPECIFIER__ID = TYPE_SPECIFIER_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Constraint</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ARRAY_TYPE_SPECIFIER__CONSTRAINT = TYPE_SPECIFIER_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ARRAY_TYPE_SPECIFIER__ABSTRACT = TYPE_SPECIFIER_FEATURE_COUNT + 3;
+
+	/**
+	 * The feature id for the '<em><b>Visible</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ARRAY_TYPE_SPECIFIER__VISIBLE = TYPE_SPECIFIER_FEATURE_COUNT + 4;
+
+	/**
+	 * The feature id for the '<em><b>Dimensions</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ARRAY_TYPE_SPECIFIER__DIMENSIONS = TYPE_SPECIFIER_FEATURE_COUNT + 5;
+
+	/**
+	 * The number of structural features of the '<em>Array Type Specifier</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ARRAY_TYPE_SPECIFIER_FEATURE_COUNT = TYPE_SPECIFIER_FEATURE_COUNT + 6;
+
+	/**
+	 * The meta object id for the '{@link org.yakindu.base.types.impl.ArrayDimensionImpl <em>Array Dimension</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.yakindu.base.types.impl.ArrayDimensionImpl
+	 * @see org.yakindu.base.types.impl.TypesPackageImpl#getArrayDimension()
+	 * @generated
+	 */
+	int ARRAY_DIMENSION = 21;
+
+	/**
+	 * The feature id for the '<em><b>Size</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ARRAY_DIMENSION__SIZE = 0;
+
+	/**
+	 * The number of structural features of the '<em>Array Dimension</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ARRAY_DIMENSION_FEATURE_COUNT = 1;
+
+	/**
+	 * The meta object id for the '{@link org.yakindu.base.types.impl.DeclaredTypeSpecifierImpl <em>Declared Type Specifier</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.yakindu.base.types.impl.DeclaredTypeSpecifierImpl
+	 * @see org.yakindu.base.types.impl.TypesPackageImpl#getDeclaredTypeSpecifier()
+	 * @generated
+	 */
+	int DECLARED_TYPE_SPECIFIER = 22;
+
+	/**
+	 * The feature id for the '<em><b>Type Arguments</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DECLARED_TYPE_SPECIFIER__TYPE_ARGUMENTS = TYPE_SPECIFIER__TYPE_ARGUMENTS;
+
+	/**
+	 * The feature id for the '<em><b>Type</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DECLARED_TYPE_SPECIFIER__TYPE = TYPE_SPECIFIER__TYPE;
+
+	/**
+	 * The number of structural features of the '<em>Declared Type Specifier</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DECLARED_TYPE_SPECIFIER_FEATURE_COUNT = TYPE_SPECIFIER_FEATURE_COUNT + 0;
+
+	/**
 	 * The meta object id for the '{@link org.yakindu.base.types.Direction <em>Direction</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1234,7 +1499,7 @@ public interface TypesPackage extends EPackage {
 	 * @see org.yakindu.base.types.impl.TypesPackageImpl#getDirection()
 	 * @generated
 	 */
-	int DIRECTION = 19;
+	int DIRECTION = 23;
 
 	/**
 	 * Returns the meta object for class '{@link org.yakindu.base.types.Package <em>Package</em>}'.
@@ -1437,6 +1702,17 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getTypedElement_Type();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.yakindu.base.types.TypedElement#getTypeSpecifier <em>Type Specifier</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Type Specifier</em>'.
+	 * @see org.yakindu.base.types.TypedElement#getTypeSpecifier()
+	 * @see #getTypedElement()
+	 * @generated
+	 */
+	EReference getTypedElement_TypeSpecifier();
 
 	/**
 	 * Returns the meta object for the reference list '{@link org.yakindu.base.types.TypedElement#getTypeArguments <em>Type Arguments</em>}'.
@@ -1724,6 +2000,90 @@ public interface TypesPackage extends EPackage {
 	EClass getTypeAlias();
 
 	/**
+	 * Returns the meta object for class '{@link org.yakindu.base.types.TypeSpecifier <em>Type Specifier</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Type Specifier</em>'.
+	 * @see org.yakindu.base.types.TypeSpecifier
+	 * @generated
+	 */
+	EClass getTypeSpecifier();
+
+	/**
+	 * Returns the meta object for the reference list '{@link org.yakindu.base.types.TypeSpecifier#getTypeArguments <em>Type Arguments</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Type Arguments</em>'.
+	 * @see org.yakindu.base.types.TypeSpecifier#getTypeArguments()
+	 * @see #getTypeSpecifier()
+	 * @generated
+	 */
+	EReference getTypeSpecifier_TypeArguments();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.yakindu.base.types.TypeSpecifier#getType <em>Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Type</em>'.
+	 * @see org.yakindu.base.types.TypeSpecifier#getType()
+	 * @see #getTypeSpecifier()
+	 * @generated
+	 */
+	EReference getTypeSpecifier_Type();
+
+	/**
+	 * Returns the meta object for class '{@link org.yakindu.base.types.ArrayTypeSpecifier <em>Array Type Specifier</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Array Type Specifier</em>'.
+	 * @see org.yakindu.base.types.ArrayTypeSpecifier
+	 * @generated
+	 */
+	EClass getArrayTypeSpecifier();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.yakindu.base.types.ArrayTypeSpecifier#getDimensions <em>Dimensions</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Dimensions</em>'.
+	 * @see org.yakindu.base.types.ArrayTypeSpecifier#getDimensions()
+	 * @see #getArrayTypeSpecifier()
+	 * @generated
+	 */
+	EReference getArrayTypeSpecifier_Dimensions();
+
+	/**
+	 * Returns the meta object for class '{@link org.yakindu.base.types.ArrayDimension <em>Array Dimension</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Array Dimension</em>'.
+	 * @see org.yakindu.base.types.ArrayDimension
+	 * @generated
+	 */
+	EClass getArrayDimension();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.yakindu.base.types.ArrayDimension#getSize <em>Size</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Size</em>'.
+	 * @see org.yakindu.base.types.ArrayDimension#getSize()
+	 * @see #getArrayDimension()
+	 * @generated
+	 */
+	EAttribute getArrayDimension_Size();
+
+	/**
+	 * Returns the meta object for class '{@link org.yakindu.base.types.DeclaredTypeSpecifier <em>Declared Type Specifier</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Declared Type Specifier</em>'.
+	 * @see org.yakindu.base.types.DeclaredTypeSpecifier
+	 * @generated
+	 */
+	EClass getDeclaredTypeSpecifier();
+
+	/**
 	 * Returns the meta object for enum '{@link org.yakindu.base.types.Direction <em>Direction</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1920,6 +2280,14 @@ public interface TypesPackage extends EPackage {
 		 * @generated
 		 */
 		EReference TYPED_ELEMENT__TYPE = eINSTANCE.getTypedElement_Type();
+
+		/**
+		 * The meta object literal for the '<em><b>Type Specifier</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TYPED_ELEMENT__TYPE_SPECIFIER = eINSTANCE.getTypedElement_TypeSpecifier();
 
 		/**
 		 * The meta object literal for the '<em><b>Type Arguments</b></em>' reference list feature.
@@ -2160,6 +2528,78 @@ public interface TypesPackage extends EPackage {
 		 * @generated
 		 */
 		EClass TYPE_ALIAS = eINSTANCE.getTypeAlias();
+
+		/**
+		 * The meta object literal for the '{@link org.yakindu.base.types.impl.TypeSpecifierImpl <em>Type Specifier</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.yakindu.base.types.impl.TypeSpecifierImpl
+		 * @see org.yakindu.base.types.impl.TypesPackageImpl#getTypeSpecifier()
+		 * @generated
+		 */
+		EClass TYPE_SPECIFIER = eINSTANCE.getTypeSpecifier();
+
+		/**
+		 * The meta object literal for the '<em><b>Type Arguments</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TYPE_SPECIFIER__TYPE_ARGUMENTS = eINSTANCE.getTypeSpecifier_TypeArguments();
+
+		/**
+		 * The meta object literal for the '<em><b>Type</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TYPE_SPECIFIER__TYPE = eINSTANCE.getTypeSpecifier_Type();
+
+		/**
+		 * The meta object literal for the '{@link org.yakindu.base.types.impl.ArrayTypeSpecifierImpl <em>Array Type Specifier</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.yakindu.base.types.impl.ArrayTypeSpecifierImpl
+		 * @see org.yakindu.base.types.impl.TypesPackageImpl#getArrayTypeSpecifier()
+		 * @generated
+		 */
+		EClass ARRAY_TYPE_SPECIFIER = eINSTANCE.getArrayTypeSpecifier();
+
+		/**
+		 * The meta object literal for the '<em><b>Dimensions</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ARRAY_TYPE_SPECIFIER__DIMENSIONS = eINSTANCE.getArrayTypeSpecifier_Dimensions();
+
+		/**
+		 * The meta object literal for the '{@link org.yakindu.base.types.impl.ArrayDimensionImpl <em>Array Dimension</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.yakindu.base.types.impl.ArrayDimensionImpl
+		 * @see org.yakindu.base.types.impl.TypesPackageImpl#getArrayDimension()
+		 * @generated
+		 */
+		EClass ARRAY_DIMENSION = eINSTANCE.getArrayDimension();
+
+		/**
+		 * The meta object literal for the '<em><b>Size</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ARRAY_DIMENSION__SIZE = eINSTANCE.getArrayDimension_Size();
+
+		/**
+		 * The meta object literal for the '{@link org.yakindu.base.types.impl.DeclaredTypeSpecifierImpl <em>Declared Type Specifier</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.yakindu.base.types.impl.DeclaredTypeSpecifierImpl
+		 * @see org.yakindu.base.types.impl.TypesPackageImpl#getDeclaredTypeSpecifier()
+		 * @generated
+		 */
+		EClass DECLARED_TYPE_SPECIFIER = eINSTANCE.getDeclaredTypeSpecifier();
 
 		/**
 		 * The meta object literal for the '{@link org.yakindu.base.types.Direction <em>Direction</em>}' enum.

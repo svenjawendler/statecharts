@@ -179,6 +179,42 @@ public interface TypesFactory extends EFactory {
 	TypeAlias createTypeAlias();
 
 	/**
+	 * Returns a new object of class '<em>Type Specifier</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Type Specifier</em>'.
+	 * @generated
+	 */
+	TypeSpecifier createTypeSpecifier();
+
+	/**
+	 * Returns a new object of class '<em>Array Type Specifier</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Array Type Specifier</em>'.
+	 * @generated
+	 */
+	ArrayTypeSpecifier createArrayTypeSpecifier();
+
+	/**
+	 * Returns a new object of class '<em>Array Dimension</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Array Dimension</em>'.
+	 * @generated
+	 */
+	ArrayDimension createArrayDimension();
+
+	/**
+	 * Returns a new object of class '<em>Declared Type Specifier</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Declared Type Specifier</em>'.
+	 * @generated
+	 */
+	DeclaredTypeSpecifier createDeclaredTypeSpecifier();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
