@@ -16,6 +16,8 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.yakindu.base.base.BasePackage;
 import org.yakindu.base.base.NamedElement;
+import org.yakindu.base.types.ArrayTypeSpecifier;
+import org.yakindu.base.types.DeclaredTypeSpecifier;
 import org.yakindu.base.types.PackageMember;
 import org.yakindu.base.types.Type;
 import org.yakindu.base.types.TypeAlias;
@@ -160,8 +162,10 @@ public class TypeAliasImpl extends EObjectImpl implements TypeAlias {
 	 * @generated NOT
 	 */
 	public Type basicGetType() {
-		if (getTypeSpecifier() != null)
-			return getTypeSpecifier().getType();
+		if (getTypeSpecifier() instanceof ArrayTypeSpecifier)
+			return ((ArrayTypeSpecifier) getTypeSpecifier()).getType();
+		if (getTypeSpecifier() instanceof DeclaredTypeSpecifier)
+			return ((DeclaredTypeSpecifier) getTypeSpecifier()).getType();
 		return null;
 	}
 

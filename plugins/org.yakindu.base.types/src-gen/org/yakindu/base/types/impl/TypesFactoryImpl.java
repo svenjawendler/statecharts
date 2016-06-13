@@ -13,6 +13,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.yakindu.base.types.ArrayDimension;
+import org.yakindu.base.types.ArrayType;
 import org.yakindu.base.types.ArrayTypeSpecifier;
 import org.yakindu.base.types.ComplexType;
 import org.yakindu.base.types.DeclaredTypeSpecifier;
@@ -99,6 +100,7 @@ public class TypesFactoryImpl extends EFactoryImpl implements TypesFactory {
 			case TypesPackage.TYPE_ALIAS: return createTypeAlias();
 			case TypesPackage.TYPE_SPECIFIER: return createTypeSpecifier();
 			case TypesPackage.ARRAY_TYPE_SPECIFIER: return createArrayTypeSpecifier();
+			case TypesPackage.ARRAY_TYPE: return createArrayType();
 			case TypesPackage.ARRAY_DIMENSION: return createArrayDimension();
 			case TypesPackage.DECLARED_TYPE_SPECIFIER: return createDeclaredTypeSpecifier();
 			default:
@@ -324,6 +326,16 @@ public class TypesFactoryImpl extends EFactoryImpl implements TypesFactory {
 	public ArrayTypeSpecifier createArrayTypeSpecifier() {
 		ArrayTypeSpecifierImpl arrayTypeSpecifier = new ArrayTypeSpecifierImpl();
 		return arrayTypeSpecifier;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ArrayType createArrayType() {
+		ArrayTypeImpl arrayType = new ArrayTypeImpl();
+		return arrayType;
 	}
 
 	/**

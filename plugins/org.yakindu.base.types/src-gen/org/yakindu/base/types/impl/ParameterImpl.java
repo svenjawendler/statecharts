@@ -17,6 +17,8 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.yakindu.base.base.BasePackage;
 import org.yakindu.base.base.NamedElement;
+import org.yakindu.base.types.ArrayTypeSpecifier;
+import org.yakindu.base.types.DeclaredTypeSpecifier;
 import org.yakindu.base.types.Operation;
 import org.yakindu.base.types.Parameter;
 import org.yakindu.base.types.Type;
@@ -105,8 +107,10 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 	 * @generated NOT
 	 */
 	public Type basicGetType() {
-		if (getTypeSpecifier() != null)
-			return getTypeSpecifier().getType();
+		if (getTypeSpecifier() instanceof ArrayTypeSpecifier)
+			return ((ArrayTypeSpecifier) getTypeSpecifier()).getType();
+		if (getTypeSpecifier() instanceof DeclaredTypeSpecifier)
+			return ((DeclaredTypeSpecifier) getTypeSpecifier()).getType();
 		return null;
 	}
 

@@ -156,8 +156,8 @@ class DefaultExecutionContextInitializer implements IExecutionContextInitializer
 		slot.name = element.fullyQualifiedName.lastSegment
 		slot.fqName = element.fullyQualifiedName.toString
 		slot.value = slot.type?.defaultValue
-		slot.type = type
-		val size = type.dimensions.get(0).size
+		slot.type = type.type
+		val size = type.type.dimensions.get(0).size
 		for (var int i=0; i<size; i++) {
 			val elemSlot = new ExecutionVariableImpl()
 			elemSlot.name = "["+i+"]"

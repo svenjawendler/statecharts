@@ -47,6 +47,7 @@ import org.yakindu.base.expressions.expressions.ShiftExpression;
 import org.yakindu.base.expressions.expressions.StringLiteral;
 import org.yakindu.base.expressions.expressions.TypeCastExpression;
 import org.yakindu.base.expressions.expressions.UnaryOperator;
+import org.yakindu.base.types.ArrayType;
 import org.yakindu.base.types.ArrayTypeSpecifier;
 import org.yakindu.base.types.DeclaredTypeSpecifier;
 import org.yakindu.base.types.EnumerationType;
@@ -56,6 +57,7 @@ import org.yakindu.base.types.Parameter;
 import org.yakindu.base.types.Property;
 import org.yakindu.base.types.Type;
 import org.yakindu.base.types.TypeAlias;
+import org.yakindu.base.types.TypesFactory;
 import org.yakindu.base.types.inferrer.AbstractTypeSystemInferrer;
 
 /**
@@ -206,7 +208,10 @@ public class ExpressionsTypeInferrer extends AbstractTypeSystemInferrer implemen
 	}
 	
 	public Type infer(ArrayInitializationExpression e) {
-		return inferTypeDispatch(e.getValues().get(0));
+		ArrayType arrayType = TypesFactory.eINSTANCE.createArrayType();
+		Type elementType = inferTypeDispatch(e.getValues().get(0));
+		arrayType.setBaseType(elementType);
+		return arrayType;
 	}
 	
 	public Object infer(DeclaredTypeSpecifier typeSpecifier) {

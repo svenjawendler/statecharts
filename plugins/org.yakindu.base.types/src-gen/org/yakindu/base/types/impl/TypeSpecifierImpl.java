@@ -29,7 +29,6 @@ import org.yakindu.base.types.TypesPackage;
  * </p>
  * <ul>
  *   <li>{@link org.yakindu.base.types.impl.TypeSpecifierImpl#getTypeArguments <em>Type Arguments</em>}</li>
- *   <li>{@link org.yakindu.base.types.impl.TypeSpecifierImpl#getType <em>Type</em>}</li>
  * </ul>
  *
  * @generated
@@ -44,16 +43,6 @@ public class TypeSpecifierImpl extends EObjectImpl implements TypeSpecifier {
 	 * @ordered
 	 */
 	protected EList<Type> typeArguments;
-
-	/**
-	 * The cached value of the '{@link #getType() <em>Type</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getType()
-	 * @generated
-	 * @ordered
-	 */
-	protected Type type;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -91,52 +80,11 @@ public class TypeSpecifierImpl extends EObjectImpl implements TypeSpecifier {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Type getType() {
-		if (type != null && type.eIsProxy()) {
-			InternalEObject oldType = (InternalEObject)type;
-			type = (Type)eResolveProxy(oldType);
-			if (type != oldType) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, TypesPackage.TYPE_SPECIFIER__TYPE, oldType, type));
-			}
-		}
-		return type;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Type basicGetType() {
-		return type;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setType(Type newType) {
-		Type oldType = type;
-		type = newType;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, TypesPackage.TYPE_SPECIFIER__TYPE, oldType, type));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case TypesPackage.TYPE_SPECIFIER__TYPE_ARGUMENTS:
 				return getTypeArguments();
-			case TypesPackage.TYPE_SPECIFIER__TYPE:
-				if (resolve) return getType();
-				return basicGetType();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -154,9 +102,6 @@ public class TypeSpecifierImpl extends EObjectImpl implements TypeSpecifier {
 				getTypeArguments().clear();
 				getTypeArguments().addAll((Collection<? extends Type>)newValue);
 				return;
-			case TypesPackage.TYPE_SPECIFIER__TYPE:
-				setType((Type)newValue);
-				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -172,9 +117,6 @@ public class TypeSpecifierImpl extends EObjectImpl implements TypeSpecifier {
 			case TypesPackage.TYPE_SPECIFIER__TYPE_ARGUMENTS:
 				getTypeArguments().clear();
 				return;
-			case TypesPackage.TYPE_SPECIFIER__TYPE:
-				setType((Type)null);
-				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -189,8 +131,6 @@ public class TypeSpecifierImpl extends EObjectImpl implements TypeSpecifier {
 		switch (featureID) {
 			case TypesPackage.TYPE_SPECIFIER__TYPE_ARGUMENTS:
 				return typeArguments != null && !typeArguments.isEmpty();
-			case TypesPackage.TYPE_SPECIFIER__TYPE:
-				return type != null;
 		}
 		return super.eIsSet(featureID);
 	}

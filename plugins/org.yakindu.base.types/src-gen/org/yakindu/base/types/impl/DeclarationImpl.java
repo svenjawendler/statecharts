@@ -12,7 +12,9 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.yakindu.base.base.BasePackage;
 import org.yakindu.base.base.NamedElement;
+import org.yakindu.base.types.ArrayTypeSpecifier;
 import org.yakindu.base.types.Declaration;
+import org.yakindu.base.types.DeclaredTypeSpecifier;
 import org.yakindu.base.types.PackageMember;
 import org.yakindu.base.types.Type;
 import org.yakindu.base.types.TypeSpecifier;
@@ -111,8 +113,10 @@ public abstract class DeclarationImpl extends EObjectImpl implements Declaration
 	 * @generated NOT
 	 */
 	public Type basicGetType() {
-		if (getTypeSpecifier() != null)
-			return getTypeSpecifier().getType();
+		if (getTypeSpecifier() instanceof ArrayTypeSpecifier)
+			return ((ArrayTypeSpecifier) getTypeSpecifier()).getType();
+		if (getTypeSpecifier() instanceof DeclaredTypeSpecifier)
+			return ((DeclaredTypeSpecifier) getTypeSpecifier()).getType();
 		return null;
 	}
 

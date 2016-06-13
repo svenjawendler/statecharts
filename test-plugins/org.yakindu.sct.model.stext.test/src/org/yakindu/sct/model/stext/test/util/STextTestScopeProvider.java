@@ -27,6 +27,7 @@ import org.eclipse.xtext.scoping.IScope;
 import org.eclipse.xtext.scoping.impl.SimpleScope;
 import org.yakindu.base.types.ComplexType;
 import org.yakindu.base.types.Declaration;
+import org.yakindu.base.types.DeclaredTypeSpecifier;
 import org.yakindu.base.types.EnumerationType;
 import org.yakindu.base.types.Enumerator;
 import org.yakindu.base.types.Property;
@@ -102,7 +103,7 @@ public class STextTestScopeProvider extends STextScopeProvider {
 
 		Property featureX = TypesFactory.eINSTANCE.createProperty();
 		featureX.setName("x");
-		TypeSpecifier typeSpecifier = TypesFactory.eINSTANCE.createTypeSpecifier();
+		DeclaredTypeSpecifier typeSpecifier = TypesFactory.eINSTANCE.createDeclaredTypeSpecifier();
 		typeSpecifier.setType(typeSystem.getType(GenericTypeSystem.INTEGER));
 		featureX.setTypeSpecifier(typeSpecifier);
 		complexType.getFeatures().add(featureX);

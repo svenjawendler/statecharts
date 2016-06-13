@@ -20,6 +20,8 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -40,6 +42,8 @@ public abstract class AbstractTypeSystem implements ITypeSystem {
 	protected Map<String, Type> typeRegistry = new HashMap<String, Type>();
 	protected Map<Type, Type> extendsRegistry = new HashMap<Type, Type>();
 	protected Map<Type, Type> conversionRegistry = new HashMap<Type, Type>();
+	
+	protected Map<EClass, EReference> recursionRegistry = new HashMap<>();
 
 	protected abstract void initBuiltInTypes();
 
@@ -54,8 +58,10 @@ public abstract class AbstractTypeSystem implements ITypeSystem {
 		typeRegistry.clear();
 		extendsRegistry.clear();
 		conversionRegistry.clear();
+		recursionRegistry.clear();
 	}
 
+	@Override
 	public Type getType(String type) {
 		Type result = typeRegistry.get(type);
 		if (result == null) {
@@ -64,6 +70,7 @@ public abstract class AbstractTypeSystem implements ITypeSystem {
 		return result;
 	}
 
+	@Override
 	public List<Type> getSuperTypes(Type type) {
 		List<Type> superTypes = new ArrayList<Type>();
 		Set<Entry<Type, Type>> entrySet = extendsRegistry.entrySet();
@@ -80,6 +87,7 @@ public abstract class AbstractTypeSystem implements ITypeSystem {
 		return superTypes;
 	}
 
+	@Override
 	public boolean isSuperType(Type subtype, Type supertype) {
 		List<Type> typehierachy = new ArrayList<Type>();
 		typehierachy.add(subtype);
@@ -102,10 +110,12 @@ public abstract class AbstractTypeSystem implements ITypeSystem {
 		}
 	}
 
+	@Override
 	public Collection<Type> getTypes() {
 		return Collections.unmodifiableCollection(typeRegistry.values());
 	}
 
+	@Override
 	public Collection<Type> getConcreteTypes() {
 		List<Type> result = new ArrayList<Type>();
 		for (Type type : getTypes()) {
@@ -123,25 +133,29 @@ public abstract class AbstractTypeSystem implements ITypeSystem {
 		return primitive;
 	}
 
-	public void declareType(Type type, String name) {
+	protected void declareType(Type type, String name) {
 		typeRegistry.put(name, type);
 	}
 
-	public void removeType(String name) {
-		Type type = typeRegistry.get(name);
-		if (type != null) {
-			extendsRegistry.remove(type);
-			resource.getContents().remove(type);
-			typeRegistry.remove(type);
-		}
-	}
-
-	public void declareSuperType(Type subType, Type superType) {
+	protected void declareSuperType(Type subType, Type superType) {
 		extendsRegistry.put(subType, superType);
 	}
 
-	public void declareConversion(Type baseType, Type targetType) {
+	protected void declareConversion(Type baseType, Type targetType) {
 		conversionRegistry.put(baseType, targetType);
+	}
+	
+	protected void declareRecursion(EClass typeClass, EReference ref) {
+		recursionRegistry.put(typeClass, ref);
+	}
+	
+	protected Type getRecursionType(Type type) {
+		EReference typeRef = recursionRegistry.get(type.eClass());
+		if (typeRef != null) {
+			Type rType = (Type) type.eGet(typeRef);
+			return getRecursionType(rType);
+		}
+		return type;
 	}
 
 	public boolean haveCommonType(Type type1, Type type2) {
@@ -149,6 +163,8 @@ public abstract class AbstractTypeSystem implements ITypeSystem {
 	}
 
 	public boolean isSame(Type type1, Type type2) {
+//		Type t1 = getRecursionType(type1);
+//		Type t2 = get
 		return EcoreUtil.equals(type1, type2);
 	}
 

@@ -197,6 +197,15 @@ public interface TypesFactory extends EFactory {
 	ArrayTypeSpecifier createArrayTypeSpecifier();
 
 	/**
+	 * Returns a new object of class '<em>Array Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Array Type</em>'.
+	 * @generated
+	 */
+	ArrayType createArrayType();
+
+	/**
 	 * Returns a new object of class '<em>Array Dimension</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

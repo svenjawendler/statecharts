@@ -11,6 +11,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
 import org.yakindu.base.base.NamedElement;
 import org.yakindu.base.types.ArrayDimension;
+import org.yakindu.base.types.ArrayType;
 import org.yakindu.base.types.ArrayTypeSpecifier;
 import org.yakindu.base.types.ComplexType;
 import org.yakindu.base.types.Declaration;
@@ -258,9 +259,15 @@ public class TypesSwitch<T> extends Switch<T> {
 				ArrayTypeSpecifier arrayTypeSpecifier = (ArrayTypeSpecifier)theEObject;
 				T result = caseArrayTypeSpecifier(arrayTypeSpecifier);
 				if (result == null) result = caseTypeSpecifier(arrayTypeSpecifier);
-				if (result == null) result = caseType(arrayTypeSpecifier);
-				if (result == null) result = casePackageMember(arrayTypeSpecifier);
-				if (result == null) result = caseNamedElement(arrayTypeSpecifier);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case TypesPackage.ARRAY_TYPE: {
+				ArrayType arrayType = (ArrayType)theEObject;
+				T result = caseArrayType(arrayType);
+				if (result == null) result = caseType(arrayType);
+				if (result == null) result = casePackageMember(arrayType);
+				if (result == null) result = caseNamedElement(arrayType);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -599,6 +606,21 @@ public class TypesSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseArrayTypeSpecifier(ArrayTypeSpecifier object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Array Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Array Type</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseArrayType(ArrayType object) {
 		return null;
 	}
 

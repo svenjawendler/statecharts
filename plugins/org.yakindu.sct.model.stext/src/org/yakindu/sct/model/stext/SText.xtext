@@ -88,8 +88,10 @@ TypeSpecifier returns types::TypeSpecifier:
 	ArrayTypeSpecifier | DeclaredTypeSpecifier;
 
 ArrayTypeSpecifier returns types::ArrayTypeSpecifier:
-	type=[types::Type|FQN] (('<' (typeArguments+=[types::Type|QID]) (',' typeArguments+=[types::Type|QID])* '>'))? 
-	(=> '[' dimensions+=ArrayDimension ']' ('[' dimensions+=ArrayDimension ']')*);
+	type=ArrayType;
+
+ArrayType returns types::ArrayType:
+	baseType=[types::Type|FQN] (=> '[' dimensions+=ArrayDimension ']' ('[' dimensions+=ArrayDimension ']')*);
 
 DeclaredTypeSpecifier returns types::DeclaredTypeSpecifier:
 	type=[types::Type|FQN] (('<' (typeArguments+=[types::Type|QID]) (',' typeArguments+=[types::Type|QID])* '>'))?;

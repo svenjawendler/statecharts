@@ -1318,22 +1318,13 @@ public interface TypesPackage extends EPackage {
 	int TYPE_SPECIFIER__TYPE_ARGUMENTS = 0;
 
 	/**
-	 * The feature id for the '<em><b>Type</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TYPE_SPECIFIER__TYPE = 1;
-
-	/**
 	 * The number of structural features of the '<em>Type Specifier</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TYPE_SPECIFIER_FEATURE_COUNT = 2;
+	int TYPE_SPECIFIER_FEATURE_COUNT = 1;
 
 	/**
 	 * The meta object id for the '{@link org.yakindu.base.types.impl.ArrayTypeSpecifierImpl <em>Array Type Specifier</em>}' class.
@@ -1355,67 +1346,13 @@ public interface TypesPackage extends EPackage {
 	int ARRAY_TYPE_SPECIFIER__TYPE_ARGUMENTS = TYPE_SPECIFIER__TYPE_ARGUMENTS;
 
 	/**
-	 * The feature id for the '<em><b>Type</b></em>' reference.
+	 * The feature id for the '<em><b>Type</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ARRAY_TYPE_SPECIFIER__TYPE = TYPE_SPECIFIER__TYPE;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ARRAY_TYPE_SPECIFIER__NAME = TYPE_SPECIFIER_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ARRAY_TYPE_SPECIFIER__ID = TYPE_SPECIFIER_FEATURE_COUNT + 1;
-
-	/**
-	 * The feature id for the '<em><b>Constraint</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ARRAY_TYPE_SPECIFIER__CONSTRAINT = TYPE_SPECIFIER_FEATURE_COUNT + 2;
-
-	/**
-	 * The feature id for the '<em><b>Abstract</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ARRAY_TYPE_SPECIFIER__ABSTRACT = TYPE_SPECIFIER_FEATURE_COUNT + 3;
-
-	/**
-	 * The feature id for the '<em><b>Visible</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ARRAY_TYPE_SPECIFIER__VISIBLE = TYPE_SPECIFIER_FEATURE_COUNT + 4;
-
-	/**
-	 * The feature id for the '<em><b>Dimensions</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ARRAY_TYPE_SPECIFIER__DIMENSIONS = TYPE_SPECIFIER_FEATURE_COUNT + 5;
+	int ARRAY_TYPE_SPECIFIER__TYPE = TYPE_SPECIFIER_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Array Type Specifier</em>' class.
@@ -1424,7 +1361,89 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ARRAY_TYPE_SPECIFIER_FEATURE_COUNT = TYPE_SPECIFIER_FEATURE_COUNT + 6;
+	int ARRAY_TYPE_SPECIFIER_FEATURE_COUNT = TYPE_SPECIFIER_FEATURE_COUNT + 1;
+
+	/**
+	 * The meta object id for the '{@link org.yakindu.base.types.impl.ArrayTypeImpl <em>Array Type</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.yakindu.base.types.impl.ArrayTypeImpl
+	 * @see org.yakindu.base.types.impl.TypesPackageImpl#getArrayType()
+	 * @generated
+	 */
+	int ARRAY_TYPE = 21;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ARRAY_TYPE__NAME = TYPE__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ARRAY_TYPE__ID = TYPE__ID;
+
+	/**
+	 * The feature id for the '<em><b>Constraint</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ARRAY_TYPE__CONSTRAINT = TYPE__CONSTRAINT;
+
+	/**
+	 * The feature id for the '<em><b>Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ARRAY_TYPE__ABSTRACT = TYPE__ABSTRACT;
+
+	/**
+	 * The feature id for the '<em><b>Visible</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ARRAY_TYPE__VISIBLE = TYPE__VISIBLE;
+
+	/**
+	 * The feature id for the '<em><b>Dimensions</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ARRAY_TYPE__DIMENSIONS = TYPE_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Base Type</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ARRAY_TYPE__BASE_TYPE = TYPE_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of structural features of the '<em>Array Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ARRAY_TYPE_FEATURE_COUNT = TYPE_FEATURE_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link org.yakindu.base.types.impl.ArrayDimensionImpl <em>Array Dimension</em>}' class.
@@ -1434,7 +1453,7 @@ public interface TypesPackage extends EPackage {
 	 * @see org.yakindu.base.types.impl.TypesPackageImpl#getArrayDimension()
 	 * @generated
 	 */
-	int ARRAY_DIMENSION = 21;
+	int ARRAY_DIMENSION = 22;
 
 	/**
 	 * The feature id for the '<em><b>Size</b></em>' attribute.
@@ -1462,7 +1481,7 @@ public interface TypesPackage extends EPackage {
 	 * @see org.yakindu.base.types.impl.TypesPackageImpl#getDeclaredTypeSpecifier()
 	 * @generated
 	 */
-	int DECLARED_TYPE_SPECIFIER = 22;
+	int DECLARED_TYPE_SPECIFIER = 23;
 
 	/**
 	 * The feature id for the '<em><b>Type Arguments</b></em>' reference list.
@@ -1480,7 +1499,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DECLARED_TYPE_SPECIFIER__TYPE = TYPE_SPECIFIER__TYPE;
+	int DECLARED_TYPE_SPECIFIER__TYPE = TYPE_SPECIFIER_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Declared Type Specifier</em>' class.
@@ -1489,7 +1508,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DECLARED_TYPE_SPECIFIER_FEATURE_COUNT = TYPE_SPECIFIER_FEATURE_COUNT + 0;
+	int DECLARED_TYPE_SPECIFIER_FEATURE_COUNT = TYPE_SPECIFIER_FEATURE_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link org.yakindu.base.types.Direction <em>Direction</em>}' enum.
@@ -1499,7 +1518,7 @@ public interface TypesPackage extends EPackage {
 	 * @see org.yakindu.base.types.impl.TypesPackageImpl#getDirection()
 	 * @generated
 	 */
-	int DIRECTION = 23;
+	int DIRECTION = 24;
 
 	/**
 	 * Returns the meta object for class '{@link org.yakindu.base.types.Package <em>Package</em>}'.
@@ -2021,17 +2040,6 @@ public interface TypesPackage extends EPackage {
 	EReference getTypeSpecifier_TypeArguments();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.yakindu.base.types.TypeSpecifier#getType <em>Type</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Type</em>'.
-	 * @see org.yakindu.base.types.TypeSpecifier#getType()
-	 * @see #getTypeSpecifier()
-	 * @generated
-	 */
-	EReference getTypeSpecifier_Type();
-
-	/**
 	 * Returns the meta object for class '{@link org.yakindu.base.types.ArrayTypeSpecifier <em>Array Type Specifier</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2042,15 +2050,47 @@ public interface TypesPackage extends EPackage {
 	EClass getArrayTypeSpecifier();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.yakindu.base.types.ArrayTypeSpecifier#getDimensions <em>Dimensions</em>}'.
+	 * Returns the meta object for the containment reference '{@link org.yakindu.base.types.ArrayTypeSpecifier#getType <em>Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Dimensions</em>'.
-	 * @see org.yakindu.base.types.ArrayTypeSpecifier#getDimensions()
+	 * @return the meta object for the containment reference '<em>Type</em>'.
+	 * @see org.yakindu.base.types.ArrayTypeSpecifier#getType()
 	 * @see #getArrayTypeSpecifier()
 	 * @generated
 	 */
-	EReference getArrayTypeSpecifier_Dimensions();
+	EReference getArrayTypeSpecifier_Type();
+
+	/**
+	 * Returns the meta object for class '{@link org.yakindu.base.types.ArrayType <em>Array Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Array Type</em>'.
+	 * @see org.yakindu.base.types.ArrayType
+	 * @generated
+	 */
+	EClass getArrayType();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.yakindu.base.types.ArrayType#getDimensions <em>Dimensions</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Dimensions</em>'.
+	 * @see org.yakindu.base.types.ArrayType#getDimensions()
+	 * @see #getArrayType()
+	 * @generated
+	 */
+	EReference getArrayType_Dimensions();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.yakindu.base.types.ArrayType#getBaseType <em>Base Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Base Type</em>'.
+	 * @see org.yakindu.base.types.ArrayType#getBaseType()
+	 * @see #getArrayType()
+	 * @generated
+	 */
+	EReference getArrayType_BaseType();
 
 	/**
 	 * Returns the meta object for class '{@link org.yakindu.base.types.ArrayDimension <em>Array Dimension</em>}'.
@@ -2082,6 +2122,17 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getDeclaredTypeSpecifier();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.yakindu.base.types.DeclaredTypeSpecifier#getType <em>Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Type</em>'.
+	 * @see org.yakindu.base.types.DeclaredTypeSpecifier#getType()
+	 * @see #getDeclaredTypeSpecifier()
+	 * @generated
+	 */
+	EReference getDeclaredTypeSpecifier_Type();
 
 	/**
 	 * Returns the meta object for enum '{@link org.yakindu.base.types.Direction <em>Direction</em>}'.
@@ -2548,14 +2599,6 @@ public interface TypesPackage extends EPackage {
 		EReference TYPE_SPECIFIER__TYPE_ARGUMENTS = eINSTANCE.getTypeSpecifier_TypeArguments();
 
 		/**
-		 * The meta object literal for the '<em><b>Type</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference TYPE_SPECIFIER__TYPE = eINSTANCE.getTypeSpecifier_Type();
-
-		/**
 		 * The meta object literal for the '{@link org.yakindu.base.types.impl.ArrayTypeSpecifierImpl <em>Array Type Specifier</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2566,12 +2609,38 @@ public interface TypesPackage extends EPackage {
 		EClass ARRAY_TYPE_SPECIFIER = eINSTANCE.getArrayTypeSpecifier();
 
 		/**
+		 * The meta object literal for the '<em><b>Type</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ARRAY_TYPE_SPECIFIER__TYPE = eINSTANCE.getArrayTypeSpecifier_Type();
+
+		/**
+		 * The meta object literal for the '{@link org.yakindu.base.types.impl.ArrayTypeImpl <em>Array Type</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.yakindu.base.types.impl.ArrayTypeImpl
+		 * @see org.yakindu.base.types.impl.TypesPackageImpl#getArrayType()
+		 * @generated
+		 */
+		EClass ARRAY_TYPE = eINSTANCE.getArrayType();
+
+		/**
 		 * The meta object literal for the '<em><b>Dimensions</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference ARRAY_TYPE_SPECIFIER__DIMENSIONS = eINSTANCE.getArrayTypeSpecifier_Dimensions();
+		EReference ARRAY_TYPE__DIMENSIONS = eINSTANCE.getArrayType_Dimensions();
+
+		/**
+		 * The meta object literal for the '<em><b>Base Type</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ARRAY_TYPE__BASE_TYPE = eINSTANCE.getArrayType_BaseType();
 
 		/**
 		 * The meta object literal for the '{@link org.yakindu.base.types.impl.ArrayDimensionImpl <em>Array Dimension</em>}' class.
@@ -2600,6 +2669,14 @@ public interface TypesPackage extends EPackage {
 		 * @generated
 		 */
 		EClass DECLARED_TYPE_SPECIFIER = eINSTANCE.getDeclaredTypeSpecifier();
+
+		/**
+		 * The meta object literal for the '<em><b>Type</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference DECLARED_TYPE_SPECIFIER__TYPE = eINSTANCE.getDeclaredTypeSpecifier_Type();
 
 		/**
 		 * The meta object literal for the '{@link org.yakindu.base.types.Direction <em>Direction</em>}' enum.

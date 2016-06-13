@@ -114,8 +114,6 @@ public class LocalReactionImpl extends ReactionImpl implements LocalReaction {
 	 * @generated NOT
 	 */
 	public Type basicGetType() {
-		if (getTypeSpecifier() != null)
-			return getTypeSpecifier().getType();
 		return null;
 	}
 
