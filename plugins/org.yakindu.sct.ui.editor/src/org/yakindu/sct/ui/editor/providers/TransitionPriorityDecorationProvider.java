@@ -49,7 +49,7 @@ public class TransitionPriorityDecorationProvider extends AbstractDecoratorProvi
 		decorators = new ArrayList<>();
 		DiagramActivator.getDefault().getPreferenceStore().addPropertyChangeListener(this);
 	}
-
+//Test
 	@Override
 	public void createDecorators(IDecoratorTarget decoratorTarget) {
 		EditPart editPart = (EditPart) decoratorTarget.getAdapter(EditPart.class);

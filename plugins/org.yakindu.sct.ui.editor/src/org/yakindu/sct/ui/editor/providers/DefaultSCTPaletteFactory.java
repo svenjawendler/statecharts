@@ -52,7 +52,7 @@ public class DefaultSCTPaletteFactory implements ISCTPaletteFactory {
 	public static final String EXITNODE_ID = "Exit";
 	public static final String FINALSTATE_ID = "FinalState";
 	public static final String SYNCHRONIZATION_ID = "Synchronization";
-
+	// Test 1
 	public void createPaletteEntries(PaletteRoot root) {
 		PaletteContainer container = createToolsCategory(root);
 		createTransitionEntry(container);
