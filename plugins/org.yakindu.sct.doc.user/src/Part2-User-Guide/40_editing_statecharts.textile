@@ -1,3 +1,4 @@
+
 h1(#editing-statecharts). Editing statecharts
 
 h2(#creating-and-deleting-statecharts). Creating and deleting statecharts
@@ -147,6 +148,18 @@ Generally, there are two different ways to edit transitions:
 * Select a transition and edit its properties in the _Properties_ view.
 
 There are certain properties you can only edit with one of these methods. For example, to add guidance points to a transition's arrow, use the statechart editor. To change a transition's arrow's color, use the _Properties_ view.
+
+h2(#editing-regions). Editing regions
+
+To change the size or the location of a region, use the graphical editor. Drag the region to move it elsewhere. Use a selected region's handles to resize it.
+
+You can change the name of a region in the statechart editor as well as in the properties view.
+* In the statechart editor,
+** double-click on the region's current name,
+** edit the name in the text field that appeared after double-clicking,
+** press the @[Return]@ key.
+* In the properties view,
+** modify the _Region Name_ property. It is a region's only property you can access through the properties view.
 
 h2(#editing-hierarchies). Editing hierarchies
 
@@ -376,7 +389,7 @@ While you are busily developing a statechart, it is quite common that you have i
 
 For all these and other purposes you can define _tasks_ anywhere in your statechart where a comment is allowed. A task is a special comment comprising either @FIXME@ or @TODO@. Adding one of these words to a comment is called "tagging" the comment as a task.
 
-The nice thing is that you don't have to remember all the places you took a note and defined a task. YAKINDU Statechart Tools lists all of your tasks in the _Tasks_ view. Figure "&quot;Tasks defined by tags in the statechart showing up in the _Tasks_ view&quot;":oss_fig_tasks-defined-by-tags-in-the-statechart-showing-up-in-the-tasks-view is showing an example with various tasks being defined in a transition, in a state's behavior, in a state's documentation, and in the statecharts definition section.
+The nice thing is that you don't have to remember all the places you took a note and defined a task. YAKINDU Statechart Tools lists all of your tasks in the _Tasks_ view. Figure "&quot;Tasks defined by tags in the statechart showing up in the _Tasks_ view&quot;":#oss_fig_tasks-defined-by-tags-in-the-statechart-showing-up-in-the-tasks-view is showing an example with various tasks being defined in a transition, in a state's behavior, in a state's documentation, and in the statecharts definition section.
 
 p(#oss_fig_tasks-defined-by-tags-in-the-statechart-showing-up-in-the-tasks-view). 
 
