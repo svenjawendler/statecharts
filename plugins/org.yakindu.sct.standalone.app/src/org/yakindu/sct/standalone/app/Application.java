@@ -16,6 +16,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
 import org.yakindu.sct.generator.core.GeneratorExecutor;
@@ -79,7 +80,7 @@ public class Application implements IApplication {
 		Resource loadResource = loadResource(workspaceFileFor);
 		GeneratorModel model = (GeneratorModel) loadResource.getContents().get(0);
 		
-		
+		EcoreUtil.resolveAll(model);
 		//exec gen
 		new GeneratorExecutor().executeGenerator(model);
 		

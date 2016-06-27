@@ -108,7 +108,7 @@ public class CmdLineUtil {
 		try {
 			CommandLineParser parser = new BasicParser();
 			cmd = parser.parse(options, args);
-			configureCustomLogging(cmd);
+//TODO			configureCustomLogging(cmd);
 		} catch (MissingOptionException e) {
 			System.err.println(e.getMessage());
 			help(options, app);
