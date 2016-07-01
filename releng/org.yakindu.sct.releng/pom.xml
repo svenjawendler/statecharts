@@ -15,6 +15,7 @@
 		<antrun-version>1.6</antrun-version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<testFailureIgnore>false</testFailureIgnore>
+		<argLine>${test.vmargs}</argLine>
 	</properties>
 	<build>
 		<plugins>
