@@ -147,7 +147,7 @@ class StatemachineHeader implements IContentTemplate {
 
 	def dispatch scopeTypeDeclMember(VariableDefinition it) '''
 		«IF type.isArrayType»
-			«typeSpecifier.typeArguments.get(0).type.name» «name.asEscapedIdentifier»[«typeSpecifier.arraySize»];
+			«typeSpecifier.typeArguments.get(0).type.targetLanguageName» «name.asEscapedIdentifier»[«typeSpecifier.arraySize»];
 		«ELSE»
 			«IF type.name != 'void' && !isConst»«type.targetLanguageName» «name.asEscapedIdentifier»;«ENDIF»
 		«ENDIF»

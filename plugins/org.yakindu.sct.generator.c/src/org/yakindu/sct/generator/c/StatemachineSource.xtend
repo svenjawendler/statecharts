@@ -22,6 +22,9 @@ import org.yakindu.sct.model.sexec.naming.INamingService
 import org.yakindu.sct.model.sgen.GeneratorEntry
 import org.yakindu.sct.model.stext.stext.StatechartScope
 import org.yakindu.sct.model.stext.stext.VariableDefinition
+import org.yakindu.base.types.typesystem.ITypeSystem
+import org.yakindu.base.types.ArrayTypeSpecifier
+import org.yakindu.base.types.TypeSpecifier
 
 class StatemachineSource implements IContentTemplate {
 	
@@ -33,6 +36,8 @@ class StatemachineSource implements IContentTemplate {
 	@Inject extension FlowCode
 	@Inject extension ConstantInitializationResolver
 	@Inject protected extension StateVectorExtensions
+	
+	@Inject extension ITypeSystem
 	
 	override content(ExecutionFlow it, GeneratorEntry entry, extension IGenArtifactConfigurations artifactConfigs) { 
 		initializeNamingService
@@ -284,12 +289,12 @@ class StatemachineSource implements IContentTemplate {
 			«ENDFOR»
 			
 			«FOR variable : scope.variableDefinitions»
-				«IF variable.const»const «ENDIF»«variable.type.targetLanguageName» «variable.asGetter»(const «scHandleDecl»)
+				«IF variable.const»const «ENDIF»«variable.printType» «variable.asGetter»(const «scHandleDecl»)
 				{
 					return «variable.access»;
 				}
 				«IF !variable.readonly && !variable.const»
-				void «variable.asSetter»(«scHandleDecl», «variable.type.targetLanguageName» value)
+				void «variable.asSetter»(«scHandleDecl», «variable.printAsParam("value")»)
 				{
 					«variable.access» = value;
 				}
@@ -297,6 +302,26 @@ class StatemachineSource implements IContentTemplate {
 			«ENDFOR»
 		«ENDFOR»
 	'''
+	
+	def dispatch arraySize(TypeSpecifier it) ''''''
+	
+	def dispatch arraySize(ArrayTypeSpecifier it) '''«size»'''
+	
+	def printType(VariableDefinition it) {
+		if (type.isArrayType) {
+			'''«typeSpecifier.typeArguments.get(0).type.targetLanguageName»[«typeSpecifier.arraySize»]'''
+		} else {
+			'''«type.targetLanguageName»'''
+		}
+	}
+	
+	def printAsParam(VariableDefinition it, String paramName) {
+		if (type.isArrayType) {
+			'''«typeSpecifier.typeArguments.get(0).type.targetLanguageName» «paramName»[«typeSpecifier.arraySize»]'''
+		} else {
+			'''«type.targetLanguageName» «paramName»'''
+		}
+	}
 	
 	/* ===================================================================================
 	 * Handling decralartion of function prototypes
