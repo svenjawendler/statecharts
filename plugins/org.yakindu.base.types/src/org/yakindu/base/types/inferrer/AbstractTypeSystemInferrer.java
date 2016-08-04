@@ -86,7 +86,9 @@ public abstract class AbstractTypeSystemInferrer implements ITypeSystemInferrer 
 
 	private void initTypeCache() {
 		typeCache = CacheBuilder.newBuilder().maximumSize(100).build(new CacheLoader<EObject, Type>() {
+			
 			public Type load(EObject key) {
+				// TODO: this is not relevant anymore as we do not declare type aliases in type system
 				if (key instanceof TypeAlias) {
 					// for type aliases we want to infer their base types
 					return (Type) (EObject) dispatcher.invoke(key);

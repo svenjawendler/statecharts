@@ -24,6 +24,8 @@ import com.google.inject.multibindings.Multibinder;
  * This module registers services that are intended to be used by the graphical editor.
  * 
  * @author terfloth
+ * @author muelder - add palette factory
+ * @author dicks - add outline factory
  *
  */
 public class GenericEditorModule extends AbstractGenericModule {
@@ -39,5 +41,4 @@ public class GenericEditorModule extends AbstractGenericModule {
 	public Class<? extends ISCTPaletteFactory> bindISCTPaletteFactory() {
 		return DefaultSCTPaletteFactory.class;
 	}
-	
 }

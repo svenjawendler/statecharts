@@ -9,7 +9,6 @@
 */
 package org.yakindu.sct.model.stext.scoping;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
@@ -39,7 +38,7 @@ public class StextImportAwareScopeProvider extends ImportedNamespaceAwareLocalSc
 	@Override
 	protected List<ImportNormalizer> internalGetImportedNamespaceResolvers(final EObject context, boolean ignoreCase) {
 		List<ImportNormalizer> importedNamespaceResolvers = Lists.newArrayList();
-		List<ImportScope> importScopes = new ArrayList<ImportScope>();
+		List<ImportScope> importScopes = null;
 		if (context instanceof StateSpecification || context instanceof TransitionSpecification) {
 			importScopes = EcoreUtil2.getAllContentsOfType(getStatechart(context), ImportScope.class);
 		} else {

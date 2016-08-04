@@ -23,11 +23,18 @@ import org.eclipse.emf.transaction.ResourceSetChangeEvent;
 import org.eclipse.emf.transaction.ResourceSetListener;
 import org.eclipse.emf.transaction.ResourceSetListenerImpl;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
+import org.eclipse.gef.KeyHandler;
+import org.eclipse.gef.KeyStroke;
 import org.eclipse.gef.editparts.ZoomManager;
+import org.eclipse.gef.ui.actions.GEFActionConstants;
+import org.eclipse.gef.ui.actions.ZoomInAction;
+import org.eclipse.gef.ui.actions.ZoomOutAction;
 import org.eclipse.gmf.runtime.common.ui.services.marker.MarkerNavigationService;
 import org.eclipse.gmf.runtime.diagram.core.preferences.PreferencesHint;
 import org.eclipse.gmf.runtime.diagram.ui.internal.parts.DiagramGraphicalViewerKeyHandler;
 import org.eclipse.gmf.runtime.gef.ui.internal.editparts.AnimatableZoomManager;
+import org.eclipse.jface.action.IAction;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
@@ -36,6 +43,7 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.help.IWorkbenchHelpSystem;
 import org.eclipse.ui.ide.IGotoMarker;
+import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 import org.eclipse.xtext.ui.XtextProjectHelper;
 import org.yakindu.base.xtext.utils.gmf.resource.DirtyStateListener;
 import org.yakindu.sct.domain.extension.DomainRegistry;
@@ -45,14 +53,16 @@ import org.yakindu.sct.model.sgraph.Statechart;
 import org.yakindu.sct.ui.editor.DiagramActivator;
 import org.yakindu.sct.ui.editor.partitioning.DiagramPartitioningEditor;
 import org.yakindu.sct.ui.editor.partitioning.DiagramPartitioningUtil;
+import org.yakindu.sct.ui.editor.preferences.StatechartPreferenceConstants;
 import org.yakindu.sct.ui.editor.proposals.ContentProposalViewerKeyHandler;
+import org.yakindu.sct.ui.editor.providers.ISCTOutlineFactory;
 import org.yakindu.sct.ui.editor.utils.HelpContextIds;
 import org.yakindu.sct.ui.editor.validation.SCTValidationJob;
 
 import com.google.inject.Injector;
+import com.google.inject.Key;
 
 /**
- * 
  * @author andreas muelder - Initial contribution and API
  * @author martin esser
  */
@@ -61,6 +71,8 @@ public class StatechartDiagramEditor extends DiagramPartitioningEditor implement
 
 	public static final String ID = "org.yakindu.sct.ui.editor.editor.StatechartDiagramEditor";
 	private static final int DELAY = 200; // ms
+
+	private KeyHandler keyHandler;
 
 	private ResourceSetListener validationListener = new ResourceSetListenerImpl() {
 
@@ -73,17 +85,24 @@ public class StatechartDiagramEditor extends DiagramPartitioningEditor implement
 					EObject eObject = (EObject) notification.getNotifier();
 					if (eObject.eClass().getEPackage() == SGraphPackage.eINSTANCE) {
 						validationJob.cancel();
-						validationJob.schedule(DELAY);
+						if (liveValidationEnabled())
+							validationJob.schedule(DELAY);
 					} else
 						for (EClass eClass : eObject.eClass().getEAllSuperTypes()) {
 							if (SGraphPackage.eINSTANCE == eClass.getEPackage()) {
 								validationJob.cancel();
-								validationJob.schedule(DELAY);
+								if (liveValidationEnabled())
+									validationJob.schedule(DELAY);
 								return;
 							}
 						}
 				}
 			}
+		}
+
+		protected boolean liveValidationEnabled() {
+			return DiagramActivator.getDefault().getPreferenceStore()
+					.getBoolean(StatechartPreferenceConstants.PREF_LIVE_VALIDATION);
 		}
 	};
 
@@ -93,6 +112,27 @@ public class StatechartDiagramEditor extends DiagramPartitioningEditor implement
 
 	public StatechartDiagramEditor() {
 		super(true);
+	}
+
+	@Override
+	public Object getAdapter(@SuppressWarnings("rawtypes") Class type) {
+		if (IContentOutlinePage.class.equals(type)) {
+			return createOutline(type);
+		}
+		return super.getAdapter(type);
+	}
+
+	protected Object createOutline(Class<?> type) {
+		Injector editorInjector = DomainRegistry.getDomainDescriptor(getDiagram().getElement())
+				.getDomainInjectorProvider().getEditorInjector();
+		
+		boolean outlineBindingExists = null != editorInjector.getExistingBinding(Key.get(ISCTOutlineFactory.class));
+		if (!outlineBindingExists) {
+			//get the GMF defautl outline
+			return super.getAdapter(type);
+		}
+		ISCTOutlineFactory instance = editorInjector.getInstance(ISCTOutlineFactory.class);
+		return instance.createOutline(this);
 	}
 
 	@Override
@@ -179,8 +219,56 @@ public class StatechartDiagramEditor extends DiagramPartitioningEditor implement
 	protected void createContentProposalViewerKeyHandler() {
 		ContentProposalViewerKeyHandler contentProposalHandler = new ContentProposalViewerKeyHandler(
 				getGraphicalViewer());
-		contentProposalHandler.setParent(new DiagramGraphicalViewerKeyHandler(getGraphicalViewer()));
+		contentProposalHandler
+				.setParent(new DiagramGraphicalViewerKeyHandler(getGraphicalViewer()).setParent(getKeyHandler()));
 		getGraphicalViewer().setKeyHandler(contentProposalHandler);
+	}
+
+	/**
+	 * Overrides the GMF key handler to fix key binding for zooming and to
+	 * remove unused key bindings.
+	 */
+	@Override
+	protected KeyHandler getKeyHandler() {
+		if (keyHandler == null) {
+			keyHandler = new KeyHandler();
+
+			registerZoomActions();
+
+			// Zoom out - all OS - German and English keyboard layout
+			getKeyHandler().put(KeyStroke.getPressed('-', 0x2d, SWT.MOD1),
+					getActionRegistry().getAction(GEFActionConstants.ZOOM_OUT));
+
+			// Zoom in - all OS - English keyboard layout
+			getKeyHandler().put(KeyStroke.getPressed('=', 0x3d, SWT.MOD1),
+					getActionRegistry().getAction(GEFActionConstants.ZOOM_IN));
+
+			// Zoom in - Unix - German layout ([CTRL++] propagates char '+')
+			getKeyHandler().put(KeyStroke.getPressed('+', 0x2b, SWT.MOD1),
+					getActionRegistry().getAction(GEFActionConstants.ZOOM_IN));
+
+			// Zoom in - Windows - German layout ([CTRL++] propagates char 0x1d)
+			getKeyHandler().put(KeyStroke.getPressed((char) 0x1d, 0x2b, SWT.MOD1),
+					getActionRegistry().getAction(GEFActionConstants.ZOOM_IN));
+
+		}
+		return keyHandler;
+	}
+
+	@SuppressWarnings("unchecked")
+	protected void registerZoomActions() {
+		IAction action;
+		action = new ZoomInAction(getZoomManager());
+		action.setText(""); //$NON-NLS-1$ // no text necessary since this
+							// is not a visible action
+		getActionRegistry().registerAction(action);
+		getSelectionActions().add(action.getId());
+
+		action = new ZoomOutAction(getZoomManager());
+		action.setText(""); //$NON-NLS-1$ // no text necessary since this
+							// is not a visible action
+		getActionRegistry().registerAction(action);
+		getSelectionActions().add(action.getId());
 	}
 
 	@Override
@@ -207,7 +295,7 @@ public class StatechartDiagramEditor extends DiagramPartitioningEditor implement
 		}
 		super.dispose();
 	}
-	
+
 	@Override
 	protected int getInitialPaletteSize() {
 		return 175;

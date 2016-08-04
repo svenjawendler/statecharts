@@ -9,15 +9,14 @@
  */
 package org.yakindu.sct.generator.cpp
 
-import org.yakindu.sct.model.sexec.ExecutionFlow
-import org.yakindu.sct.model.sgen.GeneratorEntry
-import org.eclipse.xtext.generator.IFileSystemAccess
 import com.google.inject.Inject
 import org.yakindu.sct.generator.c.GenmodelEntries
-import org.yakindu.sct.generator.core.library.IOutletFeatureHelper
-import org.yakindu.sct.generator.core.impl.IExecutionFlowGenerator
+import org.yakindu.sct.generator.c.IContentTemplate
+import org.yakindu.sct.generator.c.IGenArtifactConfigurations
+import org.yakindu.sct.model.sexec.ExecutionFlow
+import org.yakindu.sct.model.sgen.GeneratorEntry
 
-class TimerInterface {
+class TimerInterface implements IContentTemplate {
 	
 	@Inject
 	extension Naming
@@ -25,18 +24,7 @@ class TimerInterface {
 	@Inject
 	extension GenmodelEntries
 	
-	@Inject
-	protected IOutletFeatureHelper outletFeatureHelper;
-	
-	def generateITimerService(ExecutionFlow flow, GeneratorEntry entry, IFileSystemAccess fsa) {
-		if (outletFeatureHelper.getLibraryTargetFolderValue(entry) != null)
-			fsa.generateFile(timerInterface.h, IExecutionFlowGenerator.LIBRARY_TARGET_FOLDER_OUTPUT,
-				flow.content(entry))
-		else
-			fsa.generateFile(timerInterface.h, flow.content(entry))
-	}
-	
-	def protected content(ExecutionFlow it, GeneratorEntry entry) {
+	override content(ExecutionFlow it, GeneratorEntry entry, IGenArtifactConfigurations locations) {
 		'''
 		«entry.licenseText»
 		
@@ -48,8 +36,7 @@ class TimerInterface {
 		//forward declaration of TimedStatemachineInterface to avoid cyclic dependency
 		class TimedStatemachineInterface;
 		
-		/*
-		 * Basic interface for state machines.
+		/*! \file Basic interface for state machines.
 		 */
 		class «timerInterface»
 		{
@@ -57,19 +44,16 @@ class TimerInterface {
 				
 				virtual ~«timerInterface»() = 0;
 			
-				/*
-				 * Starts the timing for a time event.
+				/*! Starts the timing for a time event.
 				 */ 
 				virtual void setTimer(«timedStatemachineInterface»* statemachine, sc_eventid event, sc_integer time, sc_boolean isPeriodic) = 0;
 				
-				/*
-				 * Unsets the given time event.
+				/*! Unsets the given time event.
 				 */
 				virtual void unsetTimer(«timedStatemachineInterface»* statemachine, sc_eventid event) = 0;
 			
-				/*
-				 * Cancel timer service. Use this to end possible timing threads and free
-				 * memory resources.
+				/*! Cancel timer service. Use this to end possible timing threads and free
+				 	 memory resources.
 				 */
 				virtual void cancel() = 0;
 		};
