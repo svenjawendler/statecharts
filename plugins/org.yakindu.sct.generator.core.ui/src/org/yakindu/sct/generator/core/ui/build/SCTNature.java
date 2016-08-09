@@ -8,14 +8,13 @@
  * Contributors:
  *     committers of YAKINDU - initial API and implementation
  */
-package org.yakindu.sct.builder.nature;
+package org.yakindu.sct.generator.core.ui.build;
 
 import org.eclipse.core.resources.ICommand;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IProjectNature;
 import org.eclipse.core.runtime.CoreException;
-import org.yakindu.sct.builder.SCTBuilder;
 /**
  * 
  * @author andreas muelder - Initial contribution and API
@@ -24,14 +23,16 @@ import org.yakindu.sct.builder.SCTBuilder;
 public class SCTNature implements IProjectNature {
 
 	public static final String NATURE_ID = "org.yakindu.sct.builder.SCTNature";
-
+	public static final String SCT_FILE_EXTENSION = "sct";
+	public static final String SGEN_FILE_EXTENSION = "sgen";
+	public static final String BUILDER_ID = "org.yakindu.sct.builder.SCTBuilder";
 	private IProject project;
 
 	public void configure() throws CoreException {
 		IProjectDescription desc = project.getDescription();
 		ICommand[] commands = desc.getBuildSpec();
 		for (int i = 0; i < commands.length; ++i) {
-			if (commands[i].getBuilderName().equals(SCTBuilder.BUILDER_ID)) {
+			if (commands[i].getBuilderName().equals(BUILDER_ID)) {
 				return;
 			}
 		}
@@ -39,7 +40,7 @@ public class SCTNature implements IProjectNature {
 		ICommand[] newCommands = new ICommand[commands.length + 1];
 		System.arraycopy(commands, 0, newCommands, 0, commands.length);
 		ICommand command = desc.newCommand();
-		command.setBuilderName(SCTBuilder.BUILDER_ID);
+		command.setBuilderName(BUILDER_ID);
 		newCommands[newCommands.length - 1] = command;
 		desc.setBuildSpec(newCommands);
 		project.setDescription(desc, null);
@@ -49,7 +50,7 @@ public class SCTNature implements IProjectNature {
 		IProjectDescription description = getProject().getDescription();
 		ICommand[] commands = description.getBuildSpec();
 		for (int i = 0; i < commands.length; ++i) {
-			if (commands[i].getBuilderName().equals(SCTBuilder.BUILDER_ID)) {
+			if (commands[i].getBuilderName().equals(BUILDER_ID)) {
 				ICommand[] newCommands = new ICommand[commands.length - 1];
 				System.arraycopy(commands, 0, newCommands, 0, i);
 				System.arraycopy(commands, i + 1, newCommands, i,

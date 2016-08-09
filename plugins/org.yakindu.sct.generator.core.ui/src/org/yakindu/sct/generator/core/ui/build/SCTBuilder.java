@@ -8,11 +8,12 @@
  * Contributors:
  *     committers of YAKINDU - initial API and implementation
  */
-package org.yakindu.sct.builder;
+package org.yakindu.sct.generator.core.ui.build;
 
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
@@ -25,6 +26,9 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.common.util.WrappedException;
 import org.eclipse.emf.ecore.EObject;
@@ -32,7 +36,6 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.jface.preference.IPreferenceStore;
 import org.yakindu.sct.generator.core.GeneratorActivator;
 import org.yakindu.sct.generator.core.GeneratorExecutor;
 import org.yakindu.sct.model.sgen.GeneratorEntry;
@@ -52,9 +55,6 @@ public class SCTBuilder extends IncrementalProjectBuilder {
 
 	// TODO Remove dependency to fileextension and read referenced elements from
 	// genmodels instead.
-	private static final String SCT_FILE_EXTENSION = "sct";
-	private static final String SGEN_FILE_EXTENSION = "sgen";
-	public static final String BUILDER_ID = "org.yakindu.sct.builder.SCTBuilder";
 
 	private final class ElementRefGenerator implements Predicate<GeneratorEntry> {
 
@@ -111,8 +111,8 @@ public class SCTBuilder extends IncrementalProjectBuilder {
 	protected IProject[] build(int kind, @SuppressWarnings("rawtypes") Map args, IProgressMonitor monitor)
 			throws CoreException {
 		
-		IPreferenceStore store = GeneratorActivator.getDefault().getPreferenceStore();
-		boolean generateAutomatical = store.getBoolean(GeneratorActivator.PREF_GENERATE_AUTOMATICALLY);
+		IEclipsePreferences node = InstanceScope.INSTANCE.getNode(GeneratorActivator.getDefault().getBundle().getSymbolicName()); 
+		boolean generateAutomatical = node.getBoolean(GeneratorActivator.PREF_GENERATE_AUTOMATICALLY,true);
 
 		if (generateAutomatical) {
 			if (kind == FULL_BUILD) {
@@ -154,14 +154,14 @@ public class SCTBuilder extends IncrementalProjectBuilder {
 		if (changedResource.getType() != IResource.FILE) {
 			return;
 		}
-		if (SGEN_FILE_EXTENSION.equals(changedResource.getFileExtension()) && !buildSgens.contains(changedResource)) {
+		if (SCTNature.SGEN_FILE_EXTENSION.equals(changedResource.getFileExtension()) && !buildSgens.contains(changedResource)) {
 			if (hasError(changedResource)) {
 				logGenmodelError(changedResource.getFullPath().toString());
 			} else {
 				buildSgens.add(changedResource);
 				executeGenmodelGenerator(changedResource);
 			}
-		} else if (SCT_FILE_EXTENSION.equals(changedResource.getFileExtension())) {
+		} else if (SCTNature.SCT_FILE_EXTENSION.equals(changedResource.getFileExtension())) {
 			// TODO rely on indexed genmodel and referenced objects uri
 			final Statechart statechart = loadFromResource(changedResource);
 			if (statechart == null)
@@ -171,7 +171,7 @@ public class SCTBuilder extends IncrementalProjectBuilder {
 
 					public boolean visit(IResource resource) throws CoreException {
 						if (IResource.FILE == resource.getType()
-								&& SGEN_FILE_EXTENSION.equals(resource.getFileExtension())
+								&& SCTNature.SGEN_FILE_EXTENSION.equals(resource.getFileExtension())
 								&& !buildSgens.contains(resource) && isGenmodelForStatechart(resource, statechart)) {
 							// TODO: would be good to filter the config for the
 							// statechart so only the sct that changed is
@@ -213,18 +213,41 @@ public class SCTBuilder extends IncrementalProjectBuilder {
 		return false;
 	}
 
-	protected void executeGenmodelGenerator(IResource resource) {
-		new GeneratorExecutor().executeGenerator(resource.getProject().getFile(resource.getProjectRelativePath()));
+	protected void executeGenmodelGenerator(final IResource resource) {
+		
+		final IFile file = resource.getProject().getFile(resource.getProjectRelativePath());
+		Job generatorJob = new Job("Execute SCT Genmodel " + resource.getName()) {
+			@Override
+			protected IStatus run(IProgressMonitor monitor) {
+				
+				
+				new GeneratorExecutor().executeGenerator(loadResource(file));
+				return Status.OK_STATUS;
+			}
+		};
+		generatorJob.setRule(file.getProject().getWorkspace().getRuleFactory().buildRule());
+		generatorJob.schedule();
+		
+		
+		
+		
+		
+	}
+	public static Resource loadResource(IFile file) {
+		Resource resource = null;
+		URI uri = URI.createPlatformResourceURI(file.getFullPath().toString(), true);
+		resource = new ResourceSetImpl().getResource(uri, true);
+		return resource;
 	}
 
 	protected void logGenmodelError(String resource) {
-		Status status = new Status(Status.ERROR, BUILDER_ID, String.format(
+		Status status = new Status(Status.ERROR, SCTNature.BUILDER_ID, String.format(
 				"Cannot execute Genmodel %s. The file contains errors.", resource));
 		Platform.getLog(GeneratorActivator.getDefault().getBundle()).log(status);
 	}
 
 	protected void logStatechartError(final String resource) {
-		Status status = new Status(Status.ERROR, BUILDER_ID, String.format(
+		Status status = new Status(Status.ERROR, SCTNature.BUILDER_ID, String.format(
 				"Cannot generate Code for Statechart %s. The file contains errors.", resource));
 		Platform.getLog(GeneratorActivator.getDefault().getBundle()).log(status);
 	}
