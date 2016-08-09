@@ -11,7 +11,8 @@
 package org.yakindu.sct.generator.core.preferences;
 
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
-import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.yakindu.sct.generator.core.GeneratorActivator;
 
 public class GenModelPreferenceInitializer extends
@@ -19,9 +20,8 @@ public class GenModelPreferenceInitializer extends
 
 	@Override
 	public void initializeDefaultPreferences() {
-		IPreferenceStore store = GeneratorActivator.getDefault()
-				.getPreferenceStore();
-		store.setDefault(GeneratorActivator.PREF_GENERATE_AUTOMATICALLY, true);
+		IEclipsePreferences node = InstanceScope.INSTANCE.getNode(GeneratorActivator.getDefault().getBundle().getSymbolicName()); 
+		node.putBoolean(GeneratorActivator.PREF_GENERATE_AUTOMATICALLY, true);
 	}
 
 }

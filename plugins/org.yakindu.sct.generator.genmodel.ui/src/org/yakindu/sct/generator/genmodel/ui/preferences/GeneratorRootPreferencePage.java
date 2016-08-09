@@ -10,10 +10,12 @@
  */
 package org.yakindu.sct.generator.genmodel.ui.preferences;
 
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.gmf.runtime.common.ui.preferences.CheckBoxFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
+import org.eclipse.ui.preferences.ScopedPreferenceStore;
 import org.yakindu.sct.generator.core.GeneratorActivator;
 
 public class GeneratorRootPreferencePage extends FieldEditorPreferencePage
@@ -32,6 +34,6 @@ public class GeneratorRootPreferencePage extends FieldEditorPreferencePage
 
 	@Override
 	public void init(IWorkbench workbench) {
-		setPreferenceStore(GeneratorActivator.getDefault().getPreferenceStore());
+		setPreferenceStore(new ScopedPreferenceStore(InstanceScope.INSTANCE, GeneratorActivator.getDefault().getBundle().getSymbolicName()));
 	}
 }
