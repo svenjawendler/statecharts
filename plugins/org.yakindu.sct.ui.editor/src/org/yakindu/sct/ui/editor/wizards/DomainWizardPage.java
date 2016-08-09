@@ -17,6 +17,7 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ISelection;
@@ -90,7 +91,10 @@ public class DomainWizardPage extends WizardPage {
 			public void selectionChanged(SelectionChangedEvent event) {
 				IDomainDescriptor domain = unwrap(event.getSelection());
 				description.setText(domain.getDescription());
-				image.setImage(domain.getImage());
+				
+				ImageDescriptor descriptor = ImageDescriptor.createFromURL(domain.getImagePath());
+				image.setImage(descriptor.createImage());
+				
 				domainSelectionGroup.layout();
 
 			}

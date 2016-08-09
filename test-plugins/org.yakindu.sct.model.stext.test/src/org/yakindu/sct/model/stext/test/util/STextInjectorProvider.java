@@ -12,7 +12,7 @@ package org.yakindu.sct.model.stext.test.util;
 
 import org.eclipse.xtext.junit4.IInjectorProvider;
 import org.yakindu.base.base.BasePackage;
-import org.yakindu.sct.domain.generic.modules.GenericSimulationModule;
+import org.yakindu.sct.domain.generic.ui.modules.GenericSimulationModule;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;

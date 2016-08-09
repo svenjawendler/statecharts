@@ -46,8 +46,8 @@ import org.eclipse.ui.ide.IGotoMarker;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 import org.eclipse.xtext.ui.XtextProjectHelper;
 import org.yakindu.base.xtext.utils.gmf.resource.DirtyStateListener;
-import org.yakindu.sct.domain.extension.DomainRegistry;
-import org.yakindu.sct.domain.extension.IDomainInjectorProvider;
+import org.yakindu.sct.domain.ui.extension.DomainUiRegistry;
+import org.yakindu.sct.domain.ui.extension.IDomainUiInjectorProvider;
 import org.yakindu.sct.model.sgraph.SGraphPackage;
 import org.yakindu.sct.model.sgraph.Statechart;
 import org.yakindu.sct.ui.editor.DiagramActivator;
@@ -123,7 +123,7 @@ public class StatechartDiagramEditor extends DiagramPartitioningEditor implement
 	}
 
 	protected Object createOutline(Class<?> type) {
-		Injector editorInjector = DomainRegistry.getDomainDescriptor(getDiagram().getElement())
+		Injector editorInjector = DomainUiRegistry.getDomainDescriptor(getDiagram().getElement())
 				.getDomainInjectorProvider().getEditorInjector();
 		
 		boolean outlineBindingExists = null != editorInjector.getExistingBinding(Key.get(ISCTOutlineFactory.class));
@@ -147,7 +147,7 @@ public class StatechartDiagramEditor extends DiagramPartitioningEditor implement
 		final IFile file = ((IFileEditorInput) getEditorInput()).getFile();
 		validationJob = new SCTValidationJob();
 		validationJob.setResource(getDiagram().eResource());
-		IDomainInjectorProvider injectorProvider = DomainRegistry.getDomainDescriptor(getDiagram().getElement())
+		IDomainUiInjectorProvider injectorProvider = DomainUiRegistry.getDomainDescriptor(getDiagram().getElement())
 				.getDomainInjectorProvider();
 		Injector injector = injectorProvider.getEmbeddedEditorInjector(Statechart.class.getName());
 		injector.injectMembers(validationJob);

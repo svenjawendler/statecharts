@@ -18,7 +18,7 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.xtext.ui.editor.IURIEditorOpener;
-import org.yakindu.sct.domain.util.URIUtil;
+import org.yakindu.sct.ui.editor.utils.URIUtil;
 
 /**
  * Opens <code>.sct</code> files in corresponding statechart diagramm editor.

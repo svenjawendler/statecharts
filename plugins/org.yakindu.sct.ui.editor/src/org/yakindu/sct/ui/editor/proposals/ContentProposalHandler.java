@@ -27,8 +27,8 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Control;
-import org.yakindu.sct.domain.extension.DomainRegistry;
-import org.yakindu.sct.domain.extension.IDomainInjectorProvider;
+import org.yakindu.sct.domain.ui.extension.DomainUiRegistry;
+import org.yakindu.sct.domain.ui.extension.IDomainUiInjectorProvider;
 import org.yakindu.sct.ui.editor.StatechartImages;
 
 import com.google.inject.Inject;
@@ -84,7 +84,7 @@ public class ContentProposalHandler implements IContentProposalProvider {
 	
 		try {
 			if (proposalProviders == null) {
-				IDomainInjectorProvider injectorProvider = DomainRegistry.getDomainDescriptor(getSelectedView().getElement())
+				IDomainUiInjectorProvider injectorProvider = DomainUiRegistry.getDomainDescriptor(getSelectedView().getElement())
 						.getDomainInjectorProvider();
 				
 				Injector injector = injectorProvider.getEditorInjector();

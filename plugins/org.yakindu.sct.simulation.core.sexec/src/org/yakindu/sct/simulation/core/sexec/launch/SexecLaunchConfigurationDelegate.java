@@ -16,7 +16,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.model.ILaunchConfigurationDelegate;
 import org.eclipse.emf.workspace.util.WorkspaceSynchronizer;
-import org.yakindu.sct.domain.extension.DomainRegistry;
+import org.yakindu.sct.domain.ui.extension.DomainUiRegistry;
 import org.yakindu.sct.model.sgraph.Statechart;
 import org.yakindu.sct.simulation.core.engine.ISimulationEngine;
 import org.yakindu.sct.simulation.core.launch.AbstractSCTLaunchConfigurationDelegate;
@@ -62,7 +62,7 @@ public class SexecLaunchConfigurationDelegate extends AbstractSCTLaunchConfigura
 	}
 
 	protected Injector getInjector(Statechart statechart, ILaunch launch) {
-		return DomainRegistry.getDomainDescriptor(statechart).getDomainInjectorProvider()
+		return DomainUiRegistry.getDomainDescriptor(statechart).getDomainInjectorProvider()
 				.getSimulationInjector();
 	}
 }
