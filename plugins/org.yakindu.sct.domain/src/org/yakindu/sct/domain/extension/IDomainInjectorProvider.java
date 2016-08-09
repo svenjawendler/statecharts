@@ -16,6 +16,7 @@ import com.google.inject.Module;
 /**
  * @author andreas muelder - Initial contribution and API
  * @author terfloth
+ * @author jdicks - seperate ui and core
  * 
  */
 public interface IDomainInjectorProvider {
@@ -25,11 +26,6 @@ public interface IDomainInjectorProvider {
 	 * 
 	 */
 	public Injector getResourceInjector();
-
-	/**
-	 * Returns the injector for the Simulation engine
-	 */
-	public Injector getSimulationInjector();
 
 	/**
 	 * Returns the Injector for the model sequencing without overriding existing
@@ -42,20 +38,6 @@ public interface IDomainInjectorProvider {
 	 * bindings in the overrides module.
 	 */
 	public Injector getSequencerInjector(Module overrides);
-
-	/**
-	 * Injector used to create the embedded in-diagram Xtext Editor
-	 * 
-	 * @param elementKey
-	 *            A key indicating for which element the in-diagram editor
-	 *            should be created, i.e. State, Statechart or Transition
-	 */
-	public Injector getEmbeddedEditorInjector(String elementKey);
-
-	/**
-	 * Returns an injector for all editor and UI related stuff.
-	 */
-	public Injector getEditorInjector();
 
 	/**
 	 * @param generatorId

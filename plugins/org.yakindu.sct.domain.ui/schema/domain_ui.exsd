@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="org.yakindu.sct.domain" xmlns="http://www.w3.org/2001/XMLSchema">
+<schema targetNamespace="org.yakindu.sct.domain.ui" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appinfo>
-         <meta.schema plugin="org.yakindu.sct.domain" id="domain" name="org.yakindu.sct.domain"/>
+         <meta.schema plugin="org.yakindu.sct.domain.ui" id="domainUi" name="org.yakindu.sct.domain.ui"/>
       </appinfo>
       <documentation>
          [Enter description of this extension point.]
@@ -56,37 +56,13 @@
                </documentation>
             </annotation>
          </attribute>
-         <attribute name="description" type="string">
-            <annotation>
-               <documentation>
-                  
-               </documentation>
-            </annotation>
-         </attribute>
-         <attribute name="image" type="string">
-            <annotation>
-               <documentation>
-                  
-               </documentation>
-               <appinfo>
-                  <meta.attribute kind="resource"/>
-               </appinfo>
-            </annotation>
-         </attribute>
-         <attribute name="name" type="string" use="required">
-            <annotation>
-               <documentation>
-                  
-               </documentation>
-            </annotation>
-         </attribute>
          <attribute name="domainModuleProvider" type="string" use="required">
             <annotation>
                <documentation>
                   
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn=":org.yakindu.sct.domain.extension.IDomainInjectorProvider"/>
+                  <meta.attribute kind="java" basedOn=":org.yakindu.sct.domain.ui.extension.IDomainUiInjectorProvider"/>
                </appinfo>
             </annotation>
          </attribute>

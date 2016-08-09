@@ -8,12 +8,11 @@
  * 	committers of YAKINDU - initial API and implementation
  * 
  */
-package org.yakindu.sct.domain.extension;
+package org.yakindu.sct.domain.ui.extension;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
-import java.util.Map;
 import java.util.NoSuchElementException;
 
 import org.eclipse.core.runtime.Assert;
@@ -33,35 +32,30 @@ import org.yakindu.base.base.DomainElement;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 
 /**
  * @author andreas muelder - Initial contribution and API
  * 
  */
-public class DomainRegistry {
+public class DomainUiRegistry {
 
-	private static final String EXTENSION_POINT_ID = "org.yakindu.sct.domain";
+	private static final String EXTENSION_POINT_ID = "org.yakindu.sct.domain.ui";
 	private static final String DOMAIN_ID = "domainID";
-	private static final String DESCRIPTION = "description";
-	private static final String IMAGE = "image";
-	private static final String NAME = "name";
 	private static final String MODULE_PROVIDER = "domainModuleProvider";
 
-	private DomainRegistry() {
+	private DomainUiRegistry() {
 	}
 
 	
-	private static Map<Class<?>,Class<?>> defaultBindings;
-	private static List<IDomainDescriptor> descriptors;
+	private static List<IDomainUiDescriptor> descriptors;
 
-	private static final class ConfigElementDomainDescriptor implements IDomainDescriptor {
+	private static final class ConfigElementDomainDescriptor implements IDomainUiDescriptor {
 
 		private final IConfigurationElement configElement;
 
 		private URL path;
 
-		private IDomainInjectorProvider injectorProvider;
+		private IDomainUiInjectorProvider injectorProvider;
 
 		ConfigElementDomainDescriptor(IConfigurationElement configElement) {
 			this.configElement = configElement;
@@ -73,20 +67,10 @@ public class DomainRegistry {
 		}
 
 		@Override
-		public String getName() {
-			return configElement.getAttribute(NAME);
-		}
-
-		@Override
-		public String getDescription() {
-			return configElement.getAttribute(DESCRIPTION);
-		}
-
-		@Override
-		public IDomainInjectorProvider getDomainInjectorProvider() {
+		public IDomainUiInjectorProvider getDomainInjectorProvider() {
 			if (injectorProvider == null) {
 				try {
-					injectorProvider = (IDomainInjectorProvider) configElement
+					injectorProvider = (IDomainUiInjectorProvider) configElement
 							.createExecutableExtension(MODULE_PROVIDER);
 				} catch (CoreException e) {
 					e.printStackTrace();
@@ -94,22 +78,9 @@ public class DomainRegistry {
 			}
 			return injectorProvider;
 		}
-
-		@Override
-		public URL getImagePath() {
-			if (path != null)
-				return path;
-			String pathString = configElement.getAttribute(IMAGE);
-			path = Platform.getBundle(configElement.getContributor().getName()).getEntry(pathString);
-			if (path == null)
-				return null;
-			return path;
-		}
-
-
 	}
 
-	public static List<IDomainDescriptor> getDomainDescriptors() {
+	public static List<IDomainUiDescriptor> getDomainDescriptors() {
 		if (descriptors == null) {
 			descriptors = Lists.newArrayList();
 			if (Platform.isRunning()) {
@@ -127,12 +98,12 @@ public class DomainRegistry {
 		}
 	}
 
-	public static IDomainDescriptor getDomainDescriptor(final String id) {
+	public static IDomainUiDescriptor getDomainDescriptor(final String id) {
 		final String defaultDomainID = BasePackage.Literals.DOMAIN_ELEMENT__DOMAIN_ID.getDefaultValueLiteral();
 		try {
-			return Iterables.find(getDomainDescriptors(), new Predicate<IDomainDescriptor>() {
+			return Iterables.find(getDomainDescriptors(), new Predicate<IDomainUiDescriptor>() {
 				@Override
-				public boolean apply(IDomainDescriptor input) {
+				public boolean apply(IDomainUiDescriptor input) {
 					return input.getDomainID().equals(id != null ? id : defaultDomainID);
 				}
 			});
@@ -145,7 +116,7 @@ public class DomainRegistry {
 		}
 	}
 
-	public static IDomainDescriptor getDomainDescriptor(EObject object) {
+	public static IDomainUiDescriptor getDomainDescriptor(EObject object) {
 		DomainElement domainElement = EcoreUtil2.getContainerOfType(object, DomainElement.class);
 		String domainID = domainElement != null
 				? domainElement.getDomainID()
@@ -171,25 +142,5 @@ public class DomainRegistry {
 			}
 		}
 		return result;
-	}
-	/**
-	 * Returns a default binding for the given class type.
-	 * 
-	 * @param bindingType the abstract type to get a default bidning for
-	 * @return a class implementing the given binding type
-	 */
-	public static <T> Class<T> getDefaultBinding(Class<T> bindingType) {
-		ensureDefaultBindingsInitialized();
-		return (Class<T>) defaultBindings.get(bindingType);
-	}
-
-	public static void addDefaultBinding(Class<?> bindingType, Class<?> implementationClass) {
-		ensureDefaultBindingsInitialized();
-		defaultBindings.put(bindingType, implementationClass);
-	}
-
-	private static void ensureDefaultBindingsInitialized() {
-		if(defaultBindings == null)
-			defaultBindings = Maps.newHashMap();
 	}
 }
