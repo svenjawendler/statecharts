@@ -10,13 +10,13 @@
 */
 package org.yakindu.sct.generator.core;
 
-import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.eclipse.core.runtime.Plugin;
 import org.osgi.framework.BundleContext;
 
 /**
  * The activator class controls the plug-in life cycle
  */
-public class GeneratorActivator extends AbstractUIPlugin {
+public class GeneratorActivator extends Plugin {
 
 	// The plug-in ID
 	public static final String PLUGIN_ID = "org.yakindu.sct.generator.core"; //$NON-NLS-1$

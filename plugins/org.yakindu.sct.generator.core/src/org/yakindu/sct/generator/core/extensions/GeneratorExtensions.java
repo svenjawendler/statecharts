@@ -18,8 +18,6 @@ import java.util.NoSuchElementException;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.swt.graphics.Image;
 import org.osgi.framework.Bundle;
 import org.yakindu.sct.generator.core.ISCTGenerator;
 
@@ -49,7 +47,7 @@ public class GeneratorExtensions {
 
 		private final IConfigurationElement configElement;
 
-		private Image image;
+		private URL path;
 
 		GeneratorDescriptor(IConfigurationElement configElement) {
 			this.configElement = configElement;
@@ -88,18 +86,12 @@ public class GeneratorExtensions {
 		}
 
 		@Override
-		public Image getImage() {
-			if (image != null)
-				return image;
-			String path = configElement.getAttribute(ATTRIBUTE_ICON);
-			if (path == null)
-				return null;
-
-			Bundle extensionBundle = Platform.getBundle(configElement.getContributor().getName());
-			URL entry = extensionBundle.getEntry(path);
-			ImageDescriptor descriptor = ImageDescriptor.createFromURL(entry);
-			image = descriptor.createImage();
-			return image;
+		public URL getImagePath() {
+			if (path != null)
+				return path;
+			String pathString = configElement.getAttribute(ATTRIBUTE_ICON);
+			path = getBundle().getEntry(pathString);
+			return path;
 		}
 
 		@Override
@@ -120,6 +112,10 @@ public class GeneratorExtensions {
 				e.printStackTrace();
 				return null;
 			}
+		}
+		@Override
+		public Bundle getBundle() {
+			return Platform.getBundle(configElement.getContributor().getName());
 		}
 	}
 

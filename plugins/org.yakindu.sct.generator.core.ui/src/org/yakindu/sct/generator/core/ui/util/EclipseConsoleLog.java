@@ -9,7 +9,7 @@
  * 		committers of YAKINDU - initial API and implementation
  * 
  */
-package org.yakindu.sct.generator.core.util;
+package org.yakindu.sct.generator.core.ui.util;
 
 import java.io.PrintWriter;
 

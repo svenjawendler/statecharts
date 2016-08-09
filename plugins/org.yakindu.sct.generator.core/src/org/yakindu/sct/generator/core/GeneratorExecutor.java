@@ -10,7 +10,6 @@
  */
 package org.yakindu.sct.generator.core;
 
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -42,22 +41,13 @@ import com.google.inject.Module;
  */
 public class GeneratorExecutor {
 
-	public void executeGenerator(IFile file) {
-		Resource resource = loadResource(file);
+	public void executeGenerator(Resource resource) {
+	
 		if (resource == null || resource.getContents().size() == 0 || resource.getErrors().size() > 0)
 			return;
 		final GeneratorModel model = (GeneratorModel) resource.getContents().get(0);
 
-
-		Job generatorJob = new Job("Execute SCT Genmodel " + file.getName()) {
-			@Override
-			protected IStatus run(IProgressMonitor monitor) {
-				executeGenerator(model);
-				return Status.OK_STATUS;
-			}
-		};
-		generatorJob.setRule(file.getProject().getWorkspace().getRuleFactory().buildRule());
-		generatorJob.schedule();
+		executeGenerator(model);
 	}
 
 	public void executeGenerator(GeneratorModel model) {
@@ -97,12 +87,4 @@ public class GeneratorExecutor {
 
 		return generator;
 	}
-
-	protected Resource loadResource(IFile file) {
-		Resource resource = null;
-		URI uri = URI.createPlatformResourceURI(file.getFullPath().toString(), true);
-		resource = new ResourceSetImpl().getResource(uri, true);
-		return resource;
-	}
-
 }

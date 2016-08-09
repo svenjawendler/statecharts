@@ -8,7 +8,7 @@
  * committers of YAKINDU - initial API and implementation
  *
 */
-package org.yakindu.sct.generator.core.filesystem;
+package org.yakindu.sct.generator.core.ui.efs;
 
 import java.io.File;
 import java.io.InputStream;
@@ -16,6 +16,7 @@ import java.io.InputStream;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -28,8 +29,8 @@ import org.eclipse.xtext.generator.OutputConfiguration;
 import org.eclipse.xtext.util.RuntimeIOException;
 import org.eclipse.xtext.util.StringInputStream;
 import org.yakindu.sct.generator.core.features.ICoreFeatureConstants;
-import org.yakindu.sct.generator.core.util.ClasspathChanger;
-import org.yakindu.sct.generator.core.util.EFSHelper;
+import org.yakindu.sct.generator.core.filesystem.ISCTFileSystemAccess;
+import org.yakindu.sct.generator.core.ui.util.JdtClasspathChanger;
 
 import com.google.inject.Inject;
 
@@ -48,7 +49,7 @@ public class EFSResourceFileSystemAccess extends AbstractFileSystemAccess2 imple
 		IProject project = getProject();
 		if (!isTargetProject && isValidProject(project)) {
 			if (hasJavaNature(project) && hasClasspath(project)) {
-				new ClasspathChanger().addFolderToClassPath(project, path);
+				new JdtClasspathChanger().addFolderToClassPath(project, path);
 			}
 		}
 	}
@@ -178,8 +179,8 @@ public class EFSResourceFileSystemAccess extends AbstractFileSystemAccess2 imple
 	public URI getURI(String path) {
 		URI uri = super.getURI(path);
 		if (uri == null) {
-			IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(Path.fromPortableString(path));
-			if (file != null) {
+			IResource file = ResourcesPlugin.getWorkspace().getRoot().findMember(Path.fromPortableString(path));
+			if (file != null&&file.exists()&&file.getProject().isOpen()) {
 				uri = URI.createFileURI(file.getLocationURI().getPath());
 			}
 		}

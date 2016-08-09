@@ -9,7 +9,7 @@
  * 		committers of YAKINDU - initial API and implementation
  * 
  */
-package org.yakindu.sct.generator.core.util;
+package org.yakindu.sct.generator.core.ui.efs;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -28,7 +28,6 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.xtext.generator.OutputConfiguration;
 import org.eclipse.xtext.util.RuntimeIOException;
 import org.eclipse.xtext.util.StringInputStream;
-import org.yakindu.sct.generator.core.impl.AbstractXpandBasedCodeGenerator;
 import org.yakindu.sct.generator.core.library.IOutletFeatureHelper;
 import org.yakindu.sct.model.sgen.GeneratorEntry;
 
@@ -69,8 +68,7 @@ public class EFSHelper {
 			IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(stringValue);
 			return project;
 		} else
-			throw new IllegalStateException("The " + AbstractXpandBasedCodeGenerator.class.getSimpleName()
-					+ " needs a running eclipse.Platform");
+			throw new IllegalStateException("This function needs a running eclipse.Platform");
 	}
 	
 	/**

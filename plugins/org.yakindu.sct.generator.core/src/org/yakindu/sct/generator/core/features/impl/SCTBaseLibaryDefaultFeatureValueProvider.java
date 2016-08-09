@@ -10,8 +10,8 @@
  */
 package org.yakindu.sct.generator.core.features.impl;
 
-import static org.yakindu.sct.generator.core.features.ISCTBaseFeatureConstants.LIBRARY_NAME;
 import static org.yakindu.sct.generator.core.features.ISCTBaseFeatureConstants.DEBUG_FEATURE_DUMP_SEXEC;
+import static org.yakindu.sct.generator.core.features.ISCTBaseFeatureConstants.LIBRARY_NAME;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;

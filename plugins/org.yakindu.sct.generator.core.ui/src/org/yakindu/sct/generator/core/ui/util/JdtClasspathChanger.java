@@ -8,7 +8,7 @@
  * 	committers of YAKINDU - initial API and implementation
  * 
  */
-package org.yakindu.sct.generator.core.util;
+package org.yakindu.sct.generator.core.ui.util;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IPath;
@@ -26,7 +26,7 @@ import org.eclipse.jdt.core.JavaModelException;
  * 
  */
 
-public class ClasspathChanger {
+public class JdtClasspathChanger {
 
 	public void addFolderToClassPath(IProject project, String folder) {
 

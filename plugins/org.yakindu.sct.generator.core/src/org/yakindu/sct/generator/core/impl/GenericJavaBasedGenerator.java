@@ -10,17 +10,11 @@
  */
 package org.yakindu.sct.generator.core.impl;
 
-import static org.yakindu.sct.generator.core.features.impl.IGenericJavaFeatureConstants.CONFIGURATION_MODULE;
-import static org.yakindu.sct.generator.core.features.impl.IGenericJavaFeatureConstants.GENERATOR_CLASS;
-import static org.yakindu.sct.generator.core.features.impl.IGenericJavaFeatureConstants.GENERATOR_PROJECT;
-import static org.yakindu.sct.generator.core.features.impl.IGenericJavaFeatureConstants.TEMPLATE_FEATURE;
+import static org.yakindu.sct.generator.core.features.IGenericJavaFeatureConstants.CONFIGURATION_MODULE;
+import static org.yakindu.sct.generator.core.features.IGenericJavaFeatureConstants.GENERATOR_CLASS;
+import static org.yakindu.sct.generator.core.features.IGenericJavaFeatureConstants.TEMPLATE_FEATURE;
 
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.Path;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.xtext.util.Strings;
-import org.yakindu.sct.commons.WorkspaceClassLoaderFactory;
 import org.yakindu.sct.model.sexec.ExecutionFlow;
 import org.yakindu.sct.model.sgen.FeatureConfiguration;
 import org.yakindu.sct.model.sgen.FeatureParameterValue;
@@ -71,10 +65,12 @@ public class GenericJavaBasedGenerator extends AbstractSExecModelGenerator {
 	}
 
 	protected ClassLoader getClassLoader(GeneratorEntry entry) {
-		IProject project = getLookupRoot(entry);
-		final ClassLoader classLoader = new WorkspaceClassLoaderFactory().createClassLoader(project,
-				getClass().getClassLoader());
-		return classLoader;
+		//TODO proper classloader to load classes from current workspace
+//		IProject project = getLookupRoot(entry);
+//		final ClassLoader classLoader = new WorkspaceClassLoaderFactory().createClassLoader(project,
+//				getClass().getClassLoader());
+//		return classLoader;
+		return Thread.currentThread().getContextClassLoader();
 	}
 
 	@Override
@@ -120,21 +116,23 @@ public class GenericJavaBasedGenerator extends AbstractSExecModelGenerator {
 		return entry.getFeatureConfiguration(TEMPLATE_FEATURE).getParameterValue(GENERATOR_CLASS).getStringValue();
 	}
 
-	/**
-	 * resolve the project that defines the lookup path for the XpandFacade
-	 * 
-	 */
-	protected IProject getLookupRoot(GeneratorEntry entry) {
-		IProject project = null;
-		FeatureConfiguration templateConfig = entry.getFeatureConfiguration(TEMPLATE_FEATURE);
-		FeatureParameterValue projectName = templateConfig.getParameterValue(GENERATOR_PROJECT);
-		if (projectName != null) {
-			project = ResourcesPlugin.getWorkspace().getRoot().getProject(projectName.getStringValue());
-		} else {
-			URI uri = entry.getElementRef().eResource().getURI();
-			project = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(uri.toPlatformString(true)))
-					.getProject();
-		}
-		return project;
-	}
+	
+//TODO EFS should be decoupled
+//	/**
+//	 * resolve the project that defines the lookup path for the XpandFacade
+//	 * 
+//	 */
+//	protected IProject getLookupRoot(GeneratorEntry entry) {
+//		IProject project = null;
+//		FeatureConfiguration templateConfig = entry.getFeatureConfiguration(TEMPLATE_FEATURE);
+//		FeatureParameterValue projectName = templateConfig.getParameterValue(GENERATOR_PROJECT);
+//		if (projectName != null) {
+//			project = ResourcesPlugin.getWorkspace().getRoot().getProject(projectName.getStringValue());
+//		} else {
+//			URI uri = entry.getElementRef().eResource().getURI();
+//			project = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(uri.toPlatformString(true)))
+//					.getProject();
+//		}
+//		return project;
+//	}
 }

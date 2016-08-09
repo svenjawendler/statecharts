@@ -11,9 +11,10 @@
  */
 package org.yakindu.sct.generator.core.extensions;
 
+import java.net.URL;
 import java.util.List;
 
-import org.eclipse.swt.graphics.Image;
+import org.osgi.framework.Bundle;
 import org.yakindu.sct.generator.core.ISCTGenerator;
 
 public interface IGeneratorDescriptor {
@@ -29,12 +30,13 @@ public interface IGeneratorDescriptor {
 	/**
 	 * may return null!!
 	 */
-	Image getImage();
+	URL getImagePath();
 
 	String getContentType();
 
 	String getDescription();
 
 	String getElementRefType();
+	Bundle getBundle();
 
 }

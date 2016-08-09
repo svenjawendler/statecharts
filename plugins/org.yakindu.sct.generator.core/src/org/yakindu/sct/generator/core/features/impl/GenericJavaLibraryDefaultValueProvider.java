@@ -10,16 +10,13 @@
  */
 package org.yakindu.sct.generator.core.features.impl;
 
-import static org.yakindu.sct.generator.core.features.impl.IGenericJavaFeatureConstants.GENERATOR_CLASS;
-import static org.yakindu.sct.generator.core.features.impl.IGenericJavaFeatureConstants.GENERATOR_PROJECT;
-import static org.yakindu.sct.generator.core.features.impl.IGenericJavaFeatureConstants.LIBRARY_NAME;
+import static org.yakindu.sct.generator.core.features.IGenericJavaFeatureConstants.GENERATOR_CLASS;
+import static org.yakindu.sct.generator.core.features.IGenericJavaFeatureConstants.GENERATOR_PROJECT;
+import static org.yakindu.sct.generator.core.features.IGenericJavaFeatureConstants.LIBRARY_NAME;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.jdt.core.IJavaProject;
-import org.eclipse.jdt.core.JavaCore;
-import org.eclipse.jdt.core.JavaModelException;
 import org.yakindu.sct.generator.core.features.AbstractDefaultFeatureValueProvider;
 import org.yakindu.sct.model.sgen.FeatureParameterValue;
 import org.yakindu.sct.model.sgen.FeatureType;
@@ -43,7 +40,7 @@ public class GenericJavaLibraryDefaultValueProvider extends AbstractDefaultFeatu
 			EObject contextElement) {
 		String parameterName = parameterValue.getParameter().getName();
 		if (GENERATOR_PROJECT.equals(parameterName)) {
-			parameterValue.setValue(getProject(contextElement).getName());
+			parameterValue.setValue(getTargetProjectName(contextElement));
 		} else if (GENERATOR_CLASS.equals(parameterName)) {
 			parameterValue.setValue("org.yakindu.sct.generator.Generator");
 		}
@@ -52,18 +49,21 @@ public class GenericJavaLibraryDefaultValueProvider extends AbstractDefaultFeatu
 	public IStatus validateParameterValue(FeatureParameterValue parameterValue) {
 		String parameterName = parameterValue.getParameter().getName();
 		String value = parameterValue.getStringValue();
-		if (GENERATOR_PROJECT.equals(parameterName) && !projectExists(value)) {
+		if (GENERATOR_PROJECT.equals(parameterName) && !exists(value)) {
 			return error(String.format("The Project %s does not exist", value));
 		}
-		IJavaProject ijp = JavaCore.create(this.getProject(parameterValue));
-		try {
-			if (ijp.findType(value) == null && GENERATOR_CLASS.equals(parameterName)) {
-				return error("Generator class does not exist.");
-			}
-		} catch (JavaModelException e) {
-			// Stacktrace
-			e.printStackTrace();
-		}
+
+		//TODO find a proper way to decouple a validation with special dependencies
+		//		IJavaProject ijp = JavaCore.create(this.getTargetProjectName(parameterValue));
+		//		try {
+		//			if (ijp.findType(value) == null && GENERATOR_CLASS.equals(parameterName)) {
+		//				return error("Generator class does not exist.");
+		//			}
+		//		} catch (JavaModelException e) {
+		//			// Stacktrace
+		//			e.printStackTrace();
+		//		}
+		
 		if (GENERATOR_CLASS.equals(parameterName) && !value.matches(GENERATOR_CLASS_REGEX)) {
 			return error("Generator class must be a full qualified class name");
 		}
