@@ -1,8 +1,8 @@
 package org.yakindu.sct.standalone.extension;
 
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
-import org.eclipse.swt.graphics.Image;
 import org.yakindu.sct.domain.extension.IDomainDescriptor;
 import org.yakindu.sct.domain.extension.IDomainInjectorProvider;
 import org.yakindu.sct.domain.generic.extension.GenericDomainInjectorProvider;
@@ -44,9 +44,9 @@ public abstract class DomainDescriptor implements IDomainDescriptor {
 	public abstract IDomainInjectorProvider getDomainInjectorProvider();
 
 	@Override
-	public Image getImage() {
+	public URL getImagePath() {
 		return null;
-	} 
+	}
 	
 	protected StandaloneGeneratorModule createStandaloneGeneratorModule(final String baseDir) {
 		return new StandaloneGeneratorModule(baseDir, StandardCharsets.UTF_8, StandaloneFileSystemAccess.class, Log4jGeneratorLog.class);

@@ -21,8 +21,9 @@ import org.yakindu.sct.generator.core.GeneratorExecutor;
 import org.yakindu.sct.generator.core.extensions.GeneratorExtensions;
 import org.yakindu.sct.generator.core.extensions.LibraryExtensions;
 import org.yakindu.sct.generator.core.features.impl.CoreLibraryDefaultFeatureValueProvider;
-import org.yakindu.sct.generator.core.features.impl.GenericJavaLibraryDefaultValueProvider;
 import org.yakindu.sct.generator.core.features.impl.SCTBaseLibaryDefaultFeatureValueProvider;
+import org.yakindu.sct.generator.core.filesystem.ISCTFileSystemAccess;
+import org.yakindu.sct.generator.core.impl.IGeneratorLog;
 import org.yakindu.sct.generator.genmodel.SGenRuntimeModule;
 import org.yakindu.sct.generator.genmodel.SGenStandaloneSetup;
 import org.yakindu.sct.generator.java.JavaCodeGenerator;
@@ -36,6 +37,8 @@ import org.yakindu.sct.standalone.cmdln.api.SCTStandaloneOptions;
 import org.yakindu.sct.standalone.extension.DomainDescriptor;
 import org.yakindu.sct.standalone.extension.GeneratorDescriptor;
 import org.yakindu.sct.standalone.extension.LibraryDescriptor;
+import org.yakindu.sct.standalone.generator.Log4jGeneratorLog;
+import org.yakindu.sct.standalone.generator.StandaloneFileSystemAccess;
 
 import com.google.common.collect.Lists;
 import com.google.inject.Binder;
@@ -99,6 +102,7 @@ public class SCTStandalone implements ISCTStandalone {
 		initLanguages();
 		initResourceSet();
 
+		//TODO this will be obsolete when extensions can be used
 		initSCTDomain(parameter);
 		initSgenLibraries(parameter);
 		initSCTGenerator(parameter);
@@ -137,6 +141,9 @@ public class SCTStandalone implements ISCTStandalone {
 		for (DomainDescriptor domain : getDomains(parameter)) {
 			DomainRegistry.getDomainDescriptors().add(domain);
 		}
+		//TODO init default bindings properly (needed to avoid implementation dependencies withion e.g. domain.generic)
+		DomainRegistry.addDefaultBinding(ISCTFileSystemAccess.class,StandaloneFileSystemAccess.class);
+		DomainRegistry.addDefaultBinding(IGeneratorLog.class,Log4jGeneratorLog.class);
 	}
 
 	protected void initResourceSet() {
@@ -190,9 +197,6 @@ public class SCTStandalone implements ISCTStandalone {
 		libraries.add(new LibraryDescriptor("org.yakindu.generator.core.features",
 				URI.createFileURI(parameter.getAbsoluteLibrariesDir() + "/CoreFeatureTypeLibrary.xmi"),
 				new CoreLibraryDefaultFeatureValueProvider()));
-		libraries.add(new LibraryDescriptor("org.yakindu.sct.generator.feature.java",
-				URI.createFileURI(parameter.getAbsoluteLibrariesDir()+ "/GenericJavaFeatureTypeLibrary.xmi"),
-				new GenericJavaLibraryDefaultValueProvider()));
 		libraries.add(new LibraryDescriptor("org.yakindu.generator.core.features.sctbase",
 				URI.createFileURI(parameter.getAbsoluteLibrariesDir()+ "/SCTBaseFeatureLibrary.xmi"),
 				new SCTBaseLibaryDefaultFeatureValueProvider()));

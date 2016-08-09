@@ -5,8 +5,8 @@ import java.nio.charset.StandardCharsets;
 
 public interface SCTStandaloneOptions {
 
-	String OPT_WS = "ws";
-	String OPT_WS_LONG = "workspace";
+	String OPT_WS = "workspace";
+	String OPT_WS_LONG = "sctWorkspace";
 	String OPT_WS_DESC = "Base generation directory. Relative from execution directory or an absolute path.";
 
 	String OPT_SGEN = "sgen";

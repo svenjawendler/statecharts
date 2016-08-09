@@ -1,8 +1,9 @@
 package org.yakindu.sct.standalone.extension;
 
+import java.net.URL;
 import java.util.List;
 
-import org.eclipse.swt.graphics.Image;
+import org.osgi.framework.Bundle;
 import org.yakindu.sct.generator.core.ISCTGenerator;
 import org.yakindu.sct.generator.core.extensions.IGeneratorDescriptor;
 /**
@@ -46,9 +47,9 @@ public class GeneratorDescriptor implements IGeneratorDescriptor {
 		return name;
 	}
 	@Override
-	public Image getImage() {
+	public URL getImagePath() {
 		return null;
-	}
+	} 
 	@Override
 	public String getContentType() {
 		return contentType;
@@ -60,6 +61,10 @@ public class GeneratorDescriptor implements IGeneratorDescriptor {
 	@Override
 	public String getElementRefType() {
 		return elementRefType;
+	}
+	@Override
+	public Bundle getBundle() {
+		return null;
 	}
 
 }
