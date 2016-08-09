@@ -10,7 +10,18 @@
  */
 package org.yakindu.sct.generator.java.features;
 
-import static org.yakindu.sct.generator.java.features.IJavaFeatureConstants.*;
+import static org.yakindu.sct.generator.java.features.IJavaFeatureConstants.BASE_PACKAGE;
+import static org.yakindu.sct.generator.java.features.IJavaFeatureConstants.FEATURE_RUNNABLE_WRAPPER;
+import static org.yakindu.sct.generator.java.features.IJavaFeatureConstants.FEATURE_SYCHRONIZED_WRAPPER;
+import static org.yakindu.sct.generator.java.features.IJavaFeatureConstants.IMPLEMENTATION_SUFFIX;
+import static org.yakindu.sct.generator.java.features.IJavaFeatureConstants.JAVA_KEYWORDS;
+import static org.yakindu.sct.generator.java.features.IJavaFeatureConstants.LIBRARY_NAME;
+import static org.yakindu.sct.generator.java.features.IJavaFeatureConstants.RUNNABLE_WRAPPER_NAME_PREFIX_DEFAULT;
+import static org.yakindu.sct.generator.java.features.IJavaFeatureConstants.RUNNABLE_WRAPPER_NAME_SUFFIX_DEFAULT;
+import static org.yakindu.sct.generator.java.features.IJavaFeatureConstants.SYCHRONIZED_WRAPPER_NAME_PREFIX_DEFAULT;
+import static org.yakindu.sct.generator.java.features.IJavaFeatureConstants.SYCHRONIZED_WRAPPER_NAME_SUFFIX_DEFAULT;
+import static org.yakindu.sct.generator.java.features.IJavaFeatureConstants.VALUE_NAME_PREFIX;
+import static org.yakindu.sct.generator.java.features.IJavaFeatureConstants.VALUE_NAME_SUFFIX;
 
 import java.util.Arrays;
 import java.util.regex.Matcher;

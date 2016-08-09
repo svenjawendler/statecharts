@@ -36,9 +36,9 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.WorkspaceModifyOperation;
 import org.eclipse.ui.part.FileEditorInput;
-import org.yakindu.sct.builder.nature.SCTNature;
-import org.yakindu.sct.builder.nature.ToggleSCTNatureAction;
 import org.yakindu.sct.generator.core.extensions.IGeneratorDescriptor;
+import org.yakindu.sct.generator.core.ui.build.SCTNature;
+import org.yakindu.sct.generator.core.ui.build.ToggleSCTNatureAction;
 import org.yakindu.sct.model.sgen.GeneratorModel;
 import org.yakindu.sct.ui.wizards.ModelCreationWizardPage;
 
@@ -115,7 +115,7 @@ public class SGenNewFileWizard extends Wizard implements INewWizard {
 		}
 		return false;
 	}
-
+ 
 	protected void ensureSCTNature(IProject project) throws CoreException {
 		if (project.getNature(SCTNature.NATURE_ID) == null) {
 			new ToggleSCTNatureAction().toggleNature(project);

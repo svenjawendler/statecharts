@@ -9,8 +9,6 @@
  */
 package org.yakindu.sct.generator.csharp;
 
-import org.yakindu.sct.generator.csharp.CSharpNamingService;
-import org.yakindu.sct.generator.csharp.CSharpGenerator;
 import org.yakindu.sct.generator.core.impl.GenericJavaBasedGenerator;
 import org.yakindu.sct.generator.core.types.ICodegenTypeSystemAccess;
 import org.yakindu.sct.generator.csharp.types.CSharpTypeSystemAccess;

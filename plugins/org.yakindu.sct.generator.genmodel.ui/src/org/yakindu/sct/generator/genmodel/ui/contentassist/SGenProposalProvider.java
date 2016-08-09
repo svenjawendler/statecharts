@@ -11,6 +11,7 @@
 package org.yakindu.sct.generator.genmodel.ui.contentassist;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import org.eclipse.jface.viewers.StyledString;
 import org.eclipse.xtext.Assignment;
@@ -50,10 +51,13 @@ public class SGenProposalProvider extends AbstractSGenProposalProvider {
 		Iterable<IGeneratorDescriptor> descriptions = GeneratorExtensions
 				.getGeneratorDescriptors();
 		for (IGeneratorDescriptor desc : descriptions) {
+			
+			ImageDescriptor descriptor = ImageDescriptor.createFromURL(desc.getImagePath());
+			
 			ICompletionProposal proposal = createCompletionProposal(
 					desc.getId(),
 					new StyledString((desc.getName() != null) ? desc.getName()
-							: "null"), desc.getImage(), context);
+							: "null"), descriptor.createImage(), context);
 
 			if (proposal instanceof ConfigurableCompletionProposal) {
 				ConfigurableCompletionProposal configurable = (ConfigurableCompletionProposal) proposal;

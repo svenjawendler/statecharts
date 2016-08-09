@@ -10,7 +10,12 @@
  */
 package org.yakindu.sct.generator.csharp.features;
 
-import static org.yakindu.sct.generator.csharp.features.ICSharpFeatureConstants.*;
+import static org.yakindu.sct.generator.csharp.features.ICSharpFeatureConstants.CSHARP_KEYWORDS;
+import static org.yakindu.sct.generator.csharp.features.ICSharpFeatureConstants.IMPLEMENTATION_SUFFIX;
+import static org.yakindu.sct.generator.csharp.features.ICSharpFeatureConstants.LIBRARY_NAME;
+import static org.yakindu.sct.generator.csharp.features.ICSharpFeatureConstants.NAMESPACE_NAME;
+import static org.yakindu.sct.generator.csharp.features.ICSharpFeatureConstants.NAME_PREFIX;
+import static org.yakindu.sct.generator.csharp.features.ICSharpFeatureConstants.NAME_SUFFIX;
 
 import java.util.Arrays;
 import java.util.regex.Matcher;
@@ -33,10 +38,8 @@ import org.yakindu.sct.model.sgen.FeatureTypeLibrary;
 public class CSharpFeatureValueProvider extends
 		AbstractDefaultFeatureValueProvider {
 
-	private static final String PACKAGE_NAME_REGEX = "([a-zA-Z_][a-zA-Z0-9_]*\\.)+[a-zA-Z_][a-zA-Z0-9_]*";
 	private static final String SUFFIX_REGEX = "[a-zA-Z0-9_]*";
 
-	
 	@Override
 	protected void setDefaultValue(FeatureType featureType, FeatureParameterValue parameterValue,
 			EObject contextElement) {

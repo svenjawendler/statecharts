@@ -6,7 +6,10 @@ Bundle-Version: 2.5.0.qualifier
 Require-Bundle: org.yakindu.sct.model.stext,
  org.yakindu.sct.generator.core,
  org.yakindu.sct.generator.genmodel,
- org.yakindu.sct.model.resource
+ org.yakindu.sct.model.resource,
+ org.eclipse.xpand,
+ org.yakindu.sct.model.sexec,
+ org.eclipse.core.runtime
 Bundle-Vendor: statecharts.org
 Export-Package: org.yakindu.sct.generator.csharp,
  org.yakindu.sct.generator.csharp.features

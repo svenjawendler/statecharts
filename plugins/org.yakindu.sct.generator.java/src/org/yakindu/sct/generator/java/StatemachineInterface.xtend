@@ -38,6 +38,7 @@ class StatemachineInterface {
 	def generateStatemachineInterface(ExecutionFlow flow, GeneratorEntry entry, IFileSystemAccess fsa) {
 		var filename = flow.getImplementationPackagePath(entry) + '/' + flow.statemachineInterfaceName.java
 		var content = beautifier.format(filename, content(flow, entry))
+		
 		fsa.generateFile(filename, content)
 	}
 

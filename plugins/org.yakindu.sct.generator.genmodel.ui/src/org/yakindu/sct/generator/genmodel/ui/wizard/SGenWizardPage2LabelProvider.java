@@ -14,6 +14,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.ISharedImages;
@@ -39,7 +40,10 @@ class SGenWizardPage2LabelProvider extends LabelProvider {
 		} else if (element instanceof IFile) {
 			String generatorID = FileExtensions.getGeneratorForFileExtension(((IFile) element).getFileExtension());
 			IGeneratorDescriptor genDesc = GeneratorExtensions.getGeneratorDescriptor(generatorID);
-			return genDesc.getImage();
+			
+			ImageDescriptor descriptor = ImageDescriptor.createFromURL(genDesc.getImagePath());
+			
+			return descriptor.createImage();
 		}
 		return super.getImage(element);
 	}

@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.jdt.core.JavaCore;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
@@ -218,7 +219,9 @@ public class SGenWizardPage2 extends WizardPage {
 		@Override
 		public Image getImage(Object element) {
 			if (element instanceof IGeneratorDescriptor) {
-				return ((IGeneratorDescriptor) element).getImage();
+				IGeneratorDescriptor genDesc = (IGeneratorDescriptor) element;
+				ImageDescriptor descriptor = ImageDescriptor.createFromURL(genDesc.getImagePath());
+				return descriptor.createImage();
 			}
 			return super.getImage(element);
 		}

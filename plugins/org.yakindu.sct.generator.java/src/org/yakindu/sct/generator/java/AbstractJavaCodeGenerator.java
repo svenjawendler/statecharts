@@ -15,7 +15,7 @@ import org.yakindu.sct.generator.core.impl.GenericJavaBasedGenerator;
 import org.yakindu.sct.model.sgen.FeatureConfiguration;
 import org.yakindu.sct.model.sgen.GeneratorEntry;
 import org.yakindu.sct.model.sgraph.Statechart;
-
+ 
 abstract public class AbstractJavaCodeGenerator extends GenericJavaBasedGenerator {
 
 	abstract public void generate(Statechart statechart, GeneratorEntry entry);

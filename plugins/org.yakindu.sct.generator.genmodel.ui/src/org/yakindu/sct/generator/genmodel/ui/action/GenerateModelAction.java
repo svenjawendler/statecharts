@@ -32,6 +32,7 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
 import org.yakindu.sct.generator.core.GeneratorActivator;
 import org.yakindu.sct.generator.core.GeneratorExecutor;
+import org.yakindu.sct.generator.core.ui.build.SCTBuilder;
 import org.yakindu.sct.generator.genmodel.ui.internal.SGenActivator;
 
 import com.google.inject.Inject;
@@ -57,7 +58,7 @@ public class GenerateModelAction implements IObjectActionDelegate {
 					new Status(IStatus.ERROR, GeneratorActivator.PLUGIN_ID, "The file contains errors"));
 			return;
 		}
-		generatorExecutor.executeGenerator(file);
+		generatorExecutor.executeGenerator(SCTBuilder.loadResource(file));
 	}
 
 	private boolean hasError(IFile file) {
