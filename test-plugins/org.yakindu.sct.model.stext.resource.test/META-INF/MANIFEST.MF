@@ -7,5 +7,8 @@ Fragment-Host: org.yakindu.sct.model.resource
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Require-Bundle: org.junit,
  org.yakindu.base.xtext.utils.jface,
- org.yakindu.sct.test.models
+ org.yakindu.sct.test.models,
+ org.yakindu.sct.model.sgraph,
+ org.yakindu.sct.model.stext,
+ org.yakindu.sct.model.stext.ui
 Bundle-Vendor: statecharts.org
