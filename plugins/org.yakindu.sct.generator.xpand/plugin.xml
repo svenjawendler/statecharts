@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+ <extension
+         point="org.yakindu.sct.generator.core.featuretypes">
+      <FeatureLibrary
+            library_id="org.yakindu.generator.core.features.xpand"
+            defaultProvider="org.yakindu.sct.generator.core.features.XpandLibraryDefaultFeatureValueProvider"
+            uri="platform:/plugin/org.yakindu.sct.generator.core/library/XpandFeatureTypeLibrary.xmi">
+      </FeatureLibrary>
+     
+ </extension>
+ <extension
+       point="org.yakindu.sct.generator.core.generator">
+    <SCTGenerator
+          class="org.yakindu.sct.generator.core.features.GenericXPandCodeGenerator"
+          contentType="statechart"
+          description="Generate Code using Xpand Templates"
+          elementRefType="org.yakindu.sct.model.sgraph.Statechart"
+          icon="icons/sct.png"
+          id="yakindu::xpand"
+          name="Custom Xpand-based Generator">
+       <FeatureLibrary
+             library_id="org.yakindu.generator.core.features">
+       </FeatureLibrary>
+       <FeatureLibrary
+             library_id="org.yakindu.generator.core.features.xpand">
+       </FeatureLibrary>
+    </SCTGenerator>
+ </extension>
+    <extension
+         point="org.yakindu.sct.generator.core.extensions">
+      <ExtensionGeneratorMapping
+            fileExtension="sct"
+            generatorId="yakindu::xpand">
+      </ExtensionGeneratorMapping>
+   </extension>
+ 
+ <extension
+       point="org.yakindu.sct.generator.core.generator">
+   <SCTGenerator
+         class="org.yakindu.sct.generator.core.impl.GenericJavaBasedGenerator"
+         contentType="statechart"
+         description="Generate Code using Xpand Templates"
+         elementRefType="org.yakindu.sct.model.sgraph.Statechart"
+         icon="icons/sct.png"
+         id="yakindu::generic"
+         name="Custom Xtend2/Java-based Generator">
+      <FeatureLibrary
+            library_id="org.yakindu.generator.core.features">
+      </FeatureLibrary>
+      <FeatureLibrary
+            library_id="org.yakindu.generator.core.features.generic">
+      </FeatureLibrary>
+    </SCTGenerator>
+ </extension>
+    <extension
+         point="org.yakindu.sct.generator.core.extensions">
+      <ExtensionGeneratorMapping
+            fileExtension="sct"
+            generatorId="yakindu::generic">
+      </ExtensionGeneratorMapping>
+   </extension>
+     <extension
+       point="org.eclipse.core.runtime.preferences">
+    	<initializer class="org.yakindu.sct.generator.core.preferences.GenModelPreferenceInitializer">
+    	</initializer>
+ 	</extension>
+</plugin>

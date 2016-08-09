@@ -1,0 +1,21 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: YAKINDU Generator Core
+Bundle-SymbolicName: org.yakindu.sct.generator.xpand;singleton:=true
+Bundle-Version: 2.7.1.qualifier
+Bundle-Vendor: statecharts.org
+Require-Bundle: org.yakindu.sct.model.stext,
+ org.yakindu.sct.model.sgen,
+ org.eclipse.core.expressions,
+ org.yakindu.base.types,
+ org.yakindu.sct.domain,
+ com.google.guava,
+ org.eclipse.core.runtime,
+ org.yakindu.sct.model.sexec,
+ org.yakindu.sct.generator.core,
+ org.eclipse.xpand,
+ org.eclipse.xtend,
+ org.eclipse.xtend.typesystem.emf,
+ org.eclipse.core.resources
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-ActivationPolicy: lazy
