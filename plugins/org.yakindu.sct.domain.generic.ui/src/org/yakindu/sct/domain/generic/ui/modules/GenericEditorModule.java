@@ -8,7 +8,7 @@
  * 	committers of YAKINDU - initial API and implementation
  * 
  */
-package org.yakindu.sct.domain.generic.modules;
+package org.yakindu.sct.domain.generic.ui.modules;
 
 import org.eclipse.xtext.service.AbstractGenericModule;
 import org.yakindu.sct.refactoring.proposals.RefactoringProposalProvider;

@@ -8,7 +8,7 @@
  * Contributors:
  *     committers of YAKINDU - initial API and implementation
  */
-package org.yakindu.sct.domain.generic.modules;
+package org.yakindu.sct.domain.generic.ui.modules;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.service.AbstractGenericModule;

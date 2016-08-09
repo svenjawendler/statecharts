@@ -12,10 +12,9 @@
 package org.yakindu.sct.domain.generic.modules;
 
 import org.eclipse.xtext.service.AbstractGenericModule;
-import org.yakindu.sct.generator.core.filesystem.EFSResourceFileSystemAccess;
+import org.yakindu.sct.domain.extension.DomainRegistry;
 import org.yakindu.sct.generator.core.filesystem.ISCTFileSystemAccess;
 import org.yakindu.sct.generator.core.impl.IGeneratorLog;
-import org.yakindu.sct.generator.core.util.EclipseConsoleLog;
 
 /**
  * @author Johannes Dicks - Initial contribution and API
@@ -24,11 +23,11 @@ import org.yakindu.sct.generator.core.util.EclipseConsoleLog;
 public class GenericGeneratorModule extends AbstractGenericModule {
 
 	public Class<? extends ISCTFileSystemAccess> bindISCTFileSystemAccess() {
-		return EFSResourceFileSystemAccess.class;
+		return DomainRegistry.getDefaultBinding(ISCTFileSystemAccess.class);
 	}
 
 	public Class<? extends IGeneratorLog> bindIGeneratorLog() {
-		return EclipseConsoleLog.class;
+		return DomainRegistry.getDefaultBinding(IGeneratorLog.class);
 	}
 
 }

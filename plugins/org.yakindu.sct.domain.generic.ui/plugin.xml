@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+<extension
+         point="org.yakindu.sct.domain.ui">
+      <Domain
+            domainID="org.yakindu.domain.default"
+            domainModuleProvider="org.yakindu.sct.domain.generic.ui.extension.GenericDomainUiInjectorProvider">
+      </Domain>
+   </extension>
+</plugin>
