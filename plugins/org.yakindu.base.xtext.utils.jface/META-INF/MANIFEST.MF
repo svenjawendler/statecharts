@@ -12,7 +12,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.jface.text,
  org.eclipse.emf.common,
  org.eclipse.xtext.ui,
- org.eclipse.help
+ org.eclipse.help,
+ org.yakindu.sct.model.resource;bundle-version="2.7.1"
 Export-Package: org.yakindu.base.utils.jface.help;
   uses:="org.eclipse.jface.text,
    org.eclipse.emf.ecore,

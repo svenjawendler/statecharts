@@ -17,12 +17,10 @@ Require-Bundle: org.eclipse.xtext;visibility:=reexport,
  org.eclipse.emf.common,
  org.antlr.runtime,
  org.yakindu.sct.model.sgraph;visibility:=reexport,
- org.yakindu.base.xtext.utils.gmf,
- org.eclipse.gmf.runtime.emf.core,
  org.yakindu.base.types,
- org.yakindu.base.xtext.utils.jface,
  org.yakindu.base.expressions;visibility:=reexport,
- org.yakindu.sct.domain
+ org.yakindu.sct.domain,
+ org.yakindu.sct.model.resource;bundle-version="2.7.1"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: org.yakindu.sct.model.stext,
  org.yakindu.sct.model.stext.conversion,

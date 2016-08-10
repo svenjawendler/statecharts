@@ -54,7 +54,7 @@ public class ExpressionsJavaValidator extends org.yakindu.base.expressions.valid
 
 	public static final String ERROR_CYCLE_DETECTED_CODE = "TypeExtendsItself";
 	public static final String ERROR_CYCLE_DETECTED_MSG = "Cycle detected: the type %s cannot extend itself.";
-
+  
 	@Inject
 	private GenericsPrettyPrinter printer;
 	@Inject

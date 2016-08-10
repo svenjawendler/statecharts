@@ -12,8 +12,8 @@
 package org.yakindu.base.xtext.utils.gmf.viewers;
 
 import org.yakindu.base.xtext.utils.jface.viewers.XtextStyledTextCellEditor;
-import org.yakindu.base.xtext.utils.jface.viewers.ContextElementAdapter.IContextElementProvider;
 import org.yakindu.base.xtext.utils.jface.viewers.context.IXtextFakeContextResourcesProvider;
+import org.yakindu.sct.model.resource.ContextElementAdapter.IContextElementProvider;
 
 import com.google.inject.Injector;
 

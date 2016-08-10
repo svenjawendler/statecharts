@@ -35,8 +35,9 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.xtext.ui.editor.XtextEditor;
 import org.yakindu.base.utils.jface.viewers.StyledTextCellEditor;
 import org.yakindu.base.xtext.utils.jface.fieldassist.CompletionProposalAdapter;
-import org.yakindu.base.xtext.utils.jface.viewers.ContextElementAdapter.IContextElementProvider;
 import org.yakindu.base.xtext.utils.jface.viewers.context.IXtextFakeContextResourcesProvider;
+import org.yakindu.sct.model.resource.ContextElementAdapter;
+import org.yakindu.sct.model.resource.ContextElementAdapter.IContextElementProvider;
 
 import com.google.inject.Injector;
 

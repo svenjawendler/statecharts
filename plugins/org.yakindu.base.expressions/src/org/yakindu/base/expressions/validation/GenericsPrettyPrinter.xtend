@@ -25,4 +25,4 @@ class GenericsPrettyPrinter {
 		// TODO: type arguments can have multiple hierarches Type1<Type2<T>>
 		return '''<«FOR param : parameter SEPARATOR ', '»«param.type.name»«ENDFOR»>'''.toString
 	}
-}
+} 

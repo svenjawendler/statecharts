@@ -62,7 +62,7 @@ import org.yakindu.base.types.Property;
 import org.yakindu.base.types.TypesPackage;
 import org.yakindu.base.types.annotations.TypeAnnotations;
 import org.yakindu.base.types.inferrer.ITypeSystemInferrer;
-import org.yakindu.base.xtext.utils.jface.viewers.ContextElementAdapter;
+import org.yakindu.sct.model.resource.ContextElementAdapter;
 import org.yakindu.sct.model.sgraph.Choice;
 import org.yakindu.sct.model.sgraph.Entry;
 import org.yakindu.sct.model.sgraph.Exit;

@@ -33,7 +33,7 @@ import org.yakindu.base.base.NamedElement;
 import org.yakindu.base.expressions.expressions.ElementReferenceExpression;
 import org.yakindu.base.expressions.expressions.FeatureCall;
 import org.yakindu.base.types.Declaration;
-import org.yakindu.base.xtext.utils.jface.viewers.ContextElementAdapter;
+import org.yakindu.sct.model.resource.ContextElementAdapter;
 import org.yakindu.sct.model.sgraph.Scope;
 import org.yakindu.sct.model.sgraph.Statechart;
 import org.yakindu.sct.refactoring.handlers.AbstractRefactoringHandler;
