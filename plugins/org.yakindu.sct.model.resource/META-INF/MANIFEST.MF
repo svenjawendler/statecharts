@@ -8,6 +8,5 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: org.yakindu.sct.model.resource
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.emf.ecore.xmi,
- org.eclipse.gmf.runtime.emf.core,
  org.yakindu.sct.domain,
  com.google.inject
