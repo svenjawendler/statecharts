@@ -14,7 +14,6 @@ package org.yakindu.sct.generator.core.extensions;
 import java.net.URL;
 import java.util.List;
 
-import org.osgi.framework.Bundle;
 import org.yakindu.sct.generator.core.ISCTGenerator;
 
 public interface IGeneratorDescriptor {
@@ -37,6 +36,5 @@ public interface IGeneratorDescriptor {
 	String getDescription();
 
 	String getElementRefType();
-	Bundle getBundle();
 
 }

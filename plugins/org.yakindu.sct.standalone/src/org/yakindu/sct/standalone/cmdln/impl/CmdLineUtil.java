@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.util.List;
 
 import org.apache.commons.cli.BasicParser;
 import org.apache.commons.cli.CommandLine;
@@ -26,18 +27,15 @@ import org.apache.log4j.RollingFileAppender;
  */
 public class CmdLineUtil {
 	private static final String PARAM_HELP = "h";
-	/**
-	 * root package so we will configure logging for all subpackages
-	 */
-	public static final String LOGGER_ID = "org.yakindu.sct.standalone";
-	private static final Logger logger = Logger.getLogger(LOGGER_ID);
+
 	private static final String DEFAULT_LOG_LEVEL = "INFO";
-	private static final String LOG_LEVEL_DEVELOPMENT = "DEV";
 
 	public static final String PARAM_LOG = "logLvl";
 	public static final String PARAM_LOG_FILE = "logFile";
 
-	public  void configureCustomLogging(CommandLine line) {
+	public void configureCustomLogging(CommandLine line, List<String> loggerIDs) {
+		
+		
 		// get log lvl
 		String logLevel = null;
 		if (line != null && line.hasOption(PARAM_LOG))
@@ -45,18 +43,27 @@ public class CmdLineUtil {
 		else
 			logLevel = DEFAULT_LOG_LEVEL;
 	
-		Level level = null;
-		PatternLayout layout = new PatternLayout("%5p | %d | %F | %L | %m%n");
-		if (logLevel.equals(LOG_LEVEL_DEVELOPMENT)) {
-			level = Level.ALL;
+		Level level =  Level.toLevel(logLevel);
+		
+		PatternLayout layout = new PatternLayout("%5p | %m%n");
+		
+		if (!level.isGreaterOrEqual(Level.DEBUG)) {
+			layout =  new PatternLayout("%5p | %d | %F | %L | %m%n");
+		} 
+		
+		Logger rootLogger = Logger.getRootLogger();
+		rootLogger.addAppender(new ConsoleAppender(layout));
+		rootLogger.setLevel(Level.WARN);
+		
+		for (String loggerID : loggerIDs) {
+			Logger logger = Logger.getLogger(loggerID);
 			logger.removeAllAppenders();
 			logger.addAppender(new ConsoleAppender(layout));
-		} else {
-			level = Level.toLevel(logLevel);
+			logger.setLevel(level);
+			logger.setAdditivity(false);
+			logger.debug("Logging mode: " + level);
+			initFileAppenderIfConfigured(line, logger, layout);
 		}
-		initFileAppenderIfConfigured(line, logger, layout);
-		logger.setLevel(level);
-		logger.info("Logging mode: " + level);
 	}
 
 	private  void initFileAppenderIfConfigured(CommandLine line, Logger root, PatternLayout layout) {
@@ -108,7 +115,6 @@ public class CmdLineUtil {
 		try {
 			CommandLineParser parser = new BasicParser();
 			cmd = parser.parse(options, args);
-//TODO			configureCustomLogging(cmd);
 		} catch (MissingOptionException e) {
 			System.err.println(e.getMessage());
 			help(options, app);

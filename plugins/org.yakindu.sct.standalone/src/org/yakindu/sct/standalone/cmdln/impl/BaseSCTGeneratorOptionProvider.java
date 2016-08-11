@@ -1,5 +1,7 @@
 package org.yakindu.sct.standalone.cmdln.impl;
 
+import java.util.List;
+
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
@@ -39,7 +41,6 @@ public class BaseSCTGeneratorOptionProvider implements SCTGeneratorOptionProvide
 		}
 
 		cmd = cmdLineUtil.parseCmdLine(args, "ExtendedSCTStandaloneExecutor", cmdOptions);
-
 		return this;
 	}
 
@@ -69,7 +70,7 @@ public class BaseSCTGeneratorOptionProvider implements SCTGeneratorOptionProvide
 				if (cmd.hasOption(OPT_WS))
 					return  cmd.getOptionValue(OPT_WS);
 				else
-					return System.getProperty("user.dir") + "/workspace";
+					return System.getProperty("user.dir");
 				
 			}
 
@@ -93,11 +94,14 @@ public class BaseSCTGeneratorOptionProvider implements SCTGeneratorOptionProvide
 			public String getAbsoluteGenTargetDir() {
 				return getAbsoluteWorkspaceDir();
 			}
-
-			@Override
-			public String getAbsoluteLibrariesDir() {
-				return System.getProperty("user.dir") + "/libraries";
-			}
 		};
+	}
+
+	@Override
+	public SCTGeneratorOptionProvider initLoggingForPackages(List<String> loggerIDs) {
+		if(cmd == null)
+			throw new IllegalStateException("Arguments not parsed, use call parse() first.");
+		cmdLineUtil.configureCustomLogging(cmd,loggerIDs);
+		return this;
 	}
 }

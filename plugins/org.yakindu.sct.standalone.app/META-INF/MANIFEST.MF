@@ -7,6 +7,7 @@ Bundle-Activator: org.yakindu.sct.standalone.app.Activator
 Bundle-Vendor: YAKINDU
 Require-Bundle: org.eclipse.core.runtime,
  org.yakindu.sct.standalone,
- com.google.guava
+ com.google.guava,
+ org.apache.log4j
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy

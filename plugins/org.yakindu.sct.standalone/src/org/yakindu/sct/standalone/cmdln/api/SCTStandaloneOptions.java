@@ -30,6 +30,5 @@ public interface SCTStandaloneOptions {
 	String getSGenPath();
 	String getSCTDir();
 	String getAbsoluteGenTargetDir();
-	String getAbsoluteLibrariesDir();
 	
 }

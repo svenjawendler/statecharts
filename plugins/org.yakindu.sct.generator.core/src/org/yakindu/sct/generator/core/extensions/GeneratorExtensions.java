@@ -18,7 +18,6 @@ import java.util.NoSuchElementException;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
-import org.osgi.framework.Bundle;
 import org.yakindu.sct.generator.core.ISCTGenerator;
 
 import com.google.common.base.Predicate;
@@ -90,7 +89,7 @@ public class GeneratorExtensions {
 			if (path != null)
 				return path;
 			String pathString = configElement.getAttribute(ATTRIBUTE_ICON);
-			path = getBundle().getEntry(pathString);
+			path = Platform.getBundle(configElement.getContributor().getName()).getEntry(pathString);
 			return path;
 		}
 
@@ -113,10 +112,7 @@ public class GeneratorExtensions {
 				return null;
 			}
 		}
-		@Override
-		public Bundle getBundle() {
-			return Platform.getBundle(configElement.getContributor().getName());
-		}
+
 	}
 
 	public static List<IGeneratorDescriptor> getGeneratorDescriptors() {

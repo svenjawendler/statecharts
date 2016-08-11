@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
@@ -16,27 +17,22 @@ import org.eclipse.xtext.resource.IResourceServiceProvider;
 import org.eclipse.xtext.scoping.IGlobalScopeProvider;
 import org.eclipse.xtext.scoping.impl.ResourceSetGlobalScopeProvider;
 import org.yakindu.sct.domain.extension.DomainRegistry;
-import org.yakindu.sct.domain.extension.IDomainInjectorProvider;
-import org.yakindu.sct.domain.generic.extension.GenericDomainInjectorProvider;
+import org.yakindu.sct.domain.extension.IDomainDescriptor;
 import org.yakindu.sct.generator.core.GeneratorExecutor;
 import org.yakindu.sct.generator.core.extensions.GeneratorExtensions;
+import org.yakindu.sct.generator.core.extensions.IGeneratorDescriptor;
+import org.yakindu.sct.generator.core.extensions.ILibraryDescriptor;
 import org.yakindu.sct.generator.core.extensions.LibraryExtensions;
-import org.yakindu.sct.generator.core.features.impl.CoreLibraryDefaultFeatureValueProvider;
-import org.yakindu.sct.generator.core.features.impl.SCTBaseLibaryDefaultFeatureValueProvider;
 import org.yakindu.sct.generator.core.filesystem.ISCTFileSystemAccess;
 import org.yakindu.sct.generator.core.impl.IGeneratorLog;
 import org.yakindu.sct.generator.genmodel.SGenRuntimeModule;
 import org.yakindu.sct.generator.genmodel.SGenStandaloneSetup;
-import org.yakindu.sct.generator.java.JavaCodeGenerator;
 import org.yakindu.sct.model.sgen.GeneratorModel;
 import org.yakindu.sct.model.sgen.SGenPackage;
 import org.yakindu.sct.model.stext.STextRuntimeModule;
 import org.yakindu.sct.model.stext.STextStandaloneSetup;
 import org.yakindu.sct.standalone.api.ISCTStandalone;
 import org.yakindu.sct.standalone.cmdln.api.SCTStandaloneOptions;
-import org.yakindu.sct.standalone.extension.DomainDescriptor;
-import org.yakindu.sct.standalone.extension.GeneratorDescriptor;
-import org.yakindu.sct.standalone.extension.LibraryDescriptor;
 import org.yakindu.sct.standalone.generator.Log4jGeneratorLog;
 import org.yakindu.sct.standalone.generator.StandaloneFileSystemAccess;
 import org.yakindu.sct.standalone.io.ResourceUtil;
@@ -50,14 +46,11 @@ import com.google.inject.util.Modules;
 
 public class SCTStandalone implements ISCTStandalone {
 
+	private static final Logger LOGGER = Logger.getLogger(SCTStandalone.class);
+
 	private ResourceSet resourceSet;
 	private SCTStandaloneOptions parameter;
 	private ResourceUtil resourceUtil;
-
-	@Override
-	public void generate() {
-		generateAll();
-	}
 
 	@Override
 	public void init(SCTStandaloneOptions options) {
@@ -66,29 +59,57 @@ public class SCTStandalone implements ISCTStandalone {
 		// dependencies withion e.g. domain.generic)
 		DomainRegistry.addDefaultBinding(ISCTFileSystemAccess.class, StandaloneFileSystemAccess.class);
 		DomainRegistry.addDefaultBinding(IGeneratorLog.class, Log4jGeneratorLog.class);
-		
-		
+
 		initLanguages();
 		initResourceSet();
-		
+
 		List<String> paths = Lists.newArrayList();
 		paths.add(parameter.getAbsoluteWorkspaceDir());
 		resourceUtil = new ResourceUtil(paths);
-		doLoadEMFResource(resourceUtil.getAbsolutePath(parameter.getSGenPath()));
-		
-		
-		
-		loadSCTs(resourceUtil.getAbsolutePath(parameter.getSCTDir()));
-		
-		//TODO old stuff needed to init sct extensions like domains, libraries and generators
-		// since we can use the the extensions this will work without modifications now.
-		//
-		// //TODO this will be obsolete when extensions can be used
-		// initSCTDomain(parameter);
-		// initSgenLibraries(parameter);
-		// initSCTGenerator(parameter);
+
+		loadModels();
+
+		if (LOGGER.isDebugEnabled())
+			logAvailableSctExtensions();
+
 	}
-	
+	private void logAvailableSctExtensions() {
+		LOGGER.debug("Available domains :");
+		List<IDomainDescriptor> domainDescriptors = DomainRegistry.getDomainDescriptors();
+		for (IDomainDescriptor iDomainDescriptor : domainDescriptors) {
+
+			LOGGER.debug("Name:" + iDomainDescriptor.getName());
+			LOGGER.debug("	ID:" + iDomainDescriptor.getDomainID());
+			LOGGER.debug("	Desc :" + iDomainDescriptor.getDescription());
+		}
+		LOGGER.debug("");
+		LOGGER.debug("Available libraries :");
+		List<ILibraryDescriptor> libraryDescriptors = LibraryExtensions.getLibraryDescriptors();
+		for (ILibraryDescriptor libraryDescriptor : libraryDescriptors) {
+
+			LOGGER.debug("ID:" + libraryDescriptor.getLibraryId());
+			LOGGER.debug("	URI:" + libraryDescriptor.getURI());
+		}
+		LOGGER.debug("");
+		LOGGER.debug("Available generators :");
+		List<IGeneratorDescriptor> generatorDescriptors = GeneratorExtensions.getGeneratorDescriptors();
+		for (IGeneratorDescriptor generatorDescriptor : generatorDescriptors) {
+
+			LOGGER.debug("Name:" + generatorDescriptor.getName());
+			LOGGER.debug("	ID:" + generatorDescriptor.getId());
+			LOGGER.debug("	Desc:" + generatorDescriptor.getDescription());
+		}
+	}
+	@Override
+	public void generate() {
+		generateAll();
+	}
+
+	private void loadModels() {
+		doLoadEMFResource(resourceUtil.getAbsolutePath(parameter.getSGenPath()));
+		loadSCTs(resourceUtil.getAbsolutePath(parameter.getSCTDir()));
+	}
+
 	protected void loadSCTs(String path) {
 		File file = Path.fromOSString(path).toFile();
 		loadSCTs(file);
@@ -98,7 +119,7 @@ public class SCTStandalone implements ISCTStandalone {
 		File[] listFiles = file.listFiles();
 		for (File file2 : listFiles) {
 			try {
-				if (isPlainDir(file2)&&!(file2.getName().equals("bin"))&& !(file2.getName().startsWith(".")))
+				if (isPlainDir(file2) && !(file2.getName().equals("bin")) && !(file2.getName().startsWith(".")))
 					loadSCTs(file2);
 				else if (file2.getName().endsWith(".sct"))
 					doLoadEMFResource(file2.getAbsolutePath());
@@ -125,16 +146,25 @@ public class SCTStandalone implements ISCTStandalone {
 		}
 		return !canon.getCanonicalFile().equals(canon.getAbsoluteFile());
 	}
-	
+
 	/**
 	 * Have to be an absolute path
-	 * @param filePath an absolute filepath
+	 * 
+	 * @param filePath
+	 *            an absolute filepath
 	 * @return a resource loaded or NULL
 	 */
 	protected Resource doLoadEMFResource(String filePath) {
-		return this.resourceSet.getResource(URI.createFileURI(filePath), true);
+		Resource resource = this.resourceSet.getResource(URI.createFileURI(filePath), true);
+		LOGGER.info("Loaded resource (" + isLoadedMsg(resource) + "): " + filePath);
+		return resource;
 	}
-	
+
+	private String isLoadedMsg(Resource resource) {
+		if (resource != null)
+			return "SUCCESS";
+		return "FAILED";
+	}
 
 	protected void generateAll() {
 		EList<Resource> resources = resourceSet.getResources();
@@ -149,28 +179,11 @@ public class SCTStandalone implements ISCTStandalone {
 		}
 	}
 
-	protected void initSCTGenerator(final SCTStandaloneOptions parameter) {
-		for (GeneratorDescriptor generator : getGenerators()) {
-			GeneratorExtensions.getGeneratorDescriptors().add(generator);
-		}
-	}
-
-	protected void initSgenLibraries(SCTStandaloneOptions parameter) {
-		for (LibraryDescriptor libraryDescriptor : getLibraries(parameter)) {
-			LibraryExtensions.getLibraryDescriptors().add(libraryDescriptor);
-		}
-	}
-
-	protected void initSCTDomain(final SCTStandaloneOptions parameter) {
-		for (DomainDescriptor domain : getDomains(parameter)) {
-			DomainRegistry.getDomainDescriptors().add(domain);
-		}
-	}
-
 	protected void initResourceSet() {
 		resourceSet = new ResourceSetImpl();
-//		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(SCTStandaloneOptions.FILE_EXTENSION_SCT,
-//				new SCTResourceFactory());
+		// TODO not necessary anymore?!
+		// resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(SCTStandaloneOptions.FILE_EXTENSION_SCT,
+		// new SCTResourceFactory());
 	}
 
 	protected void initLanguages() {
@@ -209,49 +222,5 @@ public class SCTStandalone implements ISCTStandalone {
 		}.createInjectorAndDoEMFRegistration();
 		IResourceServiceProvider.Registry.INSTANCE.getExtensionToFactoryMap().put(
 				SCTStandaloneOptions.FILE_EXTENSION_SCT, stextInjector.getInstance(IResourceServiceProvider.class));
-	}
-
-	protected List<LibraryDescriptor> getLibraries(SCTStandaloneOptions parameter) {
-		List<LibraryDescriptor> libraries = Lists.newArrayList();
-
-		libraries.add(new LibraryDescriptor("org.yakindu.generator.core.features",
-				URI.createFileURI(parameter.getAbsoluteLibrariesDir() + "/CoreFeatureTypeLibrary.xmi"),
-				new CoreLibraryDefaultFeatureValueProvider()));
-		libraries.add(new LibraryDescriptor("org.yakindu.generator.core.features.sctbase",
-				URI.createFileURI(parameter.getAbsoluteLibrariesDir() + "/SCTBaseFeatureLibrary.xmi"),
-				new SCTBaseLibaryDefaultFeatureValueProvider()));
-		return libraries;
-	}
-
-	protected List<GeneratorDescriptor> getGenerators() {
-
-		List<GeneratorDescriptor> generators = Lists.newArrayList();
-		generators.add(new GeneratorDescriptor("yakindu::java", "YAKINDU SCT Java Code Generator", "statechart",
-				"YAKINDU SCT Java Code Generator",
-				"org.yakindu.sct.model.sgraph.Statechart", Lists.newArrayList("org.yakindu.generator.core.features",
-						"org.yakindu.generator.core.features.sctbase", "org.yakindu.sct.generator.feature.java"),
-				new JavaCodeGenerator()));
-		return generators;
-	}
-
-	protected List<DomainDescriptor> getDomains(final SCTStandaloneOptions parameter) {
-		List<DomainDescriptor> domains = Lists.newArrayList();
-		domains.add(new DomainDescriptor("org.yakindu.domain.default", "Default",
-				"The default domain for YAKINDU Statechart Tools.") {
-			@Override
-			public IDomainInjectorProvider getDomainInjectorProvider() {
-				return new GenericDomainInjectorProvider() {
-					@Override
-					public Module getGeneratorModule(String generatorId) {
-						Module generatorModule = super.getGeneratorModule(generatorId);
-						return toStandaloneGeneratorModule(generatorModule, parameter.getAbsoluteGenTargetDir());
-					}
-					protected Module getResourceModule() {
-						return toStandaloneResourceModule(this);
-					};
-				};
-			}
-		});
-		return domains;
 	}
 }

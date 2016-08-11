@@ -4,11 +4,9 @@ Bundle-Name: Standalone
 Bundle-SymbolicName: org.yakindu.sct.standalone
 Bundle-Version: 0.9.0.qualifier
 Bundle-Vendor: itemis AG
-Export-Package: org.yakindu.sct.standalone,
- org.yakindu.sct.standalone.api,
+Export-Package: org.yakindu.sct.standalone.api,
  org.yakindu.sct.standalone.cmdln.api,
  org.yakindu.sct.standalone.cmdln.impl,
- org.yakindu.sct.standalone.extension,
  org.yakindu.sct.standalone.generator,
  org.yakindu.sct.standalone.impl,
  org.yakindu.sct.standalone.io
