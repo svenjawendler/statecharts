@@ -13,8 +13,8 @@ public interface SCTStandaloneOptions {
 	String OPT_SGEN_LONG = "generatorModel";
 	String OPT_SGEN_DESC = "Relative path to the generator model which will be used for execution.";
 
-	String OPT_SCT = "sct";
-	String OPT_SCT_LONG = "statecharts";
+	String OPT_SCT = "statecharts";
+	String OPT_SCT_LONG = "statechartFolder";
 	String OPT_SCT_DESC = "The directory where SCT models could be found.";
 
 
