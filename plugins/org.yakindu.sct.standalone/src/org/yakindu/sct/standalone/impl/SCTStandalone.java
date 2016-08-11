@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -27,7 +28,6 @@ import org.yakindu.sct.generator.core.impl.IGeneratorLog;
 import org.yakindu.sct.generator.genmodel.SGenRuntimeModule;
 import org.yakindu.sct.generator.genmodel.SGenStandaloneSetup;
 import org.yakindu.sct.generator.java.JavaCodeGenerator;
-import org.yakindu.sct.model.resource.SCTResourceFactory;
 import org.yakindu.sct.model.sgen.GeneratorModel;
 import org.yakindu.sct.model.sgen.SGenPackage;
 import org.yakindu.sct.model.stext.STextRuntimeModule;
@@ -39,6 +39,7 @@ import org.yakindu.sct.standalone.extension.GeneratorDescriptor;
 import org.yakindu.sct.standalone.extension.LibraryDescriptor;
 import org.yakindu.sct.standalone.generator.Log4jGeneratorLog;
 import org.yakindu.sct.standalone.generator.StandaloneFileSystemAccess;
+import org.yakindu.sct.standalone.io.ResourceUtil;
 
 import com.google.common.collect.Lists;
 import com.google.inject.Binder;
@@ -51,27 +52,56 @@ public class SCTStandalone implements ISCTStandalone {
 
 	private ResourceSet resourceSet;
 	private SCTStandaloneOptions parameter;
+	private ResourceUtil resourceUtil;
 
 	@Override
 	public void generate() {
-		load(parameter);
 		generateAll();
 	}
 
-	protected void load(SCTStandaloneOptions parameter) {
-		File file = new File(parameter.getSCTDir());
+	@Override
+	public void init(SCTStandaloneOptions options) {
+		this.parameter = options;
+		// TODO init default bindings properly (needed to avoid implementation
+		// dependencies withion e.g. domain.generic)
+		DomainRegistry.addDefaultBinding(ISCTFileSystemAccess.class, StandaloneFileSystemAccess.class);
+		DomainRegistry.addDefaultBinding(IGeneratorLog.class, Log4jGeneratorLog.class);
+		
+		
+		initLanguages();
+		initResourceSet();
+		
+		List<String> paths = Lists.newArrayList();
+		paths.add(parameter.getAbsoluteWorkspaceDir());
+		resourceUtil = new ResourceUtil(paths);
+		doLoadEMFResource(resourceUtil.getAbsolutePath(parameter.getSGenPath()));
+		
+		
+		
+		loadSCTs(resourceUtil.getAbsolutePath(parameter.getSCTDir()));
+		
+		//TODO old stuff needed to init sct extensions like domains, libraries and generators
+		// since we can use the the extensions this will work without modifications now.
+		//
+		// //TODO this will be obsolete when extensions can be used
+		// initSCTDomain(parameter);
+		// initSgenLibraries(parameter);
+		// initSCTGenerator(parameter);
+	}
+	
+	protected void loadSCTs(String path) {
+		File file = Path.fromOSString(path).toFile();
 		loadSCTs(file);
-		load(parameter.getSGenPath());
 	}
 
-	protected void loadSCTs(File file) {
+	private void loadSCTs(File file) {
 		File[] listFiles = file.listFiles();
 		for (File file2 : listFiles) {
 			try {
-				if (isPlainDir(file2))
+				if (isPlainDir(file2)&&!(file2.getName().equals("bin"))&& !(file2.getName().startsWith(".")))
 					loadSCTs(file2);
 				else if (file2.getName().endsWith(".sct"))
-					load(file2.getAbsolutePath());
+					doLoadEMFResource(file2.getAbsolutePath());
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -95,18 +125,16 @@ public class SCTStandalone implements ISCTStandalone {
 		}
 		return !canon.getCanonicalFile().equals(canon.getAbsoluteFile());
 	}
-
-	@Override
-	public void init(SCTStandaloneOptions parameter) {
-		this.parameter = parameter;
-		initLanguages();
-		initResourceSet();
-
-		//TODO this will be obsolete when extensions can be used
-		initSCTDomain(parameter);
-		initSgenLibraries(parameter);
-		initSCTGenerator(parameter);
+	
+	/**
+	 * Have to be an absolute path
+	 * @param filePath an absolute filepath
+	 * @return a resource loaded or NULL
+	 */
+	protected Resource doLoadEMFResource(String filePath) {
+		return this.resourceSet.getResource(URI.createFileURI(filePath), true);
 	}
+	
 
 	protected void generateAll() {
 		EList<Resource> resources = resourceSet.getResources();
@@ -133,23 +161,16 @@ public class SCTStandalone implements ISCTStandalone {
 		}
 	}
 
-	protected Resource load(String resourceURI) {
-		return resourceSet.getResource(URI.createFileURI(resourceURI), true);
-	}
-
 	protected void initSCTDomain(final SCTStandaloneOptions parameter) {
 		for (DomainDescriptor domain : getDomains(parameter)) {
 			DomainRegistry.getDomainDescriptors().add(domain);
 		}
-		//TODO init default bindings properly (needed to avoid implementation dependencies withion e.g. domain.generic)
-		DomainRegistry.addDefaultBinding(ISCTFileSystemAccess.class,StandaloneFileSystemAccess.class);
-		DomainRegistry.addDefaultBinding(IGeneratorLog.class,Log4jGeneratorLog.class);
 	}
 
 	protected void initResourceSet() {
 		resourceSet = new ResourceSetImpl();
-		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(SCTStandaloneOptions.FILE_EXTENSION_SCT,
-				new SCTResourceFactory());
+//		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(SCTStandaloneOptions.FILE_EXTENSION_SCT,
+//				new SCTResourceFactory());
 	}
 
 	protected void initLanguages() {
@@ -189,8 +210,7 @@ public class SCTStandalone implements ISCTStandalone {
 		IResourceServiceProvider.Registry.INSTANCE.getExtensionToFactoryMap().put(
 				SCTStandaloneOptions.FILE_EXTENSION_SCT, stextInjector.getInstance(IResourceServiceProvider.class));
 	}
-	
-	
+
 	protected List<LibraryDescriptor> getLibraries(SCTStandaloneOptions parameter) {
 		List<LibraryDescriptor> libraries = Lists.newArrayList();
 
@@ -198,7 +218,7 @@ public class SCTStandalone implements ISCTStandalone {
 				URI.createFileURI(parameter.getAbsoluteLibrariesDir() + "/CoreFeatureTypeLibrary.xmi"),
 				new CoreLibraryDefaultFeatureValueProvider()));
 		libraries.add(new LibraryDescriptor("org.yakindu.generator.core.features.sctbase",
-				URI.createFileURI(parameter.getAbsoluteLibrariesDir()+ "/SCTBaseFeatureLibrary.xmi"),
+				URI.createFileURI(parameter.getAbsoluteLibrariesDir() + "/SCTBaseFeatureLibrary.xmi"),
 				new SCTBaseLibaryDefaultFeatureValueProvider()));
 		return libraries;
 	}
