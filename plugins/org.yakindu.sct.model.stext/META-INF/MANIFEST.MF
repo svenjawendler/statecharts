@@ -6,8 +6,6 @@ Bundle-Version: 2.7.1.qualifier
 Bundle-SymbolicName: org.yakindu.sct.model.stext;singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.xtext;visibility:=reexport,
- org.apache.log4j;visibility:=reexport,
- org.apache.commons.logging;resolution:=optional;visibility:=reexport,
  org.eclipse.xtext.generator;resolution:=optional,
  org.eclipse.emf.codegen.ecore;resolution:=optional,
  org.eclipse.emf.mwe.utils;resolution:=optional,
@@ -19,7 +17,8 @@ Require-Bundle: org.eclipse.xtext;visibility:=reexport,
  org.yakindu.base.types,
  org.yakindu.base.expressions;visibility:=reexport,
  org.yakindu.sct.domain,
- org.yakindu.sct.model.resource;bundle-version="2.7.1"
+ org.yakindu.sct.model.resource;bundle-version="2.7.1",
+ org.apache.log4j;bundle-version="1.2.15"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: org.yakindu.sct.model.stext,
  org.yakindu.sct.model.stext.conversion,

@@ -13,8 +13,7 @@ package org.yakindu.sct.model.stext.scoping;
 
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -63,7 +62,7 @@ public class STextScopeProvider extends AbstractDeclarativeScopeProvider {
 
 		private ErrorHandler<T> delegate;
 
-		public static final Log LOG = LogFactory.getLog(STextScopeProvider.class);
+		public static final Logger LOG = Logger.getLogger(STextScopeProvider.class);
 
 		public ErrorHandlerDelegate(ErrorHandler<T> delegate) {
 			this.delegate = delegate;

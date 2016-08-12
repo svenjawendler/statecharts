@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
-import org.apache.log4j.Logger;
 import org.yakindu.sct.standalone.cmdln.api.SCTGeneratorOptionProvider;
 import org.yakindu.sct.standalone.cmdln.api.SCTStandaloneOptions;
 
@@ -13,7 +12,6 @@ public class BaseSCTGeneratorOptionProvider implements SCTGeneratorOptionProvide
 
 	private String[] args;
 	private Options cmdOptions;
-	Logger LOG = Logger.getLogger(BaseSCTGeneratorOptionProvider.class);
 	private CommandLine cmd;
 	private CmdLineUtil cmdLineUtil;
 

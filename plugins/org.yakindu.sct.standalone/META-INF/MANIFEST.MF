@@ -20,5 +20,6 @@ Require-Bundle: org.yakindu.sct.model.sgen,
  org.apache.commons.cli,
  org.eclipse.gmf.runtime.notation.edit,
  org.eclipse.osgi,
- org.eclipse.core.runtime
+ org.eclipse.core.runtime,
+ org.apache.log4j;bundle-version="1.2.15"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7

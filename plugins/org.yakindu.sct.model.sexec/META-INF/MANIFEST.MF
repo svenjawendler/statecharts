@@ -20,5 +20,6 @@ Require-Bundle: com.google.inject,
  org.yakindu.base.types;visibility:=reexport,
  org.yakindu.base.expressions;visibility:=reexport,
  org.yakindu.sct.model.stext,
- org.yakindu.sct.model.sgraph;visibility:=reexport
+ org.yakindu.sct.model.sgraph;visibility:=reexport,
+ org.apache.log4j;bundle-version="1.2.15"
 Bundle-ActivationPolicy: lazy

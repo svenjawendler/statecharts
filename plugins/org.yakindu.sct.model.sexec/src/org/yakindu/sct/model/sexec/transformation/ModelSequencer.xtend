@@ -12,8 +12,6 @@ package org.yakindu.sct.model.sexec.transformation
 
 import com.google.inject.Inject
 import java.util.Collection
-import org.apache.commons.logging.LogConfigurationException
-import org.apache.commons.logging.LogFactory
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.naming.IQualifiedNameProvider
@@ -32,6 +30,7 @@ import org.yakindu.sct.model.stext.stext.ImportScope
 import org.yakindu.sct.model.stext.stext.InterfaceScope
 import org.yakindu.sct.model.stext.stext.OperationDefinition
 import org.yakindu.sct.model.stext.stext.VariableDefinition
+import org.apache.log4j.Logger
 
 class ModelSequencer implements IModelSequencer {
 	 
@@ -156,8 +155,8 @@ class ModelSequencer implements IModelSequencer {
 			
 			println("Replace with unknown EObject ("+type+") called: " + name + " in " + resource)
 			
-			LogFactory::getLog(typeof(ModelSequencer)).error("Replace with unknown EObject ("+type+") called: " + name + " in " + resource)
-		} catch (LogConfigurationException e) {
+			Logger::getLogger(typeof(ModelSequencer)).error("Replace with unknown EObject ("+type+") called: " + name + " in " + resource)
+		} catch (Exception e) {
 			e.printStackTrace
 			println("Replace with unknown NamedElement called: "+if (ne ==null) "null" else ne.fullyQualifiedName)
 		}
