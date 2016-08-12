@@ -2,6 +2,7 @@ package org.yakindu.sct.standalone.impl;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -23,8 +24,6 @@ import org.yakindu.sct.generator.core.extensions.GeneratorExtensions;
 import org.yakindu.sct.generator.core.extensions.IGeneratorDescriptor;
 import org.yakindu.sct.generator.core.extensions.ILibraryDescriptor;
 import org.yakindu.sct.generator.core.extensions.LibraryExtensions;
-import org.yakindu.sct.generator.core.filesystem.ISCTFileSystemAccess;
-import org.yakindu.sct.generator.core.impl.IGeneratorLog;
 import org.yakindu.sct.generator.genmodel.SGenRuntimeModule;
 import org.yakindu.sct.generator.genmodel.SGenStandaloneSetup;
 import org.yakindu.sct.model.sgen.GeneratorModel;
@@ -35,6 +34,7 @@ import org.yakindu.sct.standalone.api.ISCTStandalone;
 import org.yakindu.sct.standalone.cmdln.api.SCTStandaloneOptions;
 import org.yakindu.sct.standalone.generator.Log4jGeneratorLog;
 import org.yakindu.sct.standalone.generator.StandaloneFileSystemAccess;
+import org.yakindu.sct.standalone.generator.StandaloneGeneratorModule;
 import org.yakindu.sct.standalone.io.ResourceUtil;
 
 import com.google.common.collect.Lists;
@@ -57,8 +57,10 @@ public class SCTStandalone implements ISCTStandalone {
 		this.parameter = options;
 		// TODO init default bindings properly (needed to avoid implementation
 		// dependencies withion e.g. domain.generic)
-		DomainRegistry.addDefaultBinding(ISCTFileSystemAccess.class, StandaloneFileSystemAccess.class);
-		DomainRegistry.addDefaultBinding(IGeneratorLog.class, Log4jGeneratorLog.class);
+//		DomainRegistry.addDefaultBinding(ISCTFileSystemAccess.class, StandaloneFileSystemAccess.class);
+//		DomainRegistry.addDefaultBinding(IGeneratorLog.class, Log4jGeneratorLog.class);
+		
+		DomainRegistry.addDefaultmodule(IDomainDescriptor.GENERATOR_MODULE, new StandaloneGeneratorModule(parameter.getAbsoluteWorkspaceDir(), StandardCharsets.UTF_8, StandaloneFileSystemAccess.class, Log4jGeneratorLog.class));
 
 		initLanguages();
 		initResourceSet();

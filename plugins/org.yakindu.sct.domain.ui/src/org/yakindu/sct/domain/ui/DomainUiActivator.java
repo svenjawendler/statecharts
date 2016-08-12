@@ -13,10 +13,14 @@ package org.yakindu.sct.domain.ui;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.yakindu.sct.domain.extension.DomainRegistry;
+import org.yakindu.sct.domain.extension.IDomainDescriptor;
 import org.yakindu.sct.generator.core.filesystem.ISCTFileSystemAccess;
 import org.yakindu.sct.generator.core.impl.IGeneratorLog;
 import org.yakindu.sct.generator.core.ui.efs.EFSResourceFileSystemAccess;
 import org.yakindu.sct.generator.core.ui.util.EclipseConsoleLog;
+
+import com.google.inject.Binder;
+import com.google.inject.Module;
 
 public class DomainUiActivator implements BundleActivator {
 
@@ -26,21 +30,28 @@ public class DomainUiActivator implements BundleActivator {
 		return context;
 	}
 
-	/* 
+	/*
 	 * (non-Javadoc)
-	 * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
+	 * 
+	 * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.
+	 * BundleContext)
 	 */
 	public void start(BundleContext bundleContext) throws Exception {
 		DomainUiActivator.context = bundleContext;
-		//TODO SA1: find proper place. proper place means something decoupled from domain.generic and domain.core to keep EFS decoupled from them for e.g. standalone generation
-		// at a certain point 
-		DomainRegistry.addDefaultBinding(ISCTFileSystemAccess.class, EFSResourceFileSystemAccess.class);
-		DomainRegistry.addDefaultBinding(IGeneratorLog.class, EclipseConsoleLog.class);
+		DomainRegistry.addDefaultmodule(IDomainDescriptor.GENERATOR_MODULE, new Module() {
+			@Override
+			public void configure(Binder binder) {
+				binder.bind(ISCTFileSystemAccess.class).to(EFSResourceFileSystemAccess.class);
+				binder.bind(IGeneratorLog.class).to(EclipseConsoleLog.class);
+			}
+		});
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
+	 * 
+	 * @see
+	 * org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
 	 */
 	public void stop(BundleContext bundleContext) throws Exception {
 		DomainUiActivator.context = null;

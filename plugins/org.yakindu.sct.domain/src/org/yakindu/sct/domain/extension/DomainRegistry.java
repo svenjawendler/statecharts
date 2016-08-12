@@ -34,6 +34,7 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.google.inject.Module;
 
 /**
  * @author andreas muelder - Initial contribution and API
@@ -54,6 +55,7 @@ public class DomainRegistry {
 	
 	private static Map<Class<?>,Class<?>> defaultBindings;
 	private static List<IDomainDescriptor> descriptors;
+	private static Map<String, Module> defaultModules;
 
 	private static final class ConfigElementDomainDescriptor implements IDomainDescriptor {
 
@@ -172,24 +174,34 @@ public class DomainRegistry {
 		}
 		return result;
 	}
-	/**
-	 * Returns a default binding for the given class type.
-	 * 
-	 * @param bindingType the abstract type to get a default bidning for
-	 * @return a class implementing the given binding type
-	 */
-	public static <T> Class<T> getDefaultBinding(Class<T> bindingType) {
-		ensureDefaultBindingsInitialized();
-		return (Class<T>) defaultBindings.get(bindingType);
-	}
-
-	public static void addDefaultBinding(Class<?> bindingType, Class<?> implementationClass) {
-		ensureDefaultBindingsInitialized();
-		defaultBindings.put(bindingType, implementationClass);
-	}
-
+//	/**
+//	 * Returns a default binding for the given class type.
+//	 * 
+//	 * @param bindingType the abstract type to get a default bidning for
+//	 * @return a class implementing the given binding type
+//	 */
+//	public static <T> Class<T> getDefaultBinding(Class<T> bindingType) {
+//		ensureDefaultBindingsInitialized();
+//		return (Class<T>) defaultBindings.get(bindingType);
+//	}
+//
+//	public static void addDefaultBinding(Class<?> bindingType, Class<?> implementationClass) {
+//		ensureDefaultBindingsInitialized();
+//		defaultBindings.put(bindingType, implementationClass);
+//	}
+//
 	private static void ensureDefaultBindingsInitialized() {
-		if(defaultBindings == null)
-			defaultBindings = Maps.newHashMap();
+		if(defaultModules == null)
+			defaultModules = Maps.newHashMap();
+	}
+
+	public static void addDefaultmodule(String key, Module standaloneGeneratorModule) {
+		ensureDefaultBindingsInitialized();
+		defaultModules.put(key,standaloneGeneratorModule);
+		
+	}
+	public static Module getDefaultmodule(String key) {
+		ensureDefaultBindingsInitialized();
+		return defaultModules.get(key);
 	}
 }

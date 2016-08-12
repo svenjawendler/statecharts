@@ -10,8 +10,9 @@
  */
 package org.yakindu.sct.domain.generic.extension;
 
+import org.yakindu.sct.domain.extension.DomainRegistry;
+import org.yakindu.sct.domain.extension.IDomainDescriptor;
 import org.yakindu.sct.domain.extension.IDomainInjectorProvider;
-import org.yakindu.sct.domain.generic.modules.GenericGeneratorModule;
 import org.yakindu.sct.domain.generic.modules.GenericSequencerModule;
 import org.yakindu.sct.domain.generic.modules.GenericTypeSystemModule;
 import org.yakindu.sct.model.stext.STextRuntimeModule;
@@ -30,6 +31,7 @@ import com.google.inject.util.Modules;
 public class GenericDomainInjectorProvider implements IDomainInjectorProvider {
 
 
+	
 	private Injector resourceInjector;
 	
 	public Module getLanguageRuntimeModule() {
@@ -46,9 +48,8 @@ public class GenericDomainInjectorProvider implements IDomainInjectorProvider {
 	}
 
 	public Module getGeneratorModule(String generatorId) {
-		// currently there is only one module with shared bindings for all code
-		// generators
-		return new GenericGeneratorModule();
+		// the indirection over DomainRegistry is done to decouple concrete FileSystemAccess implementations from generic domain
+		return DomainRegistry.getDefaultmodule(IDomainDescriptor.GENERATOR_MODULE);
 	}
 
 	protected Module getResourceModule() {

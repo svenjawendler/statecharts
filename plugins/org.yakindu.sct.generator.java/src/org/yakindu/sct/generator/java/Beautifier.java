@@ -34,6 +34,6 @@ public class Beautifier {
 //
 //		// return formatted results.
 //		return fileHandle.getBuffer();
-		return null;
+		return code;
 	}
 }
