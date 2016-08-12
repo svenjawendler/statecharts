@@ -1,8 +1,8 @@
-GeneratorModel for yakindu::java {
+GeneratorModel for yakindu::c {
 	statechart default {
 		feature Outlet {
 			targetProject = "test.java.plain"
-			targetFolder = "genJava"
+			targetFolder = "genC"
 		}
 	}
 }

@@ -46,6 +46,10 @@ import com.google.inject.util.Modules;
 
 public class SCTStandalone implements ISCTStandalone {
 
+	private static final String EXTENSION_SCT = ".sct";
+
+	private static final String EXTENSION_SGEN = ".sgen";
+
 	private static final Logger LOGGER = Logger.getLogger(SCTStandalone.class);
 
 	private ResourceSet resourceSet;
@@ -57,10 +61,14 @@ public class SCTStandalone implements ISCTStandalone {
 		this.parameter = options;
 		// TODO init default bindings properly (needed to avoid implementation
 		// dependencies withion e.g. domain.generic)
-//		DomainRegistry.addDefaultBinding(ISCTFileSystemAccess.class, StandaloneFileSystemAccess.class);
-//		DomainRegistry.addDefaultBinding(IGeneratorLog.class, Log4jGeneratorLog.class);
-		
-		DomainRegistry.addDefaultmodule(IDomainDescriptor.GENERATOR_MODULE, new StandaloneGeneratorModule(parameter.getAbsoluteWorkspaceDir(), StandardCharsets.UTF_8, StandaloneFileSystemAccess.class, Log4jGeneratorLog.class));
+		// DomainRegistry.addDefaultBinding(ISCTFileSystemAccess.class,
+		// StandaloneFileSystemAccess.class);
+		// DomainRegistry.addDefaultBinding(IGeneratorLog.class,
+		// Log4jGeneratorLog.class);
+
+		DomainRegistry.addDefaultmodule(IDomainDescriptor.GENERATOR_MODULE,
+				new StandaloneGeneratorModule(parameter.getAbsoluteWorkspaceDir(), StandardCharsets.UTF_8,
+						StandaloneFileSystemAccess.class, Log4jGeneratorLog.class));
 
 		initLanguages();
 		initResourceSet();
@@ -69,7 +77,7 @@ public class SCTStandalone implements ISCTStandalone {
 		paths.add(parameter.getAbsoluteWorkspaceDir());
 		resourceUtil = new ResourceUtil(paths);
 
-		loadModels();
+		loadModels(parameter);
 
 		if (LOGGER.isDebugEnabled())
 			logAvailableSctExtensions();
@@ -107,32 +115,54 @@ public class SCTStandalone implements ISCTStandalone {
 		generateAll();
 	}
 
-	private void loadModels() {
-		doLoadEMFResource(resourceUtil.getAbsolutePath(parameter.getSGenPath()));
-		loadSCTs(resourceUtil.getAbsolutePath(parameter.getSCTDir()));
+	private void loadModels(SCTStandaloneOptions options) {
+		loadSGENs(options);
+		loadSCTs(options);
 	}
+	private void loadSGENs(SCTStandaloneOptions options) {
+		String absolutesGen = resourceUtil.getAbsolutePath(options.getSGenPath());
 
-	protected void loadSCTs(String path) {
-		File file = Path.fromOSString(path).toFile();
-		loadSCTs(file);
-	}
-
-	private void loadSCTs(File file) {
-		File[] listFiles = file.listFiles();
-		for (File file2 : listFiles) {
-			try {
-				if (isPlainDir(file2) && !(file2.getName().equals("bin")) && !(file2.getName().startsWith(".")))
-					loadSCTs(file2);
-				else if (file2.getName().endsWith(".sct"))
-					doLoadEMFResource(file2.getAbsolutePath());
-			} catch (IOException e) {
-				e.printStackTrace();
+		if (isPlainDir(Path.fromOSString(absolutesGen).toFile())) {
+			List<String> loadSCTs = searchFiles(absolutesGen, EXTENSION_SGEN);
+			for (String string : loadSCTs) {
+				doLoadEMFResource(string);
 			}
+		}else{
+			doLoadEMFResource(absolutesGen);
+		}
+	}
+	private void loadSCTs(SCTStandaloneOptions options) {
+		List<String> loadSCTs = searchFiles(resourceUtil.getAbsolutePath(options.getSCTDir()), EXTENSION_SCT);
+		for (String string : loadSCTs) {
+			doLoadEMFResource(string);
 		}
 	}
 
-	protected boolean isPlainDir(File file) throws IOException {
+	protected List<String> searchFiles(String absoluteFolderPath, String extension) {
+		File file = Path.fromOSString(absoluteFolderPath).toFile();
+		return loadSCTs(file, extension);
+	}
+
+	private List<String> loadSCTs(File file, String extension) {
+		List<String> absolutePaths = Lists.newArrayList();
+		File[] listFiles = file.listFiles();
+		for (File file2 : listFiles) {
+			if (isPlainDir(file2) && !(file2.getName().equals("bin")) && !(file2.getName().startsWith(".")))
+				absolutePaths.addAll(loadSCTs(file2, extension));
+			else {
+				if (file2.getName().endsWith(extension))
+					absolutePaths.add(file2.getAbsolutePath());
+			}
+		}
+		return absolutePaths;
+	}
+
+	protected boolean isPlainDir(File file) {
+		try{
 		return file.isDirectory() && !isSymbolicLink(file);
+		}catch(IOException e){
+			throw new RuntimeException(e);
+		}
 	}
 
 	protected boolean isSymbolicLink(File file) throws IOException {
