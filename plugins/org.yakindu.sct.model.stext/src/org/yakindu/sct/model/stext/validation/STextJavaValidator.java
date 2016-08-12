@@ -60,7 +60,6 @@ import org.yakindu.base.types.Operation;
 import org.yakindu.base.types.Parameter;
 import org.yakindu.base.types.Property;
 import org.yakindu.base.types.TypesPackage;
-import org.yakindu.base.types.annotations.TypeAnnotations;
 import org.yakindu.base.types.inferrer.ITypeSystemInferrer;
 import org.yakindu.sct.model.sgraph.Choice;
 import org.yakindu.sct.model.sgraph.Entry;
@@ -223,12 +222,7 @@ public class STextJavaValidator extends AbstractSTextJavaValidator implements ST
 		Expression varRef = expression.getVarRef();
 		if (varRef instanceof FeatureCall) {
 			EObject referencedObject = ((FeatureCall) varRef).getFeature();
-			if (referencedObject instanceof Operation) {
-				if (!TypeAnnotations.hasIndexOperationAnnotation((Operation)referencedObject)) {
-					error(LEFT_HAND_ASSIGNMENT, ExpressionsPackage.Literals.ASSIGNMENT_EXPRESSION__VAR_REF);
-				}
-			}
-			else if (!(referencedObject instanceof Property)) {
+			if (!(referencedObject instanceof Property)) {
 				error(LEFT_HAND_ASSIGNMENT, ExpressionsPackage.Literals.ASSIGNMENT_EXPRESSION__VAR_REF);
 			}
 		} else if (varRef instanceof ElementReferenceExpression) {
