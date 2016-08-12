@@ -38,7 +38,7 @@ import org.yakindu.sct.simulation.core.sruntime.ExecutionVariable
 class DefaultExecutionSlotResolver implements IExecutionSlotResolver {
 
 	@Inject
-	extension IQualifiedNameProvider nameProvider
+	protected extension IQualifiedNameProvider nameProvider
 
 	def dispatch ExecutionSlot resolve(ExecutionContext context, FeatureCall e) {		
 		return resolveByFeature(context, e, e.feature)		

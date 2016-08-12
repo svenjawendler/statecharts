@@ -15,8 +15,6 @@ import java.util.List;
 
 import org.yakindu.base.types.Type;
 
-import com.google.inject.ImplementedBy;
-
 /**
  * A Implementation of {@link ITypeSystem} defines all existing types and the
  * type compatibility.
@@ -53,6 +51,6 @@ public interface ITypeSystem {
 
 	public boolean isSuperType(Type subtype, Type supertype);
 	
-	public boolean isArrayType(Type type);
+	public boolean isBuiltInType(Type type);
 
 }

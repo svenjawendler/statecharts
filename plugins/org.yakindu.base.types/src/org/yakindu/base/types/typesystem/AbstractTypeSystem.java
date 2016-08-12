@@ -218,7 +218,7 @@ public abstract class AbstractTypeSystem implements ITypeSystem {
 	}
 	
 	@Override
-	public boolean isArrayType(Type type) {
+	public boolean isBuiltInType(Type type) {
 		return false;
 	}
 }
