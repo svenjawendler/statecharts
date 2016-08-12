@@ -83,6 +83,7 @@ public class SCTStandalone implements ISCTStandalone {
 			logAvailableSctExtensions();
 
 	}
+	
 	private void logAvailableSctExtensions() {
 		LOGGER.debug("Available domains :");
 		List<IDomainDescriptor> domainDescriptors = DomainRegistry.getDomainDescriptors();

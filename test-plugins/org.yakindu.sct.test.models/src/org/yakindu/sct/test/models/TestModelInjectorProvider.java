@@ -13,7 +13,8 @@ package org.yakindu.sct.test.models;
 import java.util.List;
 
 import org.eclipse.xtext.junit4.IInjectorProvider;
-import org.yakindu.sct.domain.generic.modules.GenericGeneratorModule;
+import org.yakindu.sct.domain.extension.DomainRegistry;
+import org.yakindu.sct.domain.extension.IDomainDescriptor;
 import org.yakindu.sct.domain.generic.modules.GenericSequencerModule;
 
 import com.google.common.collect.Lists;
@@ -39,7 +40,8 @@ public class TestModelInjectorProvider implements IInjectorProvider {
 	public Injector getInjector() {
 		List<Module> modules = Lists.newArrayList();
 		modules.add(new GenericSequencerModule());
-		modules.add(new GenericGeneratorModule());
+		//TODO 
+		modules.add(DomainRegistry.getDefaultmodule(IDomainDescriptor.GENERATOR_MODULE));
 		if(this.module !=null && !this.module.isEmpty())
 		modules.addAll(this.module);
 		return Guice.createInjector(modules);

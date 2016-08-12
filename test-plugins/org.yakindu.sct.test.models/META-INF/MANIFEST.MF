@@ -12,5 +12,8 @@ Require-Bundle: org.yakindu.sct.model.sexec,
  org.eclipse.gmf.runtime.emf.core,
  org.eclipse.xtext.junit4,
  org.eclipse.xtext,
- org.yakindu.sct.domain.generic
+ org.yakindu.sct.domain.generic,
+ org.yakindu.sct.generator.core.ui,
+ org.yakindu.sct.generator.core,
+ org.yakindu.sct.domain
 Export-Package: org.yakindu.sct.test.models
