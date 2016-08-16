@@ -21,6 +21,11 @@ import com.google.inject.Module;
 public interface IDomainInjectorProvider {
 
 	/**
+	 * The name used to bind and inject string fields that represent the domain ID
+	 */
+	public static final String DOMAIN_ID = "domainId";
+	
+	/**
 	 * Returns the injector used for injection the {@link AbstractSCTResource}
 	 * 
 	 */

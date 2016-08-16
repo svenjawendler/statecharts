@@ -23,6 +23,7 @@ import org.eclipse.xtext.scoping.impl.FilteringScope;
 import org.yakindu.base.types.typesystem.ITypeSystem;
 import org.yakindu.sct.model.sgraph.SGraphPackage;
 import org.yakindu.sct.model.sgraph.Statechart;
+import org.yakindu.sct.model.sgraph.resource.provider.SCTResourceDescriptionStrategy;
 import org.yakindu.sct.model.sgraph.util.ContextElementAdapter;
 
 import com.google.common.base.Predicate;
@@ -33,8 +34,6 @@ import com.google.inject.Inject;
  * 
  */
 public class STextGlobalScopeProvider extends DefaultGlobalScopeProvider {
-
-	private static final String DOMAIN_ID = "domainId";
 
 	@Inject
 	private ITypeSystem typeSystem;
@@ -53,7 +52,7 @@ public class STextGlobalScopeProvider extends DefaultGlobalScopeProvider {
 		return new FilteringScope(parentScope, new Predicate<IEObjectDescription>() {
 			@Override
 			public boolean apply(IEObjectDescription input) {
-				String userData = input.getUserData(DOMAIN_ID);
+				String userData = input.getUserData(SCTResourceDescriptionStrategy.DOMAIN_ID);
 				if (userData == null)
 					return true;
 				return statechart.getDomainID().equals(userData);

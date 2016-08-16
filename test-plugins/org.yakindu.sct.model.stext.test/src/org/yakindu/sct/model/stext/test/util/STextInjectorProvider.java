@@ -12,6 +12,7 @@ package org.yakindu.sct.model.stext.test.util;
 
 import org.eclipse.xtext.junit4.IInjectorProvider;
 import org.yakindu.base.base.BasePackage;
+import org.yakindu.sct.domain.extension.IDomainInjectorProvider;
 import org.yakindu.sct.domain.generic.modules.GenericSimulationModule;
 
 import com.google.inject.AbstractModule;
@@ -31,9 +32,8 @@ public class STextInjectorProvider implements IInjectorProvider {
 
 			@Override
 			protected void configure() {
-				bind(String.class).annotatedWith(Names.named("domainId"))
+				bind(String.class).annotatedWith(Names.named(IDomainInjectorProvider.DOMAIN_ID))
 						.toInstance(BasePackage.Literals.DOMAIN_ELEMENT__DOMAIN_ID.getDefaultValueLiteral());
-
 			}
 
 		});

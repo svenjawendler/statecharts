@@ -15,6 +15,7 @@ import org.yakindu.base.base.BasePackage;
 import org.yakindu.base.types.inferrer.ITypeSystemInferrer;
 import org.yakindu.base.types.typesystem.GenericTypeSystem;
 import org.yakindu.base.types.typesystem.ITypeSystem;
+import org.yakindu.sct.domain.extension.IDomainInjectorProvider;
 import org.yakindu.sct.model.stext.inferrer.STextTypeInferrer;
 
 import com.google.inject.Binder;
@@ -30,12 +31,10 @@ import com.google.inject.name.Names;
  */
 public class GenericTypeSystemModule extends AbstractGenericModule {
 
-	public static final String DOMAIN_ID = "domainId";
-
 	@Override
 	public void configure(Binder binder) {
 		super.configure(binder);
-		binder.bind(String.class).annotatedWith(Names.named(DOMAIN_ID)).toInstance(getDomainID());
+		binder.bind(String.class).annotatedWith(Names.named(IDomainInjectorProvider.DOMAIN_ID)).toInstance(getDomainID());
 		binder.bind(ITypeSystem.class).toInstance(getTypeSystem());
 	}
 

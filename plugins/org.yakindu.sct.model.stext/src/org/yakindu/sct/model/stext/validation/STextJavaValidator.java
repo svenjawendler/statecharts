@@ -61,6 +61,7 @@ import org.yakindu.base.types.Parameter;
 import org.yakindu.base.types.Property;
 import org.yakindu.base.types.TypesPackage;
 import org.yakindu.base.types.inferrer.ITypeSystemInferrer;
+import org.yakindu.sct.domain.extension.IDomainInjectorProvider;
 import org.yakindu.sct.model.sgraph.Choice;
 import org.yakindu.sct.model.sgraph.Entry;
 import org.yakindu.sct.model.sgraph.Exit;
@@ -130,7 +131,7 @@ public class STextJavaValidator extends AbstractSTextJavaValidator implements ST
 	@Inject
 	private ResourceDescriptionsProvider resourceDescriptionsProvider;
 	@Inject(optional = true)
-	@Named("domainId")
+	@Named(IDomainInjectorProvider.DOMAIN_ID)
 	private String domainID = BasePackage.Literals.DOMAIN_ELEMENT__DOMAIN_ID.getDefaultValueLiteral();
 
 	@Check

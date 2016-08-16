@@ -27,7 +27,10 @@ import org.yakindu.sct.model.sgraph.Statechart;
  */
 public class SCTResourceDescriptionStrategy extends DefaultResourceDescriptionStrategy {
 
-	public static final String IS_COMPLEX_TYPE = "IS_COMPLEX_TYPE";
+	/**
+	 * Key for putting a domain ID in a resource description's user data.
+	 */
+	public static final String DOMAIN_ID = "domainId";
 
 	@Override
 	public boolean createEObjectDescriptions(EObject eObject, IAcceptor<IEObjectDescription> acceptor) {
