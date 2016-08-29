@@ -35,6 +35,7 @@ public class SCTResourceValidatorImpl extends ResourceValidatorImpl {
 			super.resolveProxies(resource, monitor);
 	}
 
+	@Override
 	protected void validate(Resource resource, final CheckMode mode, final CancelIndicator monitor,
 			IAcceptor<Issue> acceptor) {
 		for (EObject ele : resource.getContents()) {
