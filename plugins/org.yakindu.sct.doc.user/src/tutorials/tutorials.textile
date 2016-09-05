@@ -1,554 +1,635 @@
 
-p(edit-on-github). "Edit on GitHub":https://github.com/Yakindu/statecharts/edit/master/plugins/org.yakindu.sct.doc.user/src/tutorials/tutorials.textile
+p(edit-on-github). "Edit on GitHub":https://github.com/Yakindu/statecharts/edit/master/plugins/org.yakindu.sct.doc.user/src/user-guide/editing_statecharts.textile
 
-h1(#oss_five-minutes-tutorial). Five-minutes tutorial
+h1(#editing-statecharts). Editing statecharts
 
-The five-minutes tutorial gives you a brief introduction into YAKINDU Statechart Tools by a simple example. It models a light switch, which has the states _on_ and _off_. Operating the switch repeatedly turns the light on, off, back on again, and so forth. You can simulate this behavior in a dynamic statechart model. Here's how this looks like:
+h2(#creating-and-deleting-statecharts). Creating and deleting statecharts
 
-!(standard-image full)images/tuto_light_switch_330_statechart_simulator_state_on.png(Interactive light switch statechart simulation)!
+Statecharts are comprised in *statechart model files*. The filename extension of these files is @.sct@. Their internal format is "XML Metadata Interchange":https://en.wikipedia.org/wiki/XML_Metadata_Interchange or "XMI":https://en.wikipedia.org/wiki/XML_Metadata_Interchange, which is an XML language.
 
-p=. Interactive light switch statechart simulation
+h3(#creating-a-statechart). Creating a statechart
 
-In the simulation screenshot above, the light switch is currently in the _on_ state. To toggle the light switch, the user clicks on _operate_ on the right-hand side of the window.
+###. FIXME: Unify the following with the tutorial text!
 
-h2(#oss_importing-light-switch-example). Importing light switch example
-
-Now try this for yourself. We are assuming that you have already installed and started YAKINDU Statechart Tools. If you don't, please see the "Installation Guide":../installation/installation.html for details.
-
-# If the "Welcome" page is still open, close it. <p>!(standard-image small)images/tuto_5min_010_close_welcome.png(Closing the "Welcome" page)!</p>
-# In the main menu, select _File → New → Example…_.
-# In the dialog, select _YAKINDU SCT Examples_, then click _Next >_.
-# The example wizard opens. If needed, follow the instructions to download the examples repository.
-# On the left-hand side of the example wizard, select _basic → Light Switch_, then click _Finish_.
-# The sample project named _light_switch_ is created.
-# In the project explorer on the left-hand side of the window, open the _light_switch_ project by clicking on the small triangle left from the project name ("light_switch"). Also open the _model_ folder.<p>!(standard-image small)images/tuto_5min_020_expand_project.png(Expand project)!</p>
-# The light switch statechart is defined in the file _light_switch.sct_. Double-click on this file to open the model.
-
-h2(#oss_running-the-light-switch-simulation). Simulating the light switch
-
-# Right-click on _light_switch.sct_ and select _Run As → Statechart Simulation_ in the context menu.
-# The statechart simulation starts and shows the light switch model in its _off_ state. The rectangle named *Off* is highlighted in red, meaning it is the active state. <p>!(standard-image)images/tuto_light_switch_320_statechart_simulator_state_events.png(Light switch simulation in "off" state)!</p>
-# At the right-bottom side of the window, the simulation view is located. In this view, you can change variable values and raise events during a simulation run. Click on the small triangle left from _internal_ to unfold the _operate_ link. This link represents the _operate_ event to switch the light on or off.
-# Click on the _operate_ link. The active state changes accordingly from *Off* to *On*. <p>!(standard-image)images/tuto_light_switch_330_statechart_simulator_state_on.png(Light switch simulation in "on" state)!</p>
-# Click on _operate_ again to switch off the light.
-
-h2(standard #oss_generating-statechart-code). Generating statechart code
-
-You have developed and tested your statechart model, and now you need it as a C, C++, or Java implementation? YAKINDU Statechart Tools can create it for you.
-
-As an example, we will take the light switch statechart and generate Java source code from it. Please proceed as follows:
-
-# In the project explorer, right-click on _light_switch.sct_ and select _New → Code Generator Model_ in the context menu. <p>!(standard-image)images/tuto_5min_110_new_code_generator_model.png(Creating a new code generator model)!</p>
-# In the dialog, replace @default.sgen@ by @light_switch.sgen@, then click _Next >_.
-# In the next dialog, check the checkbox left from _light_switch.sct_, then click _Finish_.
-# Java classes implementing the statechart model are generated. You can find the generated source code in the folders _src_ and _src-gen_ within the _light_switch_ project. <p>!(standard-image)images/tuto_5min_140_generated_java_source_code.png(Generated Java source code)!</p>
-
-That's it. If you want to know more, take the time and work through the "Comprehensive Tutorial":#oss_comprehensive-tutorial.
-
-
-p(edit-on-github). "Edit on GitHub":https://github.com/Yakindu/statecharts/edit/master/plugins/org.yakindu.sct.doc.user/src/tutorials/tutorials.textile
-
-h1(#oss_comprehensive-tutorial). Comprehensive tutorial
-
-This tutorial introduces YAKINDU Statechart Tools (SCT) which provides an integrated modeling environment for the specification and development of reactive, event-driven systems based on the concept of state machines or statecharts. It is an easy-to-use tool featuring sophisticated graphical statechart editing, validation and simulation of statecharts as well as code generation for C, C&#43;&#43;, or Java.
-
-This tutorial you will teach how to
-
-* create a new statechart model, and
-* execute it using the simulation engine.
-
-Please note that this tutorial will not explain statecharts in general, so you should familiarize yourself with the basic concepts of state machines first, see "UML state machine":http://en.wikipedia.org/wiki/UML_state_machine.
-
-In order to get a fully-working statechart implementation that you can integrate with your project, you will have to familiarize yourself with _code generation_, which is covered by chapter "Code generation":#code-generation in this documentation. You can generate your state machine implementation as source code in C, C++, and Java out of the box. Alternatively, you can write your own code generator for other programming languages or for other purposes.
-
-Before we get started, make sure you have YAKINDU Statechart Tools installed. For installation instructions, see the "YAKINDU Statechart Tools Installation Guide":../installation/installation.html.
-
-h2(#the-light-switch-example). The light switch example
-
-The most basic example of a state machine that actually does something is a light switch. In this scenario there is a light bulb and a switch to turn the bulb on and off. Of course there's also a power source and some electrical cabling to put it all together, but for the purpose of our model we can omit them.
-
-h3(#the-behavior-of-a-light-switch). The behavior of a light switch
-
-When modeling the light switch example as a statechart, we can disregard everything (even the bulb) except for the switch. The behavior of the switch is very simple:
-
-* Initially the light switch is off, i. e. it is in its *Off* state.
-* If the light switch is operated while being in its *Off* state, it changes to its *On* state.
-* If the light switch is operated while being in its *On* state, it changes to its *Off* state.
-
-h2(#modeling-the-light-switch-as-a-statechart). Modeling the light switch as a statechart
-
-Now let's model the light switch as a statechart using YAKINDU Statechart Tools. This involves the following steps:
-
-# Creating an Eclipse project. It will serve as a container for the statechart model.
-# Modeling the light switch using the YAKINDU Statechart Tools editor. The result will be a static statechart model.
-# Simulating the model. We can play around with the model, operate the light switch and observe its behavior.
-
-h3(#creating-an-eclipse-project). Creating an Eclipse project
-
-The first step is to create a new Eclipse project that can serve as a container for our model. From the main menu, select _File → New → Project..._:
-
-!(standard-image)images/tuto_light_switch_010_menu_file_new_project.png(Selecting "File → New → Project..." in the main menu)!
-
-p=. Selecting "File → New → Project..." in the main menu
-
-The _New Project_ wizard opens, showing a couple of different project types structured in various folders.
-
-!(standard-image)images/tuto_light_switch_020_wizard_new_project_general_project.png(The "New Project" wizard)!
-
-p=. The "New Project" wizard
-
-Select _General → Project_ and click _Next &gt;_.
-
-The wizard shows its next page:
-
-!(standard-image)images/tuto_light_switch_040_wizard_new_project.png(Specifying project name and location)!
-
-p=. Specifying project name and location
-
-Specify a meaningful _Project name_, e. g. *LightSwitch*, and optionally select a _Location_ to create the project in.
-
-Click _Finish_.
-
-Eclipse creates the new project:
-
-!(standard-image)images/tuto_light_switch_060_project_created.png(Project "LightSwitch" created)!
-
-p=. Project "LightSwitch" created
-
-h3(#creating-a-folder-for-the-model). Creating a folder for the model
-
-Now that we have created the Eclipse project, we can establish the statechart model of the light switch. It is good practice to use a separate directory for models, so let's create a new folder called _model_.
-
-Right-click on the project's root, i. e. on *LightSwitch*, then select _New → Folder_ from the context menu.
-
-!(standard-image)images/tuto_light_switch_100_menu_new_folder.png(Selecting "New → Folder" in the context menu)!
-
-p=. Selecting "New → Folder" in the context menu
-
-The _New Folder_ wizard opens:
-
-!(standard-image)images/tuto_light_switch_110_wizard_new_folder.png(The "New Folder" wizard)!
-
-p=. The "New Folder" wizard
-
-Give the model folder a reasonable name, e. g. *model*, and type it into the _Folder Name_ text field. Then click _Finish_.
-
-The new _model_ folder is created and appears in the _Project Explorer_ view at the left.
-
-h3(#starting-with-an-empty-statechart-model). Starting with an empty statechart model
-
-h4(#using-the-yakindu-statechart-wizard). Using the YAKINDU Statechart wizard
-
-Now we are going to create an empty statechart model in the _model_ folder. Right-click on the _model_ folder and select _New → Other_ in the context menu:
-
-!(standard-image)images/tuto_light_switch_120_menu_new_other.png(Selecting "New → Other" in the context menu)!
-
-p=. Selecting "New → Other" in the context menu
-
-The _New_ wizard opens. Select _YAKINDU SCT → Statechart model_
-
-!(standard-image)images/tuto_light_switch_130_wizard_new.png(Selecting "YAKINDU SCT → Statechart model")!
-
-p=. Selecting "YAKINDU SCT → Statechart model"
-
-Click _Next &gt;_. The wizard shows the _New YAKINDU Statechart_ dialog:
-
-!(standard-image)images/tuto_light_switch_140_wizard_new_yakindu_statechart.png(The "New YAKINDU Statechart" dialog)!
-
-p=. The "New YAKINDU Statechart" dialog
-
-The dialog asks you for the project, the directory, and the name of the model file to be created. Eclipse project and directory should be preset correctly already. In our case the corresponding text field contains *LightSwitch/model* which means the directory named *model* in the *LightSwitch* project. You can change that if you wish, but most likely you won't.
-
-The default file name in the _File Name_ field is *default.sct*, however. You should change that to something more meaningful. In our case we type *LightSwitch.sct* into the _File name_ field, see the screenshot above.
-
-Click _Finish_.
-
-Since there's a dedicated perspective for statechart models, Eclipse asks you whether you want to change to it now or not:
-
-!(standard-image)images/tuto_light_switch_150_dialog_confirm_perspective_switch.png(Dialog "Confirm Perspective Switch")!
-
-p=. Dialog "Confirm Perspective Switch"
-
-Please answer the question regarding switching to the _YAKINDU Modeling_ perspective by clicking on the _Yes_ button. The _YAKINDU Modeling_ perspective has a graphical editor for statechart models, and you will need it to create and modify statecharts. On the other hand your answer really doesn't matter that much, because you can switch perspectives at any time. If you check _Do not offer to switch perspective in the future_ before clicking _Yes_, Eclipse will never ask this question again, at least regarding the _YAKINDU Modeling_ perspective.
-
-bq. *Please note:* If the _Confirm Perspective Switch_ dialog does not appear as described above you probably have already confirmed _Do not offer to switch perspective in the future_ once before.
-
-h4(#the-initial-model). The initial model
-
-An empty statechart is created and displayed in the *statechart editor* in the middle of the Eclipse workbench. In the screenshot below the statechart editor is marked by a red rectangle. Subsequently, we will use the statechart editor to graphically develop the light switch statechart.
-
-p(#light_switch_220_statechart_editor). 
-!(standard-image)images/tuto_light_switch_220_statechart_editor.png(The statechart editor)!
-
-p=. The statechart editor
-
-Actually the new statechart isn't really empty. It already contains the initial state (a small filled black circle), a "normal" state, and a transition leading from the former to the latter.
-
-h3(#statechart-validation). Statechart validation
-
-h4(#error-markers-in-the-model-graph). Error markers in the model graph
-
-The "normal" state, however, has a small filled red circle containing a white ‘X' attached. This is an error marker and tells you that something is wrong with your model, particularly with the object it is attached to.
-
-###. FIXME: Bring documentation up to date!
-
-bq. *Please note:* Since the current version of the statechart editor gives that state a proper name ("StateA"), the error marker is no longer present in a new model. So the following description is somewhat out of date. This will be fixed in a future version of this documentation. Until then, please follow the subsequent text nevertheless, because you will learn something important about statechart validation.
-
-h4(#error-markers-in-the-project-explorer). Error markers in the project explorer
-
-The error marker is also shown in the _Project Explorer_ view at the left-hand side of the main window. In this way you can see immediately which of your projects contain errors. Click on the small show/hide symbol (triangle) left of a project's or any other resource's name to show or hide its respective contents. By doing so, you can quickly encircle the directories and files that are affected by errors. In the screenshot above we have clicked open the _LightSwitch_ project and the _model_ directory, showing the error is in the _LightSwitch.sct_ file.
-
-h4(#validation-principles). Validation principles
-
-This error marker exemplifies YAKINDU Statechart Tools' model validation capabilities. Statechart validation includes syntactical and semantical checks of the whole statechart. For example, a statechart is checked for unreachable states, dead ends, or references to unknown events. These validation constraints are checked during editing. In case any constraints are violated, error or warning markers are attached to the faulty model elements. Thus the user receives direct and immediate feedback on the validation state of his statechart.
-
-Hovering with the mouse over the error marker in the statechart editor reveals what the problem is. A small popup appears and displays the error description: "A state must have a name."
-
-!(standard-image)images/tuto_light_switch_210_error_marker_and_popup.png(An error marker and a popup window explaining it)!
-
-p=. An error marker and a popup window explaining it
-
-h4(#error-markers-in-the-problems-view). Error markers in the "problems" view
-
-An alternative place to see error messages is the _Problems_ view. This view has the particular advantage to comprise all notifications in a clearly arranged list form, see the "screenshot above":#light_switch_220_statechart_editor. It displays:
-
-* A summary comprising the total number of errors, warnings, and others. In our case we have one error and nothing else.
-* Zero or more lists containing errors, warnings, and other types of messages, if available. In our example there is a just a single list containing error messages. Click on the show/hide symbol to show the message list's contents or the list's header only.
-
-Double-clicking on an error message in the _Problems_ view brings you directly to the erroneous object.
-
-Hang on, we will correct the error in a second!
-
-h3(#giving-a-state-a-name). Giving a state a name
-
-As we have seen, the initial statechart is erroneous insofar as the state does not have a name. So let's fix that.
-
-Remember the requirements of our light switch example? The first requirement demands the switch to be off initially. The erroneous state is reached from the initial state immediately, so it is appropriate to name it *Off*.
-
-table(scedit).
-|<. Double-click on the string @<name>@ in the state object. The string turns into a text input field with @<name>@ being highlighted:|<. !(standard-image)images/tuto_light_switch_230_statechart_editor_change_state_name_01.png!|
-|<. Type the state's new name, i. e. @Off@:|<. !(standard-image)images/tuto_light_switch_230_statechart_editor_change_state_name_02.png!|
-|<. Hit the @[Enter]@ key or click anywhere outside the text field. Bingo! The state now has a proper name and the error marker disappears:|<. !(standard-image)images/tuto_light_switch_230_statechart_editor_change_state_name_03.png!|
-|<. However, since the state box's size is smaller than before now while the box's left position remains unchanged, the graph looks crooked.|<. |
-|<. We can improve it by dragging the state box a little bit to the right. When it is centered below the initial state symbol, a vertical blue line appears giving the user a visual hint:|<. !(standard-image)images/tuto_light_switch_230_statechart_editor_change_state_name_04.png!|
-|<. Drop the state box at this very place, and everything looks much better now:|<. !(standard-image)images/tuto_light_switch_230_statechart_editor_change_state_name_05.png!|
-|<. Alternatively, we could have used the state box's handles to resize it. However, we just deselect the box by clicking elsewhere:|<. !(standard-image)images/tuto_light_switch_230_statechart_editor_change_state_name_06.png!|
-
-h3(#creating-a-state). Creating a state
-
-With the *Off* state only, the light switch statechart isn't complete yet. We also need an *On* state, and we going to create it now.
-
-table(scedit).
-|<. In order to add another state, move the mouse pointer to the _Palette_ compartment at the right-hand side of the statechart editor. Click on the _State_ symbol in the palette without releasing the mouse button, and drag the symbol over to the editing area.|<. !(standard-image)images/tuto_light_switch_240_statechart_editor_create_state_01.png!|
-|<. Release the mouse button over a gray area, a region:|<. !(standard-image)images/tuto_light_switch_240_statechart_editor_create_state_02.png!|
-|<. The new state appears in the model graph:|<. !(standard-image)images/tuto_light_switch_240_statechart_editor_create_state_03.png!|
-|<. Rename the new state to *On*. Vertically align it to the *Off* state, if you like:|<. !(standard-image)images/tuto_light_switch_240_statechart_editor_create_state_04.png!|
-|<. You'll notice that the new state is showing an error marker. The reason is that it is not yet possible to reach the *On* state.|<. |
-|<. Before we'll go on and fix that problem, here's another way to create a new state. When you are hovering with the mouse pointer over the main region, i. e. the large rectangle with a gray background, a popup menu shows up. If you click on the ‘S' symbol in that menu, a new state will be created. Other options in this menu are to create an initial state, a final state, or a choice.|<. !(standard-image)images/tuto_light_switch_240_statechart_editor_create_state_05.png!|
-
-h3(#creating-a-transition). Creating a transition
-
-As we have seen above, the *On* state is not reachable as of yet. So let's model switching the light switch from "off" to "on" as a transition leading from the *Off* state to the *On* state.
-
-table(scedit).
-|<. In the _Palette_, click on the _Transition_ symbol. The symbol's background turns blue.|<. !(standard-image)images/tuto_light_switch_250_statechart_editor_create_transition_01.png!|
-|<. Click on the *Off* state, but don't release the mouse button. Drag the mouse pointer towards the *On* state. The arrow representing the transition to be established is drawn.:|<. !(standard-image)images/tuto_light_switch_250_statechart_editor_create_transition_02.png!|
-|<. Once the mouse pointer reaches the target state, it changes its shape:|<. !(standard-image)images/tuto_light_switch_250_statechart_editor_create_transition_03.png!|
-|<. Releasing the mouse button establishes the transition. A text input field to specify event trigger, guard condition and effect appears. We want the transition to be triggered when the light switch is operated, so let's type @operate@ into the text field.|<. !(standard-image)images/tuto_light_switch_250_statechart_editor_create_transition_04.png!|
-|<. If you suspect that something is not in order, because the input text is underlined in red, you are right. We will explain and deal with that in a minute.|<. |
-|<. Clicking anywhere outside the text field terminates the editing mode:|<. !(standard-image)images/tuto_light_switch_250_statechart_editor_create_transition_05.png!|
-
-The event trigger _operate_ is flagged as an error. The reason is that an event with that name is not known yet. The screenshot below shows how to change that:
-
-!(standard-image)images/tuto_light_switch_260_statechart_editor_create_definitions_01.png(Creating definitions [1])!
-
-p=. Creating definitions &#91;1]
-
-Double-click into the *definition section* on the left-hand side of the statechart editor. The section becomes an editable text field.
-
-Enter the following text:
-
-bc. internal:
-    event operate
-
-
-The keyword @internal@ makes the following definition of the _operate_ event belong to the internal scope. The latter is explained in section "&quot;Internal scope&quot;":../user-guide/statechart_language.html#internal-scope.
-
-Click anywhere outside of the text field, which terminates editing the definition section. The statechart editor digests the definition, recognizes the definition of the _operate_ event, and validates the model as being okay:
-
-!(standard-image)images/tuto_light_switch_260_statechart_editor_create_definitions_02.png(Creating definitions [2])!
-
-p=. Creating definitions &#91;2]
-
-In its current state the model would not allow to turn the light switch off again, which is somewhat unsatisfactory. Operating the light switch while it is on should turn it off again. Let's model this by adding another transition. It should lead from the source state *On* to the target state *Off*.
-
-table(scedit).
-|<. However, in order to not get two straight lines being close together in the graph, let's first make some room and turn the present line into an arc. Move the mouse pointer over the transition line, but not over the text. The mouse pointer changes its shape to indicate that you can insert a control point. Click and hold to add the control point, then drag it to an appropriate position.|<. !(standard-image)images/tuto_light_switch_270_statechart_editor_create_transition_01.png!|
-|<. Now let's insert the second transition. This time we won't use the palette, but instead use another method. Hover the mouse pointer over the source state, i. e. *On*. An incoming and an outgoing arrow appear, both with a handle. Click and hold the handle of the outgoing arrow and drag it to the *Off* target state.|<. !(standard-image)images/tuto_light_switch_270_statechart_editor_create_transition_02.png!|
-|<. Upon releasing the mouse button the transition is established. Type @operate@ as the transition's event trigger into the text field. Reshape the transition arrow to make the graph look nice.|<. !(standard-image)images/tuto_light_switch_270_statechart_editor_create_transition_03.png!|
-
-h2(#simulating-the-light-switch-model). Simulating the light switch model
-
-Simulating a statechart model means to execute it, raise events manually, have time-based and other events being triggered automatically, and observe the model's behavior.
-
-Start the simulation by right-clicking on the _LightSwitch.sct_ file in the project explorer and selecting _Run As → Statechart Simulation_:
-
-!(standard-image)images/tuto_light_switch_300_statechart_simulator_run_as_statechart_simulation.png(Selecting "Run As → Statechart Simulation" in the context menu)!
-
-p=. Selecting "Run As → Statechart Simulation" in the context menu
-
-The perspective changes from _SC Modeling_ to _SC Simulation_. This perspective defines two additional views:
-
-* The _Debug_ view at the top shows all running statechart instances and allows to select one of them. YAKINDU Statechart Tools allow multiple executions of the same statechart as well as parallel executions of different statecharts at the same time.
-* The _Simulation_ view on the right-hand side is used to raise events and to inspect and modify variables. Depending on your screen resolution and font size settings, you might not be able to spot the _Simulation_ view by its name, because the tab containing it is quite narrow and might not provide enough space for displaying the title. Hover over the tabs to reveal their respective titles in a popup window. Figure "&quot;Light switch simulation in &quot;off&quot; state&quot;":#fig_light_switch_simulation_in_off_state is demonstrating this: The user has hovered the mouse pointer over a tab that is just displaying the starting letter 'S' of its title. However, a popup window right besides the pointer is showing the tab's full title "Simulation View".
-
-Not surprisingly, the simulation starts at the initial state and then transitions to the *Off* state immediately. The latter becomes the active state now. It is highlighted by a red background:
-
-p(#fig_light_switch_simulation_in_off_state). 
-
-!(standard-image)images/tuto_light_switch_310_statechart_simulator_state_off.png(Light switch simulation in "off" state)!
-
-p=. Light switch simulation in "off" state
-
-Now that the light switch is off, let's turn the lights on by operating the switch. In the simulation, we will have to raise the _operate_ event. How can we do this?
-
-In the _Simulation_ view at the right-hand side of the Eclipse workbench, click on the _internal_ entry's show/hide symbol to display its contents.
-
-!(standard-image)images/tuto_light_switch_320_statechart_simulator_state_events.png(Displaying event names in the statechart simulator's _Simulation_ view)!
-
-p=. Displaying event names in the statechart simulator's _Simulation_ view
-
-The _operate_ event is shown. Click on it to raise the event, i. e. to operate the light switch.
-
-The transition arc leading from the *Off* state to the *On* state flashes briefly in red, and then the *On* state becomes active. Its background color changes to red while the *Off* state's background color becomes normal again.
-
-!(standard-image)images/tuto_light_switch_330_statechart_simulator_state_on.png(Light switch simulation in "on" state)!
-
-p=. Light switch simulation in "on" state
-
-Click on _operate_ again, and the active state changes back to *Off*. Click on _operate_ several times and enjoy watching the state machine's behavior.
-
-Stop the simulator by clicking at the little red termination button in the toolbar at the top.
-
-h2(#code-generation). Code generation
-
-YAKINDU Statechart Tools include code generators for Java, C, and C&#43;&#43; out of the box. The code generators are following a "code-only" approach: They are generating all the code that is needed and do not rely on any additional runtime libraries. The generated code provides a well-defined application programming interface and can be integrated easily with any client code. In this tutorial we will generate Java code for a sample statechart modeling the handling of a phone call, the *CallHandling* example.
-
-h3(#the-callhandling-example). The CallHandling example
-
-The state machine handling a phone call works as follows:
-
-* After startup, the system is in an idle state and is waiting for incoming calls.
-* When a call comes in, the user can either accept the call or dismiss it.
-* If the users accepts the call and opens a connection, the system is tracking the duration of the call and is waiting for the user to hang up.
-* After hanging up, the system displays the total time of call and then returns to its idle state.
-
-The complete statechart model is shown below:
-
-!(standard-image)images/tuto_callhandling_model.png(The CallHandling statechart model)!
-
-p=. The CallHandling statechart model
-
-In order to eventually obtain the *CallHandling* example in the form of executable code, we have to create the model in the statechart editor first, followed by creating a suitable generator model, followed by executing the code generator to create the source code we need.
-
-h3(#creating-the-statechart-model). Creating the statechart model
-
-In the "previous section":#starting-with-an-empty-statechart-model we have seen how to work with the statechart editor. So let's create a new project now and use the statechart editor to create the *CallHandling* statechart model as outlined above.
-
-Since we are going to generate Java code, we should use a Java project to host the statechart model. Use _File → New → Java Project_ and follow the _New Java Project_ wizard to create one.
-
-In addition to what we have learned above already, there is one new concept: interfaces.
-
-h4(#creating-interfaces). Creating interfaces
-
-Statecharts can describe very complex interactions between a multitude of actors and an even bigger multitude of events these actors can receive or trigger. It is therefore good practice to structure such events and associate them with their respective actors. For this purpose YAKINDU Statecharts Tools provides the concept of so-called _interfaces_.
-
-In the _CallHandling_ example, we have two actors: the user and the phone. Let's model their communication as two interfaces:
-
-* The _Phone_ interface provides a single incoming event named _incoming&#95;call_.
-* The _User_ interface comprises two incoming events: _accept&#95;call_ and _dismiss&#95;call_.
-
-We have to enter the respective definitions in textual form into the statechart editor. Here's how the interface definitions look like:
-
-bc.. interface User:
-    in event accept_call
-    in event dismiss_call
-
-interface Phone:
-    var duration : integer
-    in event incoming_call
-
-p. As you can see, the _Phone_ interface also has an integer variable _duration_ which will track the duration of the call. The interface definitions above have to go into the statechart editor's definition block on the left-hand side of the statechart editor.
-
-If everything went well, any error markers in the model are gone. Your model should look like the one in the screenshot below:
-
-!(standard-image)images/tuto_callhandling_example_final.png(The CallHandling statechart modeled in the statechart editor)!
-
-p=. The CallHandling statechart modeled in the statechart editor
-
-h3(#creating-a-generator-model). Creating a generator model
-
-For code generation, YAKINDU Statechart Tools use a textual generator model called *SGen*. The generator model holds key parameters for the code generation process and allows for the latter's customization.
-
-The first step to code generation is to create a new SGen model. Right-click on the _model_ folder in the project explorer and select _New → Code Generator Model_ from the context menu.
-
-!(standard-image)images/tuto_callhandling_200_generation_create_generator_model.png(Selecting "New → Code Generator Model" in the context menu)!
-
-p=. Selecting "New → Code Generator Model" in the context menu
-
-The _YAKINDU Generator Model_ wizard opens. Change the _File name_ to *CallHandling.sgen*, then click _Next &gt;_.
-
-!(standard-image)images/tuto_callhandling_210_generation_new_sgen_model_1.png(Selecting a filename for the generator model)!
-
-p=. Selecting a filename for the generator model
-
-From the _Generator_ drop-down menu at the top, select _YAKINDU SCT Java Code Generator_.
-
-In the statechart tree beneath that menu, check the *CallHandling.sct* model, then click _Finish_.
-
-!(standard-image)images/tuto_callhandling_220_generation_new_sgen_model_2.png(Selecting generator type and statechart model)!
-
-p=. Selecting generator type and statechart model
-
-Now the wizard creates the default SGen model for Java code generation and opens it in an SGen editor. The project explorer on the left-hand side shows the new model file _CallHandling.sgen_.
-
-!(standard-image)images/tuto_callhandling_230_generation_new_sgen_model_3.png(The generator model)!
-
-p=. The generator model
-
-Here's the generator model once again as plain text:
-
-bc.. 
-GeneratorModel for yakindu::java {
-
-    statechart CallHandling {
-
-        feature Outlet {
-            targetProject = "CallHandling"
-            targetFolder = "src-gen"
-            libraryTargetFolder = "src"
-        }
-    }
-}
-
-p. Let's have a closer look at the listing above:
-
-* @yakindu::java@ is the unique ID of the Java code generator.
-* The @statechart CallHandling { … }@ block references the statechart model we want to generate code for.
-* The @feature Outlet { … }@ block specifies where the generated code artifacts are to be placed:
-** The parameters @targetProject@ and @targetFolder@ define the Eclipse project @CallHandling@ as destination for generated code and within that project the @src-gen@ folder.
-** However, certain source code modules are generated only once and won't change with the underlying statechart. By default, these source code artifacts are generated into the folder specified by the @libraryTargetFolder@ option which by default is @src@. You can change the folder name or even remove the @libraryTargetFolder@ option at all. In the latter case the "library" components are generated into the @targetFolder@.
-
-A statechart reference may contain various configuration features. You will learn more about them later.
-
-###. FIXME: Insert a reference here.
-
-h3(#enhancing-the-generator-model-by-timing-capabilities). Enhancing the generator model by timing capabilities
-
-The default generator model is insufficient yet. The _CallHandling_ statechart model uses _after_ and _every_ expressions. That is, it is dealing with *time events*, requiring a timer service to trigger them. We can instruct the code generator to provide us with a default timer service implementation by adding the following feature to the generator model:
-
-bc. feature GeneralFeatures {
-    TimerService = true
-}
-
-
-h3(#generating-java-source-code). Generating Java source code
-
-What do we have to do to actually start the Java source code generation? Nothing!
-
-The generator model is executed by a so-called Eclipse _builder_. That is, as long as the _Project → Build Automatically_ menu item is checked (which it is by default), the artifacts are generated automatically with each modification of the statechart model or of the generator model.
-
-As you can see in the project explorer, the folder _src-gen_ has been created and populated with the generated Java source code artifacts.
-
-!(standard-image)images/tuto_callhandling_240_generation_timer_service.png(Adding the timer service feature)!
-
-p=. Adding the timer service feature
-
-Add the generated artifacts to the Java build path by right-clicking on the _src-gen_ folder and selecting _Build Path → Use as source folder_ in the context menu.
-
-!(standard-image)images/tuto_callhandling_250_generation_use_as_source_folder.png(Declaring "src-gen" as a source folder)!
-
-p=. Declaring "src-gen" as a source folder
-
-If you want to execute your generator model manually, select _Generate Code Artifacts_ from the @.sgen@ file's context menu in the project explorer.
-
-h3(#integration-with-client-code). Integration with client code
-
-Now that we have a generated Java implementation of the _CallHandling_ state machine available, we want to actually use it from some client code. We'll create that client code in a second.
-
-h4(#creating-client-code). Creating client code
-
-Let's establish a new Java class _CallHandlingClient_ and integrate the state machine with it:
-
-# Right-click on the _src_ folder.
-# Select _New → Class_ in the context menu.
-# Name it _CallHandlingClient_.<br/>!(standard-image)images/tuto_callhandling_300_java_integration_create_new_class.png!
+In order to create a new statechart file, use _Project Explorer_ view:
+# Right-click on a project or on a folder you want to create the new statechart in. The context menu appears.
+# In the context menu, select _New → Other…_. The _New_ dialog appears.
+# In the _New_ dialog, select _YAKINDU SCT → Statechart Model_. The _New YAKINDU Statechart_ wizard appears.
+# In the wizard, select a statechart domain.
+# Click _Next >_.
+# Enter a filename for the statechart file to be created. The filename extension must be @.sct@.
+# Optionally you can change the project or folder to create the new statechart file in.
 # Click _Finish_.
+# If the _Confirm Perspective Switch_ dialog appears, answer its question as you see fit.
+# The new statechart file is created in the location you specified and opened in the "statechart editor":#editor-ui.
 
-Next, copy the following code into the created class:
+h3(#copying-an-existing-statechart). Copying an existing statechart
 
-bc.. 
-  import org.yakindu.scr.TimerService;
-  import org.yakindu.scr.callhandling.CallHandlingStatemachine;
+In order to copy an existing statechart file, proceed as follows:
+# Right-click on its filename in the _Project Explorer_ view. The context menu appears.
+# In the context menu, select _Copy_.
+# Right-click on the project or folder you want to insert the copied file in. The context menu appears.
+# In the context menu, select _Paste_.
+# If there already is a file with the same name as the file to be copied in the target project or folder – as is always the case if you are copying a file within the same project or directory –, the _Resource Exists_ dialog appears. It displays the names and last modifications times of source and target files and asks you whether you want to overwrite the target file with the source file.
+## Click _Yes To All_ to overwrite the target file plus any further target files. This option might be usefule in case you are copying multiple files.
+## Click _No_ to not overwrite the target file.
+## Click _Cancel_ to cancel to copying operation.
+## Click _Yes_ to overwrite the target file.
 
-  public class CallHandlingClient {
+h3(#deleting-a-statechart). Deleting a statechart
 
-      public static void main(String[] args) throws InterruptedException {
+In order to delete a statechart file, proceed as follows:
+# Right-click on its filename in the _Project Explorer_ view. The context menu appears.
+# In the context menu, select _Delete_.
+# The _Delete Resources_ confirmation dialog appears. You have three choices:
+## Click _Preview >_ to inspect what the delete operation is going to do, if confirmed.
+## Click _Cancel_ to cancel the delete operation. Your statechart file will remain in your project.
+## Click _OK_ to actually delete the statechart file.
 
-          // Create the state machine:
-          CallHandlingStatemachine sm = new CallHandlingStatemachine();
-          sm.setTimer(new TimerService());
+h2(#editor-ui). Editor UI
 
-          // Initialize the state machine:
-          sm.init();
+YAKINDU Statechart Tools comes with a *statechart editor*. This section explains the statechart editor and how you can use it to graphically edit your statecharts.
 
-          // Enter the state machine and implicitly activate its "Idle" state:
-          sm.enter();
+h3(#sc-modeling-perspective). "SC Modeling" perspective
 
-          // Raise an incoming call:
-          sm.getSCIPhone().raiseIncoming_call();
-          sm.runCycle();
+_SC Modeling_ is an Eclipse perspective supporting the modeling of statecharts. The perspective defines the following views and their positions:
+* _Project Explorer_ (left): This view displays your workspace and projects, folders, and files contained therein. You can also use the _Project Explorer_ to inspect the internal structure of your statechart models.
+* _Properties_ (bottom): This view displays properties, regarding the semantic model or the graphical appearance, of the selected element in the statechart editor. You can directly edit these properties in this view.
+* _Problems_ (bottom): This view displays errors and warnings existing in your workspace. Double-clicking on an entry typically opens the location of the respective error or warning.
+* _Outline_ (right): This view is a bird's eye view on the opened statechart. It also indicates the current viewport for better orientation in large models.
 
-          // Accept the call:
-          sm.getSCIUser().raiseAccept_call();
-          sm.runCycle();
+h3(#canvas). Canvas
 
-          // Keep the phone conversation busy for a while:
-          for (int i = 0; i < 50; i++) {
-              Thread.sleep(200);
-              sm.runCycle();
-          }
+The canvas is the statechart editor's drawing area. When you create a new statechart model, the canvas comprises the definition section and a single "region":../user-guide/statechart_language#region.
 
-          // Before hang-up, output the duration of the call:
-          System.out.println(String.format("The phone call took %d seconds.",
-                  sm.getSCIPhone().getDuration()));
+The following list gives an overview of what kind of actions you can perform on the canvas:
+* Add or remove a region
+** To add a region to the canvas, select _Region_ in the "editor palette":#editor-palette, then click on the canvas location you want to place the region.
+** To remove a region from the canvas, select the region, then press the @[Del]@ key or select _Edit → Delete_ from the menu bar.
+* Zooming
+** Press and hold @[Ctrl]@ and turn the mouse wheel to zoom in or out.
+** Right-click on the canvas to open its context menu. In the context menu, several zooming functions are available in the _Zoom_ submenu.
 
-          // Hang up the phone:
-          sm.getSCIUser().raiseDismiss_call();
-          sm.runCycle();
-      }
-  }
+h3(#editor-palette). Editor palette
 
-p. Let's have a detailed look at this client code:
+The editor palette provides you with a set of various actions and statechart editing tools. By default, the palette is located right of the canvas, but you can also drag it to the left.
 
-* First, this program creates a new instance of the state machine by calling the default @CallHandlingStatemachine@ constructor:
-** @CallHandlingStatemachine sm = new CallHandlingStatemachine();@
-* Since we are using time events, the statechart implementation requires an implementation of the @ITimer@ interface. And since we added the @TimerService@ feature to the generator model, the code generator creates a default implementation @org.yakindu.scr.TimerService@ that uses the @java.util.Timer@ class. A new instance of the default @TimerService@ is created and set to the state machine:
-** @sm.setTimer(new TimerService());@
-* The state machine and its internal data structures are initialized:
-** @sm.init();@
-* After that, @sm.enter()@ enters the state machine and – via its initial state – activates its *Idle* state.
-* For each interface in the statechart definition block a getter method has been generated, here @getSCIPhone()@ and @getSCIUser()@. You can access all incoming events and all variables via these interfaces.
-** @sm.getSCIPhone().raiseIncoming_call();@ raises the _incoming&#95;call_ event, activating the *Incoming Call* state after the next run cycle has been executed. The latter is triggered by @sm.runCycle()@.
-* @sm.getSCIUser().raiseAccept_call()@ accepts the call or, to be more precise, raises the _accept_call_ event via the _User_ interface. It activates the *Active Call* state after the next run cycle has been performed by @sm.runCycle();@.
-* In the @for@ loop, the run cycle is executed periodically every 200 milliseconds. This simulates the duration of the phone call.
-* Before hanging up the phone, let's find out how much time we spent in the call. @sm.getSCIPhone().getDuration()@ retrieves the call's duration, which is then formatted and printed to the console.
-* Finally, @sm.getSCIUser().raiseDismiss_call()@ raises the _dismiss_call_ event. It activates the *Dismiss Call* state after the next run cycle.
+You can hide the palette by clicking on the small triangle in the palette's title bar. Click on the triangle again to make the palette reappear.
 
-h4(#executing-the-client-code). Executing the client code
+!(standard-image)images/docu_editor-palette_010_overview.png(Editor palette)!
 
-You can execute the client code via _Run As → Java Application_ from the class file's context menu.
+p=. Editor palette
 
-h2(#closing-remarks). Closing remarks
+h4(#oss-editing-action-tools). Editing action tools
 
-At this point you have mastered the comprehensive tutorial and got to know the most important YAKINDU Statechart Tools features up to a certain degree. The subsequent sections will explain statechart language, statechart editor, simulation, and code generation in detail.
+Below its title bar, the palette contains a toolbar with the following editing action tools (from left to right):
+| !images/docu_editor-palette_020_symbol_select.png(Editor palette symbol "Select")! | Select | |
+| !images/docu_editor-palette_030_symbol_zoom_in.png(Editor palette symbol "Zoom in")! | Zoom in | Left-click to zoom in. Press @[Shift]@ and left-click to zoom out. Drag to zoom to selection. |
+| !images/docu_editor-palette_040_symbol_zoom_out.png(Editor palette symbol "Zoom out")! | Zoom out | Left-click to zoom out. Press @[Shift]@ and left-click to zoom in. |
+| !images/docu_editor-palette_070_symbol_note.png(Editor palette symbol "Note")! | Note | Create a note, a text or a note attachment. |
+
+h4(#oss-statechart-elements-tools). Statechart elements tools
+
+The palette comprises a couple of tools serving to add statechart elements to the diagram (from top to bottom):
+
+| !images/docu_editor-palette_210_tool_transition.png(Editor palette element tool "Transition")! |
+| !images/docu_editor-palette_220_tool_state.png(Editor palette element tool "State")! |
+| !images/docu_editor-palette_230_tool_composite_state.png(Editor palette element tool "Composite state")! |
+| !images/docu_editor-palette_240_tool_orthogonal_state.png(Editor palette element tool "Orthogonal state")! |
+| !images/docu_editor-palette_250_tool_region.png(Editor palette element tool "Region")! |
+| !images/docu_editor-palette_260_tool_entry.png(Editor palette element tool "Entry")! |
+| !images/docu_editor-palette_270_tool_shallow_history.png(Editor palette element tool "Shallow history")! |
+| !images/docu_editor-palette_280_tool_deep_history.png(Editor palette element tool "Deep history")! |
+| !images/docu_editor-palette_290_tool_final_state.png(Editor palette element tool "Final state")! |
+| !images/docu_editor-palette_300_tool_exit_node.png(Editor palette element tool "Exit node")! |
+| !images/docu_editor-palette_310_tool_choice.png(Editor palette element tool "Choice")! |
+| !images/docu_editor-palette_320_tool_synchronization.png(Editor palette element tool "Synchronization")! |
+
+h3(#outline-view). Outline view
+
+The _Outline_ view allows you to keep the big picture of your statechart model and navigate it easily. It displays the model outline either as a graphical overview or as a hierarchical outline.
+
+h4(#oss-graphical-overview). Graphical overview
+
+Click on the _Overview_ icon in the _Outline_ view's title bar to engage the graphical overview.
+
+While the statechart editor window, due to zooming or the size of the whole statechart, might display a cutout only, the _Outline_ view shows the whole diagram as an overview. It is scaled down as needed to completely fit into the available area.
+
+A light-grey overlay rectangle represents the statechart editor's "viewport":https://en.wikipedia.org/wiki/Viewport. Drag this rectangle to move the statechart editor's viewport. Click into the outline view to position the rectangle's center to the point you have clicked.
+
+h4(#oss-hierarchical-outline). Hierarchical outline
+
+Click on the _Outline_ icon in the _Outline_ view's title bar to engage the hierarchical outline.
+
+h3(#problems-view). Problems view
+
+The _Problems_ view by default lists all errors, warnings and other types of messages in all open projects.
+
+The messages are grouped by message type, typically error or warning. Click on the show/hide symbol to open or close the respective message group's contents.
+
+Double-clicking on an entry in the _Problems_ view takes you directly to the resource or model element causing the problem.
+
+You can configure the _Problems_ view in a multitude of ways, e.&nbsp;g. to group entries by different criteria, to sort them in a specific way, or to restrict them to certain projects. You can even define multiple _Problems_ views, each with different selection or display criteria.
+
+To start configuring the _Problems_ view, click on the small triangle pointing downwards in the _Problem_ view's title bar. A drop-down menu will open and show the options you have.
+
+To configure the view click the small triangle pointing downwards in the view's title bar. A drop-down menu opens and shows the options you have.
+
+h2(#editing-states-and-other-nodes). Editing states and other nodes
+
+Generally, there are two different ways to edit states and other nodes:
+* Use the graphical editor to modify a node in the diagram.
+* Select a node and edit its properties in the _Properties_ view.
+
+There are certain properties you can only edit with one of these methods. For example, to modify a state's position or size, use the statechart editor. To change a state's transitions' priority, use the _Properties_ view.
+
+h2(#editing-transitions). Editing transitions
+
+Generally, there are two different ways to edit transitions:
+* Use the graphical editor to modify a transition in the diagram.
+* Select a transition and edit its properties in the _Properties_ view.
+
+There are certain properties you can only edit with one of these methods. For example, to add guidance points to a transition's arrow, use the statechart editor. To change a transition's arrow's color, use the _Properties_ view.
+
+h2(#editing-regions). Editing regions
+
+To change the size or the location of a region, use the graphical editor. Drag the region to move it elsewhere. Use a selected region's handles to resize it.
+
+You can change the name of a region in the statechart editor as well as in the properties view.
+* In the statechart editor,
+** double-click on the region's current name,
+** edit the name in the text field that appeared after double-clicking,
+** press the @[Return]@ key.
+* In the properties view,
+** modify the _Region Name_ property. It is a region's only property you can access through the properties view.
+
+h2(#editing-hierarchies). Editing hierarchies
+
+Statecharts can get rather big and complex. *"Composite states":../user-guide/statechart_language#composite-state* are a way to reduce complexity and thus make statecharts easier to create, comprehend and maintain. A composite state comprises a state machine of its own within a "region":../user-guide/statechart_language#region. The states belonging to such a nested state machine are called *substates*. *"Orthogonal states":../user-guide/statechart_language#orthogonal-states* are a generalization of composite states, comprising two or more independent state machines in separate regions that are executed in parallel.
+
+A complementary way to mitigate size are *subdiagrams*. A subdiagram externalizes the possibly large region(s) contained by a composite state into a subdiagram. In this case the composite state no longer displays its substates. Instead it is visualized very similar to a regular state, aside from a small label marking it as a composite state and giving access to its internal structure: the subdiagram. In this way a composite state consumes much less space and gives the user the opportunity to better see the overall picture. Section "Using subdiagrams":#using-subdiagrams explains how to work with subdiagrams, how to create them and how to inline them again, if needed.
+
+Composite states resp. subdiagrams can be nested to any depth.
+
+The statechart editor provides various "refactorings":#refactorings to support editing these hierarchies.
+
+h2(#using-subdiagrams). Using subdiagrams
+
+When using composite states, a statechart model may easily become too big to give a comprehensive overview of the whole diagram. Subdiagrams come as a solution.
+
+!(standard-image)images/docu_subdiagram_010_inline.png(Composite state)!
+
+p=. Composite state
+
+When the _Extract Subdiagram_ "refactoring":#refactorings is executed on a composite state, all containing regions are extracted into a separate diagram. The composite state no longer clutters the diagram with all its internal details, but instead appears almost like a normal state. The only difference is a small decorator in the lower-right corner of the state, indicating the existence of a subdiagram. When you hover over this decorator with the mouse cursor, you'll see a small preview of the subdiagram's content.
+
+Extracting a subdiagram creates entry and exit nodes in the subdiagram as needed.
+
+!(standard-image)images/docu_subdiagram_020_preview.png(Subdiagram popup window)!
+
+p=. Subdiagram popup window
+
+A click on the decorator opens the subdiagram in a separate editor tab. The breadcrumb at the top allows easy navigation throughout the hierachy levels.
+
+!(standard-image)images/docu_subdiagram_030_subdiagram-editor.png(Subdiagram editor)!
+
+p=. Subdiagram editor
+
+Using the "inlining subdiagram refactoring":#inlining-subdiagram, you can move the subdiagram back into the composite state.
+
+h2(#refactorings). Refactorings
+
+Refactoring means modifying certain model aspects while maintaining its semantics. The statechart editor allows for the refactoring of variables, events, interfaces, and states, including composite and orthogonal states. A state's context menu contains the _Refactor_ submenu with the refactoring actions explained below. Depending on certain conditions, a refactoring might be executable or not, which will be explained below.
+
+
+h3(#renaming). Renaming variables, events and interfaces
+
+Using the _Rename_ refactoring, you can change the name of a variable, event or interface throughout your statechart model. Each occurrence of that name will be changed to the new name.
+
+To initiate renaming, right-click on the name of a variable, event or interface in the diagram editor, in the definition section, or in a text field in the _Properties_ view, then select _Rename …_.
+
+!(standard-image)images/docu_refactoring-rename_010_renaming-variable.png(Renaming a variable)!
+
+p=. Renaming a variable
+
+###. FIXME: finish description!
+
+h3(#folding-incoming-actions). Folding incoming actions
+
+When building a statechart model step by step, you may come into a situation where you have defined several transitions having the same target state and share a common set of actions.
+
+The _Fold Incoming Actions_ refactoring moves these actions from the transitions to the target state's entry block. To preserve model semantics, only actions that are defined on _all_ incoming transitions will be moved. Since the execution order must be preserved, the refactoring algorithm starts with the right-most action and proceeds action by action to the left. As soon as it detects an action that is not defined on _all_ incoming transitions, it stops moving actions to the entry block.
+
+Consider the following model:
+
+!(standard-image)images/docu_refactoring-fold-incoming-actions_010_example_01.png(Moving incoming actions to entry block)!
+
+p=. Moving incoming actions to entry block
+
+Only the most-right action _y += 42_ can be moved to the entry block of the target state. Although _x += 1_ is also a common action of both transitions, it cannot be moved to the target state, because the semantics of the _B → Target_ transition would change, in that _y = x_ would be executed before _x_ had been incremented.
+
+Another aspect to take into account are transitions leading to target states that are nested in composite states. Consider the following example:
+
+!(standard-image)images/docu_refactoring-fold-incoming-actions_020_example_02.png(Moving incoming actions into a nested state's entry block)!
+
+p=. Moving incoming actions into a nested state's entry block
+
+The actions _y = x_ of the two incoming transitions leading to the _Target_ state cannot be moved to _Target_'s entry block, because doing so would change the model's semantics. The reason consists in the composite state's entry action _x += 1_. It will be executed immediately _after_ the action of transition _A → Target_ and _before_ the actions in the entry block of _Target_. Moving  _y = x_ from the transition to _Target_'s entry block would change that order. The statechart editor pays regard to this constraint and prohibits the refactoring.
+
+To fold incoming actions, right-click on the state to refactor, then select _Refactor → Fold Incoming Actions_ in the context menu. The menu entry is active only if there are actual actions to move into the target state's entry block with the above rules applied.
+
+h3(#folding-outgoing-actions). Folding outgoing actions
+
+The _Fold Outgoing Actions_ refactoring is similar to "folding incoming actions":#folding-incoming-actions, except that it moves actions from outgoing transitions to the source state's exit block. To preserve model semantics, only actions that are defined on _all_ outgoing transitions will be moved. Since the execution order must be preserved, the refactoring algorithm starts at the left-most action and proceeds action by action to the right. As soon as it detects an action that is not defined on _all_ outgoing transitions, it stops moving actions to the exit block.
+
+Preconditions for this refactoring are analog to "&quot;Folding incoming actions&quot;":#folding-incoming-actions. Consider the following example:
+
+!(standard-image)images/docu_refactoring-fold-outgoing-actions_010_example_01.png(Moving outgoing actions to exit block)!
+
+p=. Moving outgoing actions to exit block
+
+Here, the actions _y = x_ cannot be moved from the outgoing transitions to the exit block of the source state, because the composite state has an exit action. For the _Source → A_ transition, the proper execution order is to first execute _x += 1_ of the nesting composite state's exit block, followed by _y = x_ of the transition. Moving _y = x_ to the exit block of _Source_ would reverse this order and thus will be prohibited by the statechart editor.
+
+To fold outgoing actions, right-click on the state to refactor, then select _Refactor → Fold Outgoing Actions_ in the context menu. The menu entry is active only if there are actual actions to move into the source state's exit block with the above rules applied.
+
+h3(#unfolding-entry-actions). Unfolding entry actions
+
+This refactoring is the reverse of "folding incoming actions":#folding-incoming-actions. It removes all entry actions from a target state and appends them to each of its incoming transition's actions.
+
+Transitions crossing the borders of composite states enclosing the target state might inhibit refactoring, see section "&quot;Unfolding exit actions&quot;":#unfolding-exit-actions for an analogous example.
+
+To unfold entry actions, right-click on the state to refactor, then select _Refactor → Unfold Entry Actions_ in the context menu. The menu entry is active only if there are actual actions in the state's entry block that can be moved to the state's incoming transitions while maintaining semantic equivalence and preserving execution order.
+
+h3(#unfolding-exit-actions). Unfolding exit actions
+
+This refactoring is the reverse of "folding outgoing actions":#folding-outgoing-actions. It moves all exit actions from a source state and prepends them to each of its outgoing transition's actions.
+
+Transitions crossing the borders of composite states enclosing the source state might inhibit refactoring. Consider the following example:
+
+!(standard-image)images/docu_refactoring-unfold-outgoing-actions_010_example_01.png(Unfolding exit actions to outgoing transitions)!
+
+p=. Unfolding exit actions to outgoing transitions
+
+Unfolding the exit action _y = x_ of the _Source_ state to the two outgoing transitions would be invalid, because the execution order of said action and the composite state's exit action would be reversed.
+
+To unfold exit actions, right-click on the state to refactor, then select _Refactor → Unfold Exit Actions_ in the context menu. The menu entry is active only if there are actual actions in the state's exit block that can be moved to the state's incoming transitions, while maintaining semantic equivalence and preserving execution order.
+
+
+h3(#grouping-states-into-composite). Grouping states into composite
+
+This refactoring creates a new composite state containing the selected states. The latter must belong to the same region.
+
+To execute this refactoring, select one or more states from the same region, right-click on one of them, and select _Refactor → Group States Into Composite_ in the context menu. The menu entry is active only if the selected states belong to the same region.
+
+h3(#extracting-subdiagram). Extracting subdiagram
+
+This refactoring extracts the regions of the selected composite or orthogonal state into a subdiagram. Entry and exit nodes are created as needed in the subdiagram. See section "Using subdiagrams":#using-subdiagrams for more details.
+
+To extract a subdiagram, right-click on the composite state to refactor, then select _Refactor → Extract Subdiagram_ in the context menu.
+
+h3(#inlining-subdiagram). Inlining subdiagram
+
+This refactoring inlines the selected node's subdiagram in order to show it directly in the composite state's diagram region. See section "Using subdiagrams":#using-subdiagrams for more details.
+
+To inline the subdiagram, right-click on a composite state with a subdiagram, then select _Refactor → Inline Subdiagram_ in the context menu.
+
+h2(#using-editing-proposals). Using editing proposals
+
+h3(#oss-using-text-proposals). Using text proposals
+
+Proposals assist you when writing statechart language expressions. Whenever editing some text anywhere in the graphical statechart editor or in the properties view, you can always press the @[Ctrl+Space]@ key combination to get some context-sensitive help.
+
+Certain proposals, like statechart language keywords, have documentation associated with them. When such a proposal is selected either using the mouse or the keyboard, this information is shown in a secondary popup window next to the proposal.
+
+You can either use the mouse or the keyboard to select and insert a proposal in the text:
+* Double-click on a proposal for insertion in the text.
+* Use the up and down arrow keys to navigate to the proposal you want to insert in the text, then press @[Return]@ to actually insert the proposal.
+
+h3(#oss-using-action-proposals-on-states). Using actions proposals on states
+
+When a state is selected, @[Ctrl+Space]@ opens a popup window showing a context-sensitive menu with possible action choices to perform on the state.
+
+These action proposals have additional information associated to them. When a proposal is selected either using the mouse or the keyboard, this information is shown in a secondary popup window next to the proposal.
+
+You can either use the mouse or the keyboard to execute a proposal:
+* Double-click on a proposal to execute it.
+* Use the up and down arrow keys to navigate to the proposal you want to execute, then press @[Return]@ to actually execute it.
+
+h2(#oss_comparing-statecharts). Comparing statecharts
+
+The statechart editor allows for comparing two or even three statecharts to each other, displaying the results, and possibly merging selected differences. Figure "&quot;Comparing two statecharts&quot;":#oss_fig_comparing_two_statecharts shows a sample comparison result.
+
+p(#oss_fig_comparing_two_statecharts). 
+
+!(standard-image)images/docu_comparing_statecharts_010_result.png(Comparing two statecharts)!
+
+p=. Comparing two statecharts
+
+h3(#oss_Comparing-a-statechart-to-its-local-history). Comparing a statechart to its local history
+
+# In the _project_ view, right-click on a single statechart model file. The context menu opens.
+# In the context menu, select _Compare With → Local History…_.
+# In the local history, double-click on the file's version to compare to.
+# The comparison results are shown.
+
+h3(#oss_comparing-two-statecharts). Comparing two statecharts
+
+# In the _project_ view, select two statechart model files.
+# Right-click on one of the selected statechart model files. The context menu opens.
+# In the context menu, select _Compare With → Each Other_.
+# The comparison results are shown.
+
+h3(#oss_comparing-three-statecharts). Comparing three statecharts
+
+# In the _project_ view, select three statechart model files.
+# Right-click on one of the selected statechart model files. The context menu opens.
+# In the context menu, select _Compare With → Each Other_.
+# In the dialog to appear, select one of the statecharts that should be regarded as a common ancestor of the two others.
+# The comparison results are shown.
+
+
+h2(#exporting-a-statechart-as-an-image-file). Exporting a statechart as an image file
+
+A statechart can be saved as an image file as shown in the following steps:
+
+In the statechart editor, right-click on the main region. The context menu appears.
+
+!(standard-image)images/docu_exporting_statechart_as_image_010_save_as_menu_item.png(Selecting the "Save As Image File..." menu item)!
+
+p=. Selecting the "Save As Image File..." menu item
+
+In the context menu, select File → Save As Image File.... The _Save As Image_ dialog appears.
+
+!(standard-image)images/docu_exporting_statechart_as_image_020_save_as_dialog.png(The "Save As Image File" dialog)!
+
+p=. The "Save As Image File" dialog
+
+Specify the filesystem folder for the exported image file in the _Folder_ text field.
+
+Enter the name of the export image file into the _File Name_ text field. The file name extension depends on the selected image format (see below).
+
+Select the image format from the _Image Format_ drop-down menu. YAKINDU Statechart Tools supports the following formats:
+
+|*BMP, GIF, PNG*|Lossless pixel image formats|
+|*JPG, JPEG*|Lossy pixel image format. You can specify the image quality via the _Quality (%)_ setting.|
+|*SVG*|Scalable Vector Graphics|
+|*PDF*|Portable Document Format|
+
+bq.. *Note*
+
+The image export functionality is subject to the capabilities of your Java Runtime Environment (JRE). You can export images only in those image formats your JRE actually supports.
+
+p. The _Quality (%)_ text field is active for JPEG images only. JPEG is a lossy format, and reducing the quality results in a smaller file size. However, due to the nature of statechart images, a lossless format like PNG is most often a better choice, both in quality and in file size.
+
+Check _Overwrite existing file without warning_ if you don't want to be bothered by a confirmation dialog which will appear if the export file already exists.
+
+Check _Export to HTML_ to create both the image file plus an HTML file including it.
+
+h2(#oss_working-with-statechart-tasks). Working with statechart tasks
+
+While you are busily developing a statechart, it is quite common that you have ideas about what else you could or should do to improve the statechart, but later, in order to not get side-tracked. Examples are to write a proper documentation for a state, to refine a transition whose final specification you don't have yet etc.
+
+For all these and other purposes you can define _tasks_ anywhere in your statechart where a comment is allowed. A task is a special comment comprising either @FIXME@ or @TODO@. Adding one of these words to a comment is called "tagging" the comment as a task.
+
+The nice thing is that you don't have to remember all the places you took a note and defined a task. YAKINDU Statechart Tools lists all of your tasks in the _Tasks_ view. Figure "&quot;Tasks defined by tags in the statechart showing up in the _Tasks_ view&quot;":#oss_fig_tasks-defined-by-tags-in-the-statechart-showing-up-in-the-tasks-view is showing an example with various tasks being defined in a transition, in a state's behavior, in a state's documentation, and in the statecharts definition section.
+
+p(#oss_fig_tasks-defined-by-tags-in-the-statechart-showing-up-in-the-tasks-view). 
+
+!(standard-image)images/docu_task_tags_010_task_view.png(Tasks defined by tags in the statechart showing up in the _Tasks_ view)!
+
+p=. Tasks defined by tags in the statechart showing up in the _Tasks_ view
+
+In the example, state *B* has been selected in the statechart editor (top), so that the tasks defined in the state's behavior and in its documentation are shown in the _Properties_ view (middle).
+
+Task have a priority. While @TODO@ stamps a task as being of normal priority, @FIXME@ indicates a high-priority task.
+
+By default, tasks are ordered by priority in the _Tasks_ view (bottom), and high-priority tasks are accentuated by a red exclamation mark. However, you can change the sorting order and other settings using the view menu. Click on the little triangle on the right-hand side of the _Task_ view's title to open the view menu.
+
+Double-clicking on a task in the _Tasks_ view navigates to the location where the task is defined. If needed, the corresponding statechart diagram is opened. The graphical element holding the task definition is highlighted.
+
+bq. *Note*
+
+The _Tasks_ view is updated only when the statechart is saved.
+
+###.. h3(#oss_defining-task-tags). Defining task tags
+
+# In the main menu, select _Window → Preferences_. The _Preferences_ Dialog opens.
+# In the _Preferences_ Dialog goto _Java → Compiler → Task Tags_ to edit your task tag preferences. A task tag has one of the priorities _High_, _Normal_, or _Low_.
+
+h2(#oss_example_wizard). Using the example wizard
+
+The **Example Wizard**, which is part of YAKINDU Statechart Tools since release 2.7, gives you convenient access to the examples in our "examples repository":https://github.com/Yakindu/examples. You can browse the available examples by name or by category and read their documentation in the wizard. By a simple click you can instantiate an example as a new Eclipse project. Within an example project, you can then explore and modify the state machine models using the statechart editor, run the models in the simulator, generate source code, etc.
+
+Upon its first invocation, the example wizard downloads the online examples repository and creates a copy on your local disk. After that, all examples are immediately available to you, even if you are offline. The example wizard will notice when new examples are available in the online repository and offers to download them. It is also possible to download the examples repository out-of-band and later tell the example wizard where it can find the local copy.
+
+h3(#oss_download_example_repository). Downloading the examples repository
+
+When you start the example wizard for the first time, it does not yet have any examples available that it could show to you. Thus downloading the online examples repository is required as a special first step.  
+
+# In order to start the example wizard, select _File → New → Example…_ in the YAKINDU Statechart Tools main menu. The _New Example_ dialog opens.
+# In the _New Example_ dialog, select _YAKINDU Statechart Examples_, then click on _Next >_. The example wizard opens.
+# The example wizard outputs a message saying that it could not find any examples and offers to download them.
+# Click on the _Download_ button. The example wizard downloads the online examples repository and creates a clone of it on your local computer. This can take some time. – Downloading can fail for a variety of reasons, not being able to access the Github server being one of them. If this happens, don't panic – and read how to "manually creating a local copy of the examples repository":#oss_manualy_creating_local_copy.
+
+!(standard-image)images/docu_example_wizard_download.png(Example wizard when invoked the first time)!
+
+When the download is completed, you can "browse the examples repository":#oss_browsing_the_example_repository.
+
+h3(#oss_changing_repository_location). Changing the repository location
+
+You can change the location used by the example wizard to store the online repository's local clone.
+
+# When the example wizard shows the _Download_ button on its first start, click on the link _"change the storage location here"_. The example wizard's preferences dialog opens. Alternatively, open _Window → Preferences_ and select _YAKINDU SCT → Example Wizard_. 
+# On the examples preferences page, enter the desired directory into the _Storage Location_ text field.
+# Click on _OK_. The dialog closes.
+
+You can change the storage location of your local examples repository clone at any time. In fact, it doesn't even need to be a clone of the official examples repository. Any directory containing subdirectories with YAKINDU Statechart Tools examples suffices.
+
+* If the directory exists, the example wizard searches it for examples and displays them.
+* If the directory does not exist, the example wizard behaves as if being called for the first time. That is, it informs the user that it does not have any examples yet and offers to download them.
+
+h3(#oss_browsing_the_example_repository). Browsing the examples repository
+
+The example wizard shows the available examples and their categories on the left-hand side.
+
+Click on an example to select it and show its documentation on the right-hand side.
+
+Click on _Finish_ to create the selected example as a new project in your workspace.
+
+!(standard-image)images/docu_example_wizard_browse.png(Example wizard shows all available examples sorted by their categories)!
+
+h3(#oss_manualy_creating_local_copy). Manually creating a local copy of the examples repository
+
+The example wizard tries to download a copy of the YAKINDU Statechart Tools examples repository and install it on your local machine. However, if your Internet access is restricted or you don't have Internet access at all, this will fail.
+
+To circumvent this problem, you can
+
+# download the examples repository elsewhere, i.&nbsp;e. on a computer with Internet access,
+# copy it to the computer you want to run YAKINDU Statechart Tools, and
+# have the example wizard work with that local copy.
+
+Subsequently we will explain the necessary steps in detail.
+
+Downloading the repository as a ZIP archive:
+
+# On a computer with Internet access, go to the "examples repository's release branch":https://github.com/Yakindu/examples/tree/release.
+# Click on the green _Clone or download_ button. A submenu opens.
+# In the submenu, click on _Download ZIP_.
+# The download starts and transfers the ZIP archive file _examples-release.zip_ to your computer.
+# Copy the _examples-release.zip_ file to the computer without Internet access and continue with the following steps on that machine.
+# Unpack the archive file. A directory named _examples-release_ is created, containing the YAKINDU Statechart Tools examples repository.
+# In YAKINDU SCT, select _Window → Preferences_.
+# Inside there, navigate to _YAKINDU SCT → Example Wizard_.
+# Click on _Browse..._, and select the folder you just extracted from the zip-file and click _OK_.
+# On the next try, the example wizard will now show a catalogue of YAKINDU SCT examples.
+
+Alternatively, you can clone the repository. Cloning the examples repository containing the YAKINDU Statechart Tools examples is more complex than just downloading a ZIP archive. However, you will get certain advantages in return, like the ability to detect and receive updates, the option to create your own examples and submit them as a pull request, or the complete history of the examples repository – which could also be considered a drawback, taking its size into account.
+
+# Clone "https://github.com/Yakindu/examples.git":https://github.com/Yakindu/examples.git to your local computer. If you are using a command-line tool, the proper command is @git clone 'https://github.com/Yakindu/examples.git'@. It will create the directory _examples_ on your disk.
+# Step into that directory: @cd examples@.
+# Checkout the _release_ branch: @git checkout release@. Now the _examples_ directory reflects the current release state.
+# In the YAKINDU Statechart Tools main menu, select _File → New → Example…_. The _New Example_ dialog opens.
+# In the _New Example_ dialog, select _YAKINDU Statechart Examples_ and click on _Next >_. The example wizard opens.
+# When the example wizard is opened for the first time, there are no examples on the local disk yet.
+# In YAKINDU SCT, select _Window → Preferences_.
+# Inside there, navigate to _YAKINDU SCT → Example Wizard_.
+# Click on _Browse..._, and select the folder you just cloned and click _OK_.
+# On the next try, the example wizard will now show a catalogue of YAKINDU SCT examples.
+
+h3(#oss_updating_example_respository). Updating the examples repository
+
+When the example wizard is started and the storage location is a clone of the online examples directory, it checks whether there are any updates in the online examples repository. If new examples are available or existing examples have changed in the online repository the example wizard offers to update your local examples repository clone accordingly.
+
+!(standard-image)images/docu_example_wizard_update.png(Example wizard offers an update of the examples repository)!
+
+* Click on the _Update_ button to update your local repository.
+
+If your storage location is a plain directory and not a clone of the online examples repository, no update is ever done.
+
+h3(#oss_contributing_examples). Contributing own examples
+
+If you have a project that you want to share with the community, you can contribute it as an example. Once your contribution is reviewed and applied by the YAKINDU team, it is available for all users of YAKINDU Statechart Tools via the example wizard's update functionality.
+
+For more information on how to contribute examples, please visit our "Wiki page":https://github.com/Yakindu/examples/wiki/Creating-a-YAKINDU-Statechart-Tools-Example.
+
+h2(#Preferences). Preferences
+
+Many aspects of YAKINDU Statechart Tools can be configured by _preferences_. You can find them here:
+
+# In the main menu, select _Window → Preferences_. The _Preferences_ dialog appears.
+# In the navigation on the left-hand side, scroll to _YAKINDU SCT_. Open it and its subentries as needed.
+# Click on an entry to display the associated preference pane on the right-hand side of the _Preferences_ dialog, see e.&nbsp;g. figure "Diagram Appearance":#fig_preferences-diagram-appearance.
+
+In the subsequent sections we will quickly walk through the preferences.
+
+h3(#preferences-dialog-appearance). Diagram appearance
+
+p(#fig_preferences-diagram-appearance). 
+!(standard-image)images/docu_preferences_010_diagram_appearance_01.png(Preferences: Diagram Appearance)!
+
+p=. Preferences: Diagram Appearance
+
+h4. Colors and line styles
+
+The "diagram appearance":#fig_preferences-diagram-appearance preferences define default colors for the backgrounds and borders of states and regions, as well as the default routing style for transitions and other lines, with _oblique_ and _rectilinear_ being the options at your choice.
+
+Please keep in mind that colors and line styles will apply to _new_ elements only. Existing regions, states, etc. will remain as they are. You can always modify the properties of an existing element using the _Properties_ view.
+
+h4. Showing transition priorities
+
+In order to display "transition priorities":statechart_language.html#transition-priorities in a statechart, set a check mark at the respective preference option. Section "&quot;Transition priorities&quot;":statechart_language.html#transition-priorities has an example.
+
+h4. Disabling live validation
+
+While you are editing a statechart, the statechart editor validates your model on each and every modification you make. That's very helpful, because the editor provides you with instant feedback, so you can see immediately what is right, wrong, or dubious, and you can take corrective action, if needed.
+
+However, on very large and complex statechart models, validation may take a considerable amount of time, causing delays and impeding your editing. Remove the check mark from _Enable live validation_, and your model will be validated before it is saved to the model file only.
+
+h3. Example wizard
+
+p(#fig_preferences-example-wizard). 
+!(standard-image)images/docu_preferences_020_examples_01.png(Preferences: Example wizard)!
+
+p=. Preferences: Example wizard
+
+You can change the example wizard storage location here. It is a local directory where the "example wizard":#oss_example_wizard stores your local clone of the examples Git repository. Default is the _sct_examples_ directory in your home directory.
+
+h3. Expressions
+
+p(#fig_preferences-expressions). 
+!(standard-image)images/docu_preferences_030_expressions_01.png(Preferences: Expressions)!
+
+p=. Preferences: Expressions
+
+Certain dialogs in the statechart editor allow you to opt for never seeing them again. By clicking on the _Clear_ button on this preference pane these hidden dialogs will be shown again at their respective locations.
+
+h4. Expression syntax coloring
+
+p(#fig_preferences-expression-syntax-coloring). 
+!(standard-image)images/docu_preferences_040_expressions_syntax_coloring_01.png(Preferences: Expression syntax coloring)!
+
+p=. Preferences: Expression syntax coloring
+
+This preferences pane defines foreground color, background color, font, and style for displaying certain syntactical elements in statechart language texts.
+
+h4. Expression templates
+
+p(#fig_preferences-expression-templates). 
+!(standard-image)images/docu_preferences_050_expressions_template_01.png(Preferences: Expression templates)!
+
+p=. Preferences: Expression templates
+
+Templates are sections of textual code that occur frequently enough that you would like to be able to insert them with a few keystrokes. This function is known as _content assist_; the sections of code that are inserted are known as _templates_.
+
+To insert an existing content assist template, type the initial character, then press @[Ctrl+Space]@. The templates that begin with that character appear. Double-click on a template to insert it.
+
+On this preference pane you can create, edit, and delete statechart language templates.
+
+h3. Generator model
+
+p(#fig_preferences-generator-model). 
+!(standard-image)images/docu_preferences_060_generator_model_01.png(Preferences: Generator model)!
+
+p=. Preferences: Generator model
+
+By default code generators automatically generate artifacts defined by generator models in _.sgen_ files. Using this preference setting, you can switch this behavior off or on.
+
+h4. Generator model refactoring
+
+p(#fig_preferences-generator-model-refactoring). 
+!(standard-image)images/docu_preferences_070_generator_model_refactoring_01.png(Preferences: Generator model refactoring)!
+
+p=. Preferences: Generator model refactoring
+
+Change these preference settings for refactoring in generator models as you see fit.
+
+h4. Generator model syntax coloring
+
+p(#fig_preferences-generator-model-syntax-coloring). 
+!(standard-image)images/docu_preferences_080_generator_syntax_coloring_01.png(Preferences: Generator model syntax coloring)!
+
+p=. Preferences: Generator model syntax coloring
+
+This preferences pane defines foreground color, background color, font, and style for displaying certain syntactical elements in generator model texts.
+
+h4. Generator model templates
+
+p(#fig_preferences-generator-model-templates). 
+!(standard-image)images/docu_preferences_090_generator_templates_01.png(Preferences: Generator model templates)!
+
+p=. Preferences: Generator model templates
+
+Templates are sections of textual code that occur frequently enough that you would like to be able to insert them with a few keystrokes. This function is known as _content assist_; the sections of code that are inserted are known as _templates_.
+
+To insert an existing content assist template, type the initial character, then press @[Ctrl+Space]@. The templates that begin with that character appear. Double-click on a template to insert it.
+
+On this preference pane you can create, edit, and delete generator model language templates.
+
+h3. Simulation
+
+p(#fig_preferences-simulation). 
+!(standard-image)images/docu_preferences_100_simulation_01.png(Preferences: Simulation)!
+
+p=. Preferences: Simulation
+
+Set your color preferences for the statechart simulator on this preference pane.
